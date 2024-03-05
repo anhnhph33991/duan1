@@ -18,21 +18,21 @@ $menuAdmin = [
     [
         'id' => 3,
         'name' => 'Categorys',
-        'act' => ['categorys', 'add-category'],
+        'act' => ['categorys', 'add-category', 'show-category', 'update-category'],
         'url' => BASE_URL_ADMIN . '?act=categorys',
         'icon' => '<i class="far fa-square"></i>'
     ],
     [
         'id' => 4,
         'name' => 'Users',
-        'act' => ['users', 'add-user'],
+        'act' => ['users', 'add-user', 'show-user', 'update-user'],
         'url' => BASE_URL_ADMIN . '?act=users',
         'icon' => '<i class="far fa-square"></i>'
     ],
     [
         'id' => 5,
         'name' => 'Comments',
-        'act' => ['comments', 'add-comment'],
+        'act' => ['comments', 'add-comment', 'show-comment'],
         'url' => BASE_URL_ADMIN . '?act=comments',
         'icon' => '<i class="far fa-square"></i>'
     ],
@@ -61,7 +61,7 @@ $menuAdmin = [
             <li class="<?= $isActive ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= $value['url'] ?>">
                     <?= $value['icon'] ?>
-                    <span><?= $value['name']?></span>
+                    <span><?= $value['name'] ?></span>
                 </a>
             </li>
         <?php endforeach; ?>

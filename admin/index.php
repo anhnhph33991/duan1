@@ -8,6 +8,9 @@ require_once "../core/connect.php";
 // Require controllers
 require_once CONTROLLER_ADMIN . 'DashboardController.php';
 require_once CONTROLLER_ADMIN . 'ProductController.php';
+require_once CONTROLLER_ADMIN . 'CategoryController.php';
+require_once CONTROLLER_ADMIN . 'UserController.php';
+require_once CONTROLLER_ADMIN . 'CommentController.php';
 
 
 // Handle Routes
@@ -22,6 +25,25 @@ match ($act) {
     'update-product' => productUpdate(),
     'show-product' => productShow(),
     'delete-product' => productDelete(),
+    // route category
+    'categorys' => categoryIndex(),
+    'add-category' => categoryCreate(),
+    'update-category' => categoryUpdate(),
+    'show-category' => categoryShow(),
+    'delete-category' => categoryDelete(),
+    // route user
+    'users' => userIndex(),
+    'add-user' => userCreate(),
+    'update-user' => userUpdate(),
+    'show-user' => userShow(),
+    'delete-user' => userDelete(),
+    // route comment
+    'comments' => commentIndex(),
+    'add-comment' => commentCreate(),
+    'update-comment' => commentUpdate(),
+    'show-comment' => commentShow(),
+    'delete-comment' => commentDelete(),
+    // 404
     default => require_once VIEW_ADMIN . 'layouts/404.php',
 };
 

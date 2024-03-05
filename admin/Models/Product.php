@@ -26,6 +26,29 @@ function getAllProducts($limit, $initial_page)
     }
 }
 
+function selectAllProducts()
+{
+    try {
+        $sql = "SELECT
+        p.id as p_id,
+        p.name as p_name,
+        p.price as p_price,
+        p.image as p_image,
+        p.description as p_description,
+        p.views as p_views,
+        c.name as c_name
+        FROM products as p
+        INNER JOIN category as c
+        ON p.id_category = c.id ORDER BY p.id DESC";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    } catch (PDOException $e) {
+        die($e->getMessage());
+    }
+}
+
 
 function getTotalPageProducts()
 {
@@ -81,12 +104,22 @@ function selectOneProduct($id)
     }
 }
 
-function updateProduct()
+function updateProduct($id, $name, $price, $image, $description, $id_category)
 {
+    try {
+        $sql = "UPDATE products SET name = :name, price = :price, image = :image, description = :description, id_category = :id_category WHERE id = :id";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":price", $price);
+        $stmt->bindParam(":image", $image);
+        $stmt->bindParam(":description", $description);
+        $stmt->bindParam(":id_category", $id_category);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
 }
-
-
-
 
 
 function deleteOneProduct($id)
