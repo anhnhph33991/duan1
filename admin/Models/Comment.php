@@ -1,9 +1,9 @@
 <?php
 // select có chia page
-function getAllCategory($limit, $initial_page)
+function getAllComment($limit, $initial_page)
 {
     try {
-        $sql = "SELECT * FROM category ORDER BY id DESC LIMIT :limit OFFSET :offset";
+        $sql = "SELECT * FROM comments ORDER BY id DESC LIMIT :limit OFFSET :offset";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":limit", $limit);
         $stmt->bindParam(":offset", $initial_page);
@@ -14,10 +14,10 @@ function getAllCategory($limit, $initial_page)
     }
 }
 // select k chia page
-function selectAllCategory()
+function selectAllComment()
 {
     try {
-        $sql = "SELECT * FROM category ORDER BY id DESC";
+        $sql = "SELECT * FROM comments ORDER BY id DESC";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -27,10 +27,10 @@ function selectAllCategory()
 }
 
 
-function getTotalPageCategory()
+function getTotalPageComment()
 {
     try {
-        $sql = "SELECT COUNT(*) FROM category";
+        $sql = "SELECT COUNT(*) FROM comments";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->execute();
         return $stmt->fetchColumn();
@@ -39,22 +39,10 @@ function getTotalPageCategory()
     }
 }
 
-function insertCategory($name)
+function selectOneComment($id)
 {
     try {
-        $sql = "INSERT INTO category (name) VALUES (:name)";
-        $stmt = $GLOBALS['connect']->prepare($sql);
-        $stmt->bindParam(":name", $name);
-        $stmt->execute();
-    } catch (PDOException $e) {
-        debug($e->getMessage());
-    }
-}
-
-function selectOneCategory($id)
-{
-    try {
-        $sql = "SELECT * FROM category WHERE id = :id";
+        $sql = "SELECT * FROM comments WHERE id = :id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
@@ -64,13 +52,13 @@ function selectOneCategory($id)
     }
 }
 
-function updateCategory($id, $name)
+function updateComment($id, $content)
 {
     try {
-        $sql = "UPDATE category SET name = :name WHERE id = :id";
+        $sql = "UPDATE comments SET content = :content WHERE id = :id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":content", $content);
         $stmt->execute();
         return $stmt->fetch();
     } catch (PDOException $e) {
@@ -78,10 +66,10 @@ function updateCategory($id, $name)
     }
 }
 
-function deleteCategory($id)
+function deleteComment($id)
 {
     try {
-        $sql = "DELETE FROM category WHERE id = :id";
+        $sql = "DELETE FROM comments WHERE id = :id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
