@@ -11,6 +11,8 @@ require_once CONTROLLER_ADMIN . 'ProductController.php';
 require_once CONTROLLER_ADMIN . 'CategoryController.php';
 require_once CONTROLLER_ADMIN . 'UserController.php';
 require_once CONTROLLER_ADMIN . 'CommentController.php';
+require_once CONTROLLER_ADMIN . 'OrderController.php';
+require_once CONTROLLER_ADMIN . 'VoucherController.php';
 
 
 // Handle Routes
@@ -39,10 +41,18 @@ match ($act) {
     'delete-user' => userDelete(),
     // route comment
     'comments' => commentIndex(),
-    'add-comment' => commentCreate(),
     'update-comment' => commentUpdate(),
     'show-comment' => commentShow(),
     'delete-comment' => commentDelete(),
+    // route orders
+    'orders' => orderIndex(),
+    'update-order' => orderUpdate(),
+    'delete-order' => orderDelete(),
+    // route voucher
+    'vouchers' => voucherIndex(),
+    'add-voucher' => voucherCreate(),
+    'update-voucher' => voucherUpdate(),
+    'delete-voucher' => voucherDelete(),
     // 404
     default => require_once VIEW_ADMIN . 'layouts/404.php',
 };

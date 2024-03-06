@@ -2,11 +2,11 @@
     <div class="section-header">
         <h1>Table</h1>
         <div class="section-header-button">
-            <!-- <a href="<?= BASE_URL_ADMIN . '?act=add-comment' ?>" class="btn btn-primary">Add Comments</a> -->
+            <a href="<?= BASE_URL_ADMIN . '?act=add-voucher' ?>" class="btn btn-primary">Add Voucher</a>
         </div>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="<?= BASE_URL_ADMIN ?>">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="<?= BASE_URL_ADMIN . '?act=comments' ?>">Comments</a></div>
+            <div class="breadcrumb-item"><a href="<?= BASE_URL_ADMIN . '?act=vouchers' ?>">Vouchers</a></div>
             <div class="breadcrumb-item">Table</div>
         </div>
     </div>
@@ -20,23 +20,22 @@
 
         ?>
         <h2 class="section-title">Table</h2>
-        <p class="section-lead">Hiển Thị Comments</p>
 
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Comments Table</h4>
+                        <h4>Vouchers Table</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-md">
                                 <tr>
-                                    <th>User Image</th>
-                                    <th>Comment Content</th>
-                                    <th>User Name</th>
-                                    <th>Product Name</th>
-                                    <th>Comment Time</th>
+                                    <th>Voucher_Code</th>
+                                    <th>Voucher_Value</th>
+                                    <th>Voucher_Desc</th>
+                                    <th>Voucher_Qty</th>
+                                    <th>Time_Create</th>
                                     <th>Action</th>
                                 </tr>
                                 <?php foreach ($data as $key => $value) :  ?>
@@ -48,23 +47,19 @@
 
                                     ?>
                                     <tr>
+                                        <td><?= $value['voucher_code'] ?></td>
+                                        <td><?= $value['value'] ?></td>
+                                        <td><?= $value['voucher_desc'] ?></td>
                                         <td>
-                                            <div class="gallery">
-                                                <div class="gallery-item" data-image="data:image/jpeg;base64,<?= $value['user_image'] ?>" data-title="<?= $value['user_name'] ?>"></div>
-                                            </div>
+                                            <?= $value['qty'] ?>
                                         </td>
-                                        <td><?= $value['comment_content'] ?></td>
-                                        <td><?= $value['user_name'] ?></td>
+                                        <td><?= $value['time_create'] ?></td>
                                         <td>
-                                            <?= $value['product_name'] ?>
-                                        </td>
-                                        <td><?= $value['comment_time_comment'] ?></td>
-                                        <td>
-                                            <a href="<?= BASE_URL_ADMIN ?>?act=show-comment&id=<?= $value['comment_id'] ?>" class="btn btn-secondary"><i class="fa-regular fa-eye"></i></a>
-                                            <a href="<?= BASE_URL_ADMIN ?>?act=update-comment&id=<?= $value['comment_id'] ?>" class="btn btn-warning">
+                                            <a href="<?= BASE_URL_ADMIN ?>?act=show-voucher&id=<?= $value['id'] ?>" class="btn btn-secondary"><i class="fa-regular fa-eye"></i></a>
+                                            <a href="<?= BASE_URL_ADMIN ?>?act=update-voucher&id=<?= $value['id'] ?>" class="btn btn-warning">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <a href="<?= BASE_URL_ADMIN ?>?act=delete-comment&id=<?= $value['comment_id'] ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa comment: <?= $value['comment_content'] ?>')">
+                                            <a href="<?= BASE_URL_ADMIN ?>?act=delete-voucher&id=<?= $value['id'] ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa voucher: <?= $value['voucher_code'] ?>')">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </a>
                                         </td>
@@ -77,20 +72,20 @@
                         <nav class="d-inline-block">
                             <ul class="pagination mb-0">
                                 <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
-                                    <a class="page-link" href="<?= BASE_URL_ADMIN ?>?act=comments&page=<?= ($page > 1) ? ($page - 1) : 1 ?>" tabindex="-1">
+                                    <a class="page-link" href="<?= BASE_URL_ADMIN ?>?act=vouchers&page=<?= ($page > 1) ? ($page - 1) : 1 ?>" tabindex="-1">
                                         <i class="fas fa-chevron-left"></i>
                                     </a>
                                 </li>
                                 <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
                                     <li class="page-item  <?= $i == $page ? 'active' : ''  ?>">
-                                        <a class="page-link" href="<?= BASE_URL_ADMIN ?>?act=comments&page=<?= $i ?>">
+                                        <a class="page-link" href="<?= BASE_URL_ADMIN ?>?act=vouchers&page=<?= $i ?>">
                                             <?= $i ?>
                                         </a>
                                     </li>
                                 <?php endfor; ?>
 
                                 <li class="page-item <?= ($page == $total_pages) ? 'disabled' : '' ?>">
-                                    <a class="page-link" href="<?= BASE_URL_ADMIN ?>?act=comments&page=<?= ($page == $total_pages) ? $page : ($page + 1) ?>"><i class="fas fa-chevron-right"></i></a>
+                                    <a class="page-link" href="<?= BASE_URL_ADMIN ?>?act=vouchers&page=<?= ($page == $total_pages) ? $page : ($page + 1) ?>"><i class="fas fa-chevron-right"></i></a>
                                 </li>
                             </ul>
                         </nav>

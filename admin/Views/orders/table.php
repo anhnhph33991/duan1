@@ -1,12 +1,12 @@
 <section class="section">
     <div class="section-header">
         <h1>Table</h1>
-        <div class="section-header-button">
-            <!-- <a href="<?= BASE_URL_ADMIN . '?act=add-comment' ?>" class="btn btn-primary">Add Comments</a> -->
-        </div>
+        <!-- <div class="section-header-button">
+            <a href="<?= BASE_URL_ADMIN . '?act=add-voucher' ?>" class="btn btn-primary"></a>
+        </div> -->
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="<?= BASE_URL_ADMIN ?>">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="<?= BASE_URL_ADMIN . '?act=comments' ?>">Comments</a></div>
+            <div class="breadcrumb-item"><a href="<?= BASE_URL_ADMIN . '?act=orders' ?>">Orders</a></div>
             <div class="breadcrumb-item">Table</div>
         </div>
     </div>
@@ -20,13 +20,12 @@
 
         ?>
         <h2 class="section-title">Table</h2>
-        <p class="section-lead">Hiển Thị Comments</p>
 
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Comments Table</h4>
+                        <h4>Orders Table</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
