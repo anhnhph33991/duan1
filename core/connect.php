@@ -7,7 +7,10 @@ $pass = DB_PASS;
 
 
 try {
-	$connect = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass);
+	// db postgres
+	// $connect = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass);
+	// db mysql
+	$connect = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
 	$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch (PDOException $e) {

@@ -13,9 +13,6 @@
 
     <div class="section-body">
         <h2 class="section-title">Create New Product</h2>
-        <!-- {{-- <p class="section-lead">--}}
-        {{-- Tạo category--}}
-        {{-- </p>--}} -->
 
         <form class="row" action="" method="post" enctype="multipart/form-data">
             <div class="col-12">

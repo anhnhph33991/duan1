@@ -1,9 +1,9 @@
 <?php
 // select có chia page
-function getAllCategory($limit, $initial_page)
+function getAllVoucher($limit, $initial_page)
 {
     try {
-        $sql = "SELECT * FROM category ORDER BY id DESC LIMIT :limit OFFSET :offset";
+        $sql = "SELECT * FROM vouchers ORDER BY id DESC LIMIT :limit OFFSET :offset";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":limit", $limit, PDO::PARAM_INT);
         $stmt->bindParam(":offset", $initial_page, PDO::PARAM_INT);
@@ -14,10 +14,10 @@ function getAllCategory($limit, $initial_page)
     }
 }
 // select k chia page
-function selectAllCategory()
+function selectAllVoucher()
 {
     try {
-        $sql = "SELECT * FROM category ORDER BY id DESC";
+        $sql = "SELECT * FROM vouchers ORDER BY id DESC";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -27,10 +27,10 @@ function selectAllCategory()
 }
 
 
-function getTotalPageCategory()
+function getTotalPageVoucher()
 {
     try {
-        $sql = "SELECT COUNT(*) FROM category";
+        $sql = "SELECT COUNT(*) FROM vouchers";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->execute();
         return $stmt->fetchColumn();
@@ -39,22 +39,26 @@ function getTotalPageCategory()
     }
 }
 
-function insertCategory($name)
+function insertVoucher($code, $value, $desc, $qty, $time_create)
 {
     try {
-        $sql = "INSERT INTO category (name) VALUES (:name)";
+        $sql = "INSERT INTO vouchers (voucher_code, value, voucher_desc, qty, time_create) VALUES (:voucher_code,:value,:voucher_desc,:qty,:time_create)";
         $stmt = $GLOBALS['connect']->prepare($sql);
-        $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":voucher_code", $code);
+        $stmt->bindParam(":value", $value);
+        $stmt->bindParam(":voucher_desc", $desc);
+        $stmt->bindParam(":qty", $qty);
+        $stmt->bindParam(":time_create", $time_create);
         $stmt->execute();
     } catch (PDOException $e) {
         debug($e->getMessage());
     }
 }
 
-function selectOneCategory($id)
+function selectOneVoucher($id)
 {
     try {
-        $sql = "SELECT * FROM category WHERE id = :id";
+        $sql = "SELECT * FROM vouchers WHERE id = :id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
@@ -64,13 +68,18 @@ function selectOneCategory($id)
     }
 }
 
-function updateCategory($id, $name)
+function updateVoucher($id, $username, $email, $password, $address, $tel, $image)
 {
     try {
-        $sql = "UPDATE category SET name = :name WHERE id = :id";
+        $sql = "UPDATE vouchers SET username = :username, email = :email, password = :password, address = :address, tel = :tel, image = :image WHERE id = :id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":username", $username);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":password", $password);
+        $stmt->bindParam(":address", $address);
+        $stmt->bindParam(":tel", $tel);
+        $stmt->bindParam(":image", $image);
         $stmt->execute();
         return $stmt->fetch();
     } catch (PDOException $e) {
@@ -78,10 +87,10 @@ function updateCategory($id, $name)
     }
 }
 
-function deleteCategory($id)
+function deleteVoucher($id)
 {
     try {
-        $sql = "DELETE FROM category WHERE id = :id";
+        $sql = "DELETE FROM vouchers WHERE id = :id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->execute();

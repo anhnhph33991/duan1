@@ -32,17 +32,31 @@ $menuAdmin = [
     [
         'id' => 5,
         'name' => 'Comments',
-        'act' => ['comments', 'add-comment', 'show-comment'],
+        'act' => ['comments', 'add-comment', 'show-comment', 'update-comment'],
         'url' => BASE_URL_ADMIN . '?act=comments',
         'icon' => '<i class="far fa-square"></i>'
     ],
+    [
+        'id' => 6,
+        'name' => 'Orders',
+        'act' => ['orders', 'show-order', 'update-order'],
+        'url' => BASE_URL_ADMIN . '?act=orders',
+        'icon' => '<i class="far fa-square"></i>'
+    ],
+    [
+        'id' => 7,
+        'name' => 'Vouchers',
+        'act' => ['vouchers', 'add-voucher', 'show-voucher', 'update-voucher'],
+        'url' => BASE_URL_ADMIN . '?act=vouchers',
+        'icon' => '<i class="far fa-square"></i>'
+    ]
 ];
 
 ?>
 
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-        <a href="index.html">LUXCHILL - <?= http_response_code() ?></a>
+        <a href="index.html">LUXCHILL</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
         <a href="index.html">LUX</a>

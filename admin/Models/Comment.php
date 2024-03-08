@@ -3,26 +3,55 @@
 function getAllComment($limit, $initial_page)
 {
     try {
-        $sql = "SELECT * FROM comments ORDER BY id DESC LIMIT :limit OFFSET :offset";
+        $sql = "SELECT
+        comments.id AS comment_id,
+        comments.content AS comment_content,
+        users.username AS user_name,
+        users.image AS user_image,
+        products.name AS product_name,
+        comments.time_comment AS comment_time_comment
+    FROM
+        comments
+    INNER JOIN
+        users ON comments.id_user = users.id
+    INNER JOIN
+        products ON comments.id_product = products.id
+    ORDER BY comments.id DESC    
+    LIMIT :limit OFFSET :offset";
         $stmt = $GLOBALS['connect']->prepare($sql);
-        $stmt->bindParam(":limit", $limit);
-        $stmt->bindParam(":offset", $initial_page);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $initial_page, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll();
+        $result = $stmt->fetchAll();
+        return $result;
     } catch (PDOException $e) {
-        debug($e->getMessage());
+        die($e->getMessage());
     }
 }
 // select k chia page
 function selectAllComment()
 {
     try {
-        $sql = "SELECT * FROM comments ORDER BY id DESC";
+        $sql = "SELECT
+        comments.id AS comment_id,
+        comments.content AS comment_content,
+        users.username AS user_name,
+        users.image AS user_image,
+        products.name AS product_name,
+        comments.time_comment AS comment_time_comment
+    FROM
+        comments
+    INNER JOIN
+        users ON comments.id_user = users.id
+    INNER JOIN
+        products ON comments.id_product = products.id
+    ORDER BY comments.id DESC";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll();
+        $result = $stmt->fetchAll();
+        return $result;
     } catch (PDOException $e) {
-        debug($e->getMessage());
+        die($e->getMessage());
     }
 }
 
@@ -42,13 +71,31 @@ function getTotalPageComment()
 function selectOneComment($id)
 {
     try {
-        $sql = "SELECT * FROM comments WHERE id = :id";
+        $sql = "SELECT
+        comments.id AS comment_id,
+        comments.content AS comment_content,
+        comments.image AS comment_image,
+        comments.stars AS comment_stars,
+        users.username AS user_name,
+        users.image AS user_image,
+        products.name AS product_name,
+        products.image AS product_image,
+        comments.time_comment AS comment_time_comment
+    FROM
+        comments
+    INNER JOIN
+        users ON comments.id_user = users.id
+    INNER JOIN
+        products ON comments.id_product = products.id
+    WHERE comments.id = :id
+    ORDER BY comments.id DESC";
         $stmt = $GLOBALS['connect']->prepare($sql);
-        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
-        return $stmt->fetch();
+        $result = $stmt->fetch();
+        return $result;
     } catch (PDOException $e) {
-        debug($e->getMessage());
+        die($e->getMessage());
     }
 }
 

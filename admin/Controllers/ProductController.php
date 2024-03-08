@@ -2,6 +2,7 @@
 
 require_once MODELS_ADMIN . 'Product.php';
 require_once MODELS_ADMIN . 'Category.php';
+// require_once '../core/configCloudinary.php';
 
 function productIndex()
 {
@@ -75,7 +76,6 @@ function productCreate()
         }
     }
 
-
     require_once VIEW_ADMIN . 'layouts/master.php';
 }
 
@@ -105,7 +105,10 @@ function productUpdate()
 
         if (empty($name)) {
             $_SESSION['errors']['name'] = 'Vui lòng nhập name';
-        } else {
+        }elseif(strlen($name) < 5){
+            
+        }
+         else {
             unset($_SESSION['errors']['name']);
         }
 

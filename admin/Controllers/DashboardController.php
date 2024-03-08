@@ -1,4 +1,5 @@
 <?php
+require_once MODELS_ADMIN . 'Product.php';
 function dashboardIndex(){
     $view = 'dashboard';
     $script = 'dashboard';
