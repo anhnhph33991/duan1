@@ -5,8 +5,8 @@ function getAllVoucher($limit, $initial_page)
     try {
         $sql = "SELECT * FROM vouchers ORDER BY id DESC LIMIT :limit OFFSET :offset";
         $stmt = $GLOBALS['connect']->prepare($sql);
-        $stmt->bindParam(":limit", $limit);
-        $stmt->bindParam(":offset", $initial_page);
+        $stmt->bindParam(":limit", $limit, PDO::PARAM_INT);
+        $stmt->bindParam(":offset", $initial_page, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
     } catch (PDOException $e) {

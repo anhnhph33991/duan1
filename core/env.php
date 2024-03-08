@@ -16,9 +16,13 @@ const MODELS_ADMIN = __DIR__ . '/../admin/Models/';
 const BASE_URL = '/duan1/';
 const BASE_URL_ADMIN = '/duan1/admin/';
 
-// Database
+// Database Postgres
+// const DB_HOST = 'localhost';
+// const DB_NAME = 'duanmau-php1';
+// const DB_USER = 'postgres';
+// const DB_PASS = '';
+// Database Mysql
 const DB_HOST = 'localhost';
-const DB_NAME = 'duanmau-php1';
-const DB_USER = 'postgres';
+const DB_NAME = 'duan1';
+const DB_USER = 'root';
 const DB_PASS = '';
-?>

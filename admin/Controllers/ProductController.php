@@ -2,6 +2,7 @@
 
 require_once MODELS_ADMIN . 'Product.php';
 require_once MODELS_ADMIN . 'Category.php';
+// require_once '../core/configCloudinary.php';
 
 function productIndex()
 {

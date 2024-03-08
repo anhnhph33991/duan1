@@ -16,8 +16,8 @@ function getAllProducts($limit, $initial_page)
         ON p.id_category = c.id ORDER BY p.id DESC
         LIMIT :limit OFFSET :offset";
         $stmt = $GLOBALS['connect']->prepare($sql);
-        $stmt->bindParam(':limit', $limit);
-        $stmt->bindParam(':offset', $initial_page);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $initial_page, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetchAll();
         return $result;
