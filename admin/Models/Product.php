@@ -10,6 +10,8 @@ function getAllProducts($limit, $initial_page)
         p.image as p_image,
         p.description as p_description,
         p.views as p_views,
+        p.type as p_type,
+        p.status as p_status,
         c.name as c_name
         FROM products as p
         INNER JOIN category as c
@@ -36,6 +38,8 @@ function selectAllProducts()
         p.image as p_image,
         p.description as p_description,
         p.views as p_views,
+        p.type as p_type,
+        p.status as p_status,
         c.name as c_name
         FROM products as p
         INNER JOIN category as c
@@ -89,6 +93,8 @@ function selectOneProduct($id)
         p.image as p_image,
         p.description as p_description,
         p.views as p_views,
+        p.type as p_type,
+        p.status as p_status,
         c.name as c_name,
         c.id as c_id
         FROM products as p
@@ -104,10 +110,10 @@ function selectOneProduct($id)
     }
 }
 
-function updateProduct($id, $name, $price, $image, $description, $id_category)
+function updateProduct($id, $name, $price, $image, $description, $id_category, $status)
 {
     try {
-        $sql = "UPDATE products SET name = :name, price = :price, image = :image, description = :description, id_category = :id_category WHERE id = :id";
+        $sql = "UPDATE products SET name = :name, price = :price, image = :image, description = :description, id_category = :id_category, status = :status WHERE id = :id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->bindParam(":name", $name);
@@ -115,6 +121,7 @@ function updateProduct($id, $name, $price, $image, $description, $id_category)
         $stmt->bindParam(":image", $image);
         $stmt->bindParam(":description", $description);
         $stmt->bindParam(":id_category", $id_category);
+        $stmt->bindParam(":status", $status);
         $stmt->execute();
     } catch (PDOException $e) {
         debug($e->getMessage());
