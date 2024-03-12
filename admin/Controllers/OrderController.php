@@ -15,6 +15,14 @@ function orderUpdate(){
 
 }
 
+function orderShow(){
+    $title = 'Show';
+    $view = 'orders/show';
+
+    require_once VIEW_ADMIN . 'layouts/master.php';
+}
+
+
 
 function orderDelete(){
     

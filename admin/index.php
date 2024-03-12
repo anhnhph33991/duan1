@@ -22,38 +22,39 @@ $page = $_GET['page'] ?? 1;
 
 match ($act) {
     '/' => dashboardIndex(),
-        // route product
-        'products' => productIndex(),
-        'add-product' => productCreate(),
-        'update-product' => productUpdate(),
-        'show-product' => productShow(),
-        'delete-product' => productDelete(),
-        // // route category
-        'categorys' => categoryIndex(),
-        'add-category' => categoryCreate(),
-        'update-category' => categoryUpdate(),
-        'show-category' => categoryShow(),
-        'delete-category' => categoryDelete(),
-        // // route user
-        'users' => userIndex(),
-        'add-user' => userCreate(),
-        'update-user' => userUpdate(),
-        'show-user' => userShow(),
-        'delete-user' => userDelete(),
-        // // route comment
-        'comments' => commentIndex(),
-        'update-comment' => commentUpdate(),
-        'show-comment' => commentShow(),
-        'delete-comment' => commentDelete(),
-        // // route orders
-        'orders' => orderIndex(),
-        'update-order' => orderUpdate(),
-        'delete-order' => orderDelete(),
-        // // route voucher
-        'vouchers' => voucherIndex(),
-        'add-voucher' => voucherCreate(),
-        'update-voucher' => voucherUpdate(),
-        'delete-voucher' => voucherDelete(),
+    // route product
+    'products' => productIndex(),
+    'add-product' => productCreate(),
+    'update-product' => productUpdate(),
+    'show-product' => productShow(),
+    'delete-product' => productDelete(),
+    // // route category
+    'categorys' => categoryIndex(),
+    'add-category' => categoryCreate(),
+    'update-category' => categoryUpdate(),
+    'show-category' => categoryShow(),
+    'delete-category' => categoryDelete(),
+    // // route user
+    'users' => userIndex(),
+    'add-user' => userCreate(),
+    'update-user' => userUpdate(),
+    'show-user' => userShow(),
+    'delete-user' => userDelete(),
+    // // route comment
+    'comments' => commentIndex(),
+    'update-comment' => commentUpdate(),
+    'show-comment' => commentShow(),
+    'delete-comment' => commentDelete(),
+    // // route orders
+    'orders' => orderIndex(),
+    'show-order' => orderShow(),
+    'update-order' => orderUpdate(),
+    'delete-order' => orderDelete(),
+    // // route voucher
+    'vouchers' => voucherIndex(),
+    'add-voucher' => voucherCreate(),
+    'update-voucher' => voucherUpdate(),
+    'delete-voucher' => voucherDelete(),
         // 404
     default => require_once VIEW_ADMIN . 'layouts/404.php',
 };

@@ -30,10 +30,10 @@ function productCreate()
 
     if (isset($_POST['submit'])) {
         $name = $_POST['name'];
-        $price = $_POST['price'];
+        $price = str_replace('.', '', $_POST['price']);
         $image = $_FILES['image']['tmp_name'];
         $description = $_POST['description'];
-        $id_category = $_POST['id_category'];
+        $id_category = $_POST['id_category'] ?? null;
 
         if (empty($name)) {
             $_SESSION['errors']['name'] = 'Vui lòng nhập name';
@@ -84,6 +84,7 @@ function productUpdate()
     $id = $_GET['id'] ?? null;
     $title = 'Update';
     $view = 'products/update';
+    $script = 'product';
 
     $product = selectOneProduct($id);
     $categorys = selectAllCategory();
@@ -98,6 +99,7 @@ function productUpdate()
         $description = $_POST['description'];
         $descOld = $_POST['descOld'];
         $id_category = $_POST['id_category'] ?? $product['c_id'];
+        $status = $_POST['status'] ?? $product['p_status'];
         $imageSaveDb = '';
         $descSaveDb = '';
 
@@ -135,7 +137,7 @@ function productUpdate()
         if (!empty($_SESSION['errors'])) {
             header('Location: ' . BASE_URL_ADMIN . '?act=update-product&id=' . $id);
         } else {
-            updateProduct($id, $name, $price, $imageSaveDb, $descSaveDb, $id_category);
+            updateProduct($id, $name, $price, $imageSaveDb, $descSaveDb, $id_category, $status);
             header('Location: ' . BASE_URL_ADMIN . '?act=products');
         }
     }

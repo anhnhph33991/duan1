@@ -40,7 +40,7 @@
                         <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Price</label>
                             <div class="col-sm-12 col-md-7">
-                                <input type="text" class="form-control <?= !empty($_SESSION['errors']['price']) ? 'is-invalid' : '' ?>" name="price" value="<?= $product['p_price'] ?>">
+                                <input type="text" class="form-control <?= !empty($_SESSION['errors']['price']) ? 'is-invalid' : '' ?>" name="price" value="<?= $product['p_price'] ?>" onchange="formatPrice(this)">
                                 <div class="invalid-feedback">
                                     <?= !empty($_SESSION['errors']['price']) ? $_SESSION['errors']['price'] : '' ?>
                                 </div>
@@ -82,7 +82,7 @@
                             <div class="col-sm-12 col-md-7">
                                 <select class="form-control selectric" name="id_category">
                                     <option disabled selected value="<?= $product['c_id'] ?>"><?= $product['c_name'] ?></option>
-                                    <?php foreach($categorys as $key => $value) : ?>
+                                    <?php foreach ($categorys as $key => $value) : ?>
                                         <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
@@ -93,6 +93,18 @@
                             </div>
                         </div>
 
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
+                            <div class="col-sm-12 col-md-7">
+                                <select class="form-control selectric" name="status">
+                                    <option disabled selected value="<?= $product['p_status'] ?>">
+                                        <?= ucwords($product['p_status']) ?>
+                                    </option>
+                                    <option value="public">Public</option>
+                                    <option value="pending">Pending</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
@@ -100,6 +112,7 @@
                                 <button class="btn btn-primary" name="submit">Update Product</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

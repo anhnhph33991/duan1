@@ -33,7 +33,7 @@
                         <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Price</label>
                             <div class="col-sm-12 col-md-7">
-                                <input type="text" class="form-control <?= !empty($_SESSION['errors']['price']) ? 'is-invalid' : '' ?>" name="price">
+                                <input type="text" class="form-control <?= !empty($_SESSION['errors']['price']) ? 'is-invalid' : '' ?>" name="price" onchange="formatPrice(this)">
                                 <div class="invalid-feedback">
                                     <?= !empty($_SESSION['errors']['price']) ? $_SESSION['errors']['price'] : '' ?>
                                 </div>
@@ -65,7 +65,7 @@
                             <div class="col-sm-12 col-md-7">
                                 <select class="form-control selectric" name="id_category">
                                     <option disabled selected>Select Category</option>
-                                    <?php foreach($categorys as $key => $value) : ?>
+                                    <?php foreach ($categorys as $key => $value) : ?>
                                         <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
                                     <?php endforeach; ?>
                                 </select>

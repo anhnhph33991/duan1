@@ -1,25 +1,21 @@
 <section class="section">
     <div class="section-header">
         <h1>Table</h1>
-        <!-- <div class="section-header-button">
-            <a href="<?= BASE_URL_ADMIN . '?act=add-voucher' ?>" class="btn btn-primary"></a>
-        </div> -->
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="<?= BASE_URL_ADMIN ?>">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="<?= BASE_URL_ADMIN . '?act=orders' ?>">Orders</a></div>
             <div class="breadcrumb-item">Table</div>
         </div>
     </div>
-
     <div class="section-body">
         <?php
-
         // echo "<pre>";
         // print_r($data);
         // echo "</pre>";
 
         ?>
         <h2 class="section-title">Table</h2>
+        <p class="section-lead">Hiển Thị Orders</p>
 
         <div class="row">
             <div class="col-12">
@@ -31,14 +27,29 @@
                         <div class="table-responsive">
                             <table class="table table-bordered table-md">
                                 <tr>
-                                    <th>User Image</th>
-                                    <th>Comment Content</th>
-                                    <th>User Name</th>
-                                    <th>Product Name</th>
-                                    <th>Comment Time</th>
+                                    <th>STT</th>
+                                    <th>Mã Đơn Hàng</th>
+                                    <th>Họ Tên</th>
+                                    <th>Số Sản Phẩm</th>
+                                    <th>Tổng Giá</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Thời Gian</th>
                                     <th>Action</th>
                                 </tr>
-                                <?php foreach ($data as $key => $value) :  ?>
+
+                                <tr>
+                                    <td>1</td>
+                                    <td>LUXCHILL#239223</td>
+                                    <td>Nguyễn Hoàng Anh</td>
+                                    <td>10</td>
+                                    <td>1.200.999đ</td>
+                                    <td>Chờ xác nhận</td>
+                                    <td>10-3-2024</td>
+                                    <td>
+                                        <a href="<?= BASE_URL_ADMIN ?>?act=show-order" class="btn btn-success">SHOW</a>
+                                        <a href="" class="btn btn-warning">DELETE</a>
+                                    </td>
+                                </tr>
                                     <?php
 
                                     // echo "<pre>";
@@ -46,29 +57,6 @@
                                     // echo "</pre>";
 
                                     ?>
-                                    <tr>
-                                        <td>
-                                            <div class="gallery">
-                                                <div class="gallery-item" data-image="data:image/jpeg;base64,<?= $value['user_image'] ?>" data-title="<?= $value['user_name'] ?>"></div>
-                                            </div>
-                                        </td>
-                                        <td><?= $value['comment_content'] ?></td>
-                                        <td><?= $value['user_name'] ?></td>
-                                        <td>
-                                            <?= $value['product_name'] ?>
-                                        </td>
-                                        <td><?= $value['comment_time_comment'] ?></td>
-                                        <td>
-                                            <a href="<?= BASE_URL_ADMIN ?>?act=show-comment&id=<?= $value['comment_id'] ?>" class="btn btn-secondary"><i class="fa-regular fa-eye"></i></a>
-                                            <a href="<?= BASE_URL_ADMIN ?>?act=update-comment&id=<?= $value['comment_id'] ?>" class="btn btn-warning">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </a>
-                                            <a href="<?= BASE_URL_ADMIN ?>?act=delete-comment&id=<?= $value['comment_id'] ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa comment: <?= $value['comment_content'] ?>')">
-                                                <i class="fa-solid fa-trash-can"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach;  ?>
                             </table>
                         </div>
                     </div>
@@ -87,7 +75,6 @@
                                         </a>
                                     </li>
                                 <?php endfor; ?>
-
                                 <li class="page-item <?= ($page == $total_pages) ? 'disabled' : '' ?>">
                                     <a class="page-link" href="<?= BASE_URL_ADMIN ?>?act=comments&page=<?= ($page == $total_pages) ? $page : ($page + 1) ?>"><i class="fas fa-chevron-right"></i></a>
                                 </li>
@@ -97,7 +84,5 @@
                 </div>
             </div>
         </div>
-
     </div>
-
 </section>
