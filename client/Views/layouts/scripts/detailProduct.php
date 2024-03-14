@@ -1,0 +1,1 @@
+<script  src="<?= BASE_URL ?>public/assets/js/carousel_with_thumbs.js"></script>

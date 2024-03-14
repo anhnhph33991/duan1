@@ -1,7 +1,9 @@
 
 <?php
 function homeIndex(){
-    require_once VIEW . 'home.php';
+    $view = 'home';
+    $script = 'home';
+    require_once VIEW . 'layouts/master.php';
 }
 
 ?>
