@@ -4,9 +4,10 @@
     <div class="row">
         <div class="col-md-6">
             <div class="all">
+                $product
                 <div class="slider">
                     <div class="owl-carousel owl-theme main">
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/1.jpg);" class="item-box"></div>
+                        <div style="background-image: url(data:image/jpeg;base64,<?= $product['p_image'] ?>);" class="item-box"></div>
                         <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/2.jpg);" class="item-box"></div>
                         <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/3.jpg);" class="item-box"></div>
                         <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/4.jpg);" class="item-box"></div>
@@ -405,4 +406,3 @@
     </div>
 </div>
 <!--/feat-->
-

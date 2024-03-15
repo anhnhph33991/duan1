@@ -4,14 +4,14 @@
             <div class="breadcrumbs">
                 <ul>
                     <li><a href="<?= BASE_URL ?>">Home</a></li>
-                    <!-- <li><a href="#">Category</a></li> check nếu có category mới hiển thị --> 
+                    <!-- <li><a href="#">Category</a></li> check nếu có category mới hiển thị -->
                     <li>Shop</li>
                 </ul>
             </div>
             <h1>Shop - LuxChill</h1> <!-- check title sẽ thay đổi nếu có category -->
         </div>
     </div>
-    <img src="<?= BASE_URL ?>public/assets/img/bg_cat_shoes.jpg" class="img-fluid" alt="">
+    <img src="<?= BASE_URL ?>public/image/bannerShop.jpg" class="img-fluid" alt="" style="object-fit: fill;">
 </div>
 <!-- /top_banner -->
 <div id="stick_here"></div>
@@ -45,29 +45,19 @@
                     <div class="collapse show" id="filter_1">
                         <ul>
                             <li>
-                                <label class="container_check">Men <small>12</small>
+                                <label class="container_check">Tất Cả<small>12</small>
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>
                             </li>
-                            <li>
-                                <label class="container_check">Women <small>24</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="container_check">Running <small>23</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="container_check">Training <small>11</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
+                            <?php foreach ($dataCategory as $key => $value) :  ?>
+                                <li>
+                                    <label class="container_check"><?= $value['name'] ?> <small>12</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                            <?php endforeach;  ?>
                         </ul>
                     </div>
                     <!-- /filter_type -->
@@ -142,25 +132,25 @@
                     <div class="collapse" id="filter_4">
                         <ul>
                             <li>
-                                <label class="container_check">$0 — $50<small>11</small>
+                                <label class="container_check">50.000đ — 99.000đ<small>11</small>
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>
                             </li>
                             <li>
-                                <label class="container_check">$50 — $100<small>08</small>
+                                <label class="container_check">120.000đ — 199.000đ<small>08</small>
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>
                             </li>
                             <li>
-                                <label class="container_check">$100 — $150<small>05</small>
+                                <label class="container_check">250.000đ — 399.000đ<small>05</small>
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>
                             </li>
                             <li>
-                                <label class="container_check">$150 — $200<small>18</small>
+                                <label class="container_check">450.000đ — 599.000đ<small>18</small>
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>
@@ -177,248 +167,86 @@
         <!-- /col -->
         <div class="col-lg-9">
             <div class="row small-gutters">
-                <div class="col-6 col-md-4">
-                    <div class="grid_item">
-                        <span class="ribbon off">-30%</span>
-                        <figure>
-                            <a href="<?= BASE_URL ?>?act=product-detail">
-                                <img class="img-fluid lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/1.jpg" alt="">
-                            </a>
-                            <div data-countdown="2024/3/15" class="countdown"></div>
-                        </figure>
-                        <a href="<?= BASE_URL ?>?act=product-detail"">
-                            <h3>Armor Air x Fear</h3>
-                        </a>
-                        <div class="price_box">
-                            <span class="new_price">$48.00</span>
-                            <span class="old_price">$60.00</span>
-                        </div>
-                        <ul>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                        </ul>
-                    </div>
-                    <!-- /grid_item -->
-                </div>
-                <!-- /col -->
+                <!-- -30 % -->
 
-                <div class="col-6 col-md-4">
-                    <div class="grid_item">
-                        <span class="ribbon off">-30%</span>
-                        <figure>
-                            <a href="<?= BASE_URL ?>?act=product-detail">
-                                <img class="img-fluid lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/1.jpg" alt="">
-                            </a>
-                            <div data-countdown="2024/3/15" class="countdown"></div>
-                        </figure>
-                        <a href="<?= BASE_URL ?>?act=product-detail"">
-                            <h3>Armor Air x Fear</h3>
-                        </a>
-                        <div class="price_box">
-                            <span class="new_price">$48.00</span>
-                            <span class="old_price">$60.00</span>
-                        </div>
-                        <ul>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                        </ul>
-                    </div>
-                    <!-- /grid_item -->
-                </div>
-                <!-- /col -->
+                <?php foreach ($dataProduct as $key => $value) :  ?>
+                    <?php
+                    $priceOld = $value['p_price'];
+                    $discount = 0; // Giảm giá ban đầu là 0
+                    $mess = '';
+                    if ($value['p_type'] == 'sale') {
+                        $discount = 0.3;
+                    }
+                    $priceNew = $priceOld - ($priceOld * $discount);
+                    // echo $priceOld . '</br>';
 
-                <div class="col-6 col-md-4">
-                    <div class="grid_item">
-                        <span class="ribbon off">-30%</span>
-                        <figure>
-                            <a href="<?= BASE_URL ?>?act=product-detail">
-                                <img class="img-fluid lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/1.jpg" alt="">
-                            </a>
-                            <div data-countdown="2024/3/15" class="countdown"></div>
-                        </figure>
-                        <a href="<?= BASE_URL ?>?act=product-detail"">
-                            <h3>Armor Air x Fear</h3>
-                        </a>
-                        <div class="price_box">
-                            <span class="new_price">$48.00</span>
-                            <span class="old_price">$60.00</span>
-                        </div>
-                        <ul>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                        </ul>
-                    </div>
-                    <!-- /grid_item -->
-                </div>
-                <!-- /col -->
+                    // echo "<pre>";
+                    // print_r($value);
+                    // echo "</pre>";
+                    ?>
 
-                <div class="col-6 col-md-4">
-                    <div class="grid_item">
-                        <span class="ribbon new">New</span>
-                        <figure>
-                            <a href="product-detail-1.html">
-                                <img class="img-fluid lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/4.jpg" alt="">
-                            </a>
-                        </figure>
-                        <a href="product-detail-1.html">
-                            <h3>Armor ACG React Terra</h3>
-                        </a>
-                        <div class="price_box">
-                            <span class="new_price">$110.00</span>
-                        </div>
-                        <ul>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                        </ul>
-                    </div>
-                    <!-- /grid_item -->
-                </div>
-                <!-- /col -->
+                    <?php // if ($value['p_status'] == 'public') :  ?>
+                        <div class="col-6 col-md-4">
+                            <div class="grid_item">
+                                <!-- <span class="ribbon off">-30%</span> -->
+                                <span class="ribbon <?= $value['p_type'] == 'new' ? 'new' : ($value['p_type'] == 'hot' ? 'hot' : 'off') ?>">
+                                    <?php
+                                    if ($value['p_type'] == 'new') {
+                                        echo "New";
+                                    } elseif ($value['p_type'] == 'hot') {
+                                        echo "Hot";
+                                    } elseif ($value['p_type'] == 'sale') {
+                                        echo "-30%";
+                                    }
+                                    ?>
+                                </span>
 
-                <div class="col-6 col-md-4">
-                    <div class="grid_item">
-                        <span class="ribbon new">New</span>
-                        <figure>
-                            <a href="product-detail-1.html">
-                                <img class="img-fluid lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/4.jpg" alt="">
-                            </a>
-                        </figure>
-                        <a href="product-detail-1.html">
-                            <h3>Armor ACG React Terra</h3>
-                        </a>
-                        <div class="price_box">
-                            <span class="new_price">$110.00</span>
-                        </div>
-                        <ul>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                        </ul>
-                    </div>
-                    <!-- /grid_item -->
-                </div>
-                <!-- /col -->
+                                <figure>
+                                    <a href="<?= BASE_URL ?>?act=product-detail&id=<?= $value['p_id'] ?>">
+                                        <img class="img-fluid lazy" src="data:image/jpeg;base64,<?= $value['p_image'] ?>" data-src="data:image/jpeg;base64,<?= $value['p_image'] ?>" alt="" style="width: 100%; height: 300px; object-fit: fill;">
+                                    </a>
 
-                <div class="col-6 col-md-4">
-                    <div class="grid_item">
-                        <span class="ribbon new">New</span>
-                        <figure>
-                            <a href="product-detail-1.html">
-                                <img class="img-fluid lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/4.jpg" alt="">
-                            </a>
-                        </figure>
-                        <a href="product-detail-1.html">
-                            <h3>Armor ACG React Terra</h3>
-                        </a>
-                        <div class="price_box">
-                            <span class="new_price">$110.00</span>
-                        </div>
-                        <ul>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                        </ul>
-                    </div>
-                    <!-- /grid_item -->
-                </div>
-                <!-- /col -->
+                                    <?php if ($value['p_type'] == 'sale') :  ?>
+                                        <div data-countdown="2024/3/18" class="countdown"></div>
+                                    <?php endif; ?>
 
-                <div class="col-6 col-md-4">
-                    <div class="grid_item">
-                        <span class="ribbon hot">Hot</span>
-                        <figure>
-                            <a href="product-detail-1.html">
-                                <img class="img-fluid lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/7.jpg" alt="">
-                            </a>
-                        </figure>
-                        <a href="product-detail-1.html">
-                            <h3>Armor Air 98</h3>
-                        </a>
-                        <div class="price_box">
-                            <span class="new_price">$115.00</span>
-                        </div>
-                        <ul>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                        </ul>
-                    </div>
-                    <!-- /grid_item -->
-                </div>
-                <!-- /col -->
+                                </figure>
+                                <a href="<?= BASE_URL ?>?act=product-detail&id=<?= $value['p_id'] ?>">
+                                    <h3><?= $value['p_name'] ?></h3>
+                                </a>
+                                <div class=" price_box">
+                                    <span class="new_price"><?= number_format($value['p_price'], 0, '.', '.') ?>đ</span>
 
-                <div class="col-6 col-md-4">
-                    <div class="grid_item">
-                        <span class="ribbon hot">Hot</span>
-                        <figure>
-                            <a href="product-detail-1.html">
-                                <img class="img-fluid lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/7.jpg" alt="">
-                            </a>
-                        </figure>
-                        <a href="product-detail-1.html">
-                            <h3>Armor Air 98</h3>
-                        </a>
-                        <div class="price_box">
-                            <span class="new_price">$115.00</span>
+                                    <?php if ($value['p_type'] == 'sale') :  ?>
+                                        <span class="old_price"><?= number_format($priceNew, 0, '.', '.') ?>đ</span>
+                                    <?php endif; ?>
+                                </div>
+                                <ul>
+                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
+                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
+                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <ul>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                        </ul>
-                    </div>
-                    <!-- /grid_item -->
-                </div>
-                <!-- /col -->
-
-                <div class="col-6 col-md-4">
-                    <div class="grid_item">
-                        <span class="ribbon hot">Hot</span>
-                        <figure>
-                            <a href="product-detail-1.html">
-                                <img class="img-fluid lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/7.jpg" alt="">
-                            </a>
-                        </figure>
-                        <a href="product-detail-1.html">
-                            <h3>Armor Air 98</h3>
-                        </a>
-                        <div class="price_box">
-                            <span class="new_price">$115.00</span>
-                        </div>
-                        <ul>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                        </ul>
-                    </div>
-                    <!-- /grid_item -->
-                </div>
-                <!-- /col -->
+                    <?php // endif; ?>
+                <?php endforeach; ?>
 
             </div>
             <!-- /row -->
             <div class="pagination__wrapper">
                 <ul class="pagination">
-                    <li><a href="#0" class="prev" title="previous page">&#10094;</a></li>
-                    <li>
-                        <a href="#0" class="active">1</a>
-                    </li>
-                    <li>
-                        <a href="#0">2</a>
-                    </li>
-                    <li>
-                        <a href="#0">3</a>
-                    </li>
-                    <li>
-                        <a href="#0">4</a>
-                    </li>
-                    <li><a href="#0" class="next" title="next page">&#10095;</a></li>
+                    <li><a href="<?= BASE_URL ?>?act=shop&page=<?= ($page > 1) ? ($page - 1) : 1 ?>" class="prev" title="previous page">&#10094;</a></li>
+                    <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                        <li>
+                            <a href="<?= BASE_URL ?>?act=shop&page=<?= $i ?>" <?= $i == $page ? 'class="active"' : '' ?>>
+                                <?= $i ?>
+                            </a>
+                        </li>
+                    <?php endfor; ?>
+                    <li><a href="<?= BASE_URL ?>?act=shop&page=<?= ($page == $total_pages) ? $page : ($page + 1) ?>" class="next" title="next page">&#10095;</a></li>
                 </ul>
             </div>
+
         </div>
         <!-- /col -->
     </div>

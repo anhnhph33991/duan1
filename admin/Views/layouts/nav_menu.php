@@ -49,6 +49,13 @@ $menuAdmin = [
         'act' => ['vouchers', 'add-voucher', 'show-voucher', 'update-voucher'],
         'url' => BASE_URL_ADMIN . '?act=vouchers',
         'icon' => '<i class="far fa-square"></i>'
+    ],
+    [
+        'id' => 8,
+        'name' => 'Slides',
+        'act' => ['slides', 'create-slides', 'update-slides', 'delete-slides'],
+        'url' => BASE_URL_ADMIN . '?act=slides',
+        'icon' => '<i class="far fa-square"></i>'
     ]
 ];
 

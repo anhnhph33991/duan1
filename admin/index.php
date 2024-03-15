@@ -15,6 +15,7 @@ require_once CONTROLLER_ADMIN . 'UserController.php';
 require_once CONTROLLER_ADMIN . 'CommentController.php';
 require_once CONTROLLER_ADMIN . 'OrderController.php';
 require_once CONTROLLER_ADMIN . 'VoucherController.php';
+require_once CONTROLLER_ADMIN . 'SlideShowController.php';
 
 // Handle Routes
 $act = $_GET['act'] ?? '/';
@@ -55,6 +56,12 @@ match ($act) {
     'add-voucher' => voucherCreate(),
     'update-voucher' => voucherUpdate(),
     'delete-voucher' => voucherDelete(),
+    // route slide
+    'slides' => slideIndex(),
+    'create-slides' => slideCreate(),
+    'update-slides' => slideUpdate(),
+    'delete-slides' => slideDelete(),
+    'show-slides' => slideShow(),
         // 404
     default => require_once VIEW_ADMIN . 'layouts/404.php',
 };
