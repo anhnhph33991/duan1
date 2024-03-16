@@ -1,3 +1,23 @@
+<?php
+$titlePage = '';
+
+if ($act == 'shop') {
+    $titlePage = 'Shop';
+}
+
+if (isset($_GET['category'])) {
+    $category = $_GET['category'];
+    if ($category == 'thoi-trang-nam') {
+        $titlePage = 'Thời Trang Nam';
+    } elseif ($category == 'thoi-trang-nu') {
+        $titlePage = 'Thời Trang Nữ';
+    } elseif ($category == 'thoi-trang-tre-em') {
+        $titlePage = 'Thời Trang Trẻ Em';
+    }
+}
+
+?>
+
 <div class="top_banner">
     <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.3)">
         <div class="container">
@@ -5,10 +25,10 @@
                 <ul>
                     <li><a href="<?= BASE_URL ?>">Home</a></li>
                     <!-- <li><a href="#">Category</a></li> check nếu có category mới hiển thị -->
-                    <li>Shop</li>
+                    <li><?= $titlePage ?></li>
                 </ul>
             </div>
-            <h1>Shop - LuxChill</h1> <!-- check title sẽ thay đổi nếu có category -->
+            <h1><?= $titlePage ?> - LuxChill</h1> <!-- check title sẽ thay đổi nếu có category -->
         </div>
     </div>
     <img src="<?= BASE_URL ?>public/image/bannerShop.jpg" class="img-fluid" alt="" style="object-fit: fill;">
@@ -21,11 +41,11 @@
             <li>
                 <div class="sort_select">
                     <select name="sort" id="sort">
-                        <option value="popularity" selected="selected">Sort by popularity</option>
-                        <option value="rating">Sort by average rating</option>
-                        <option value="date">Sort by newness</option>
-                        <option value="price">Sort by price: low to high</option>
-                        <option value="price-desc">Sort by price: high to
+                        <option value="popularity" selected="selected">Sắp xếp theo mức độ phổ biến</option>
+                        <option value="rating">Sắp xếp theo đánh giá</option>
+                        <option value="date">Sắp xếp sản phẩm mới</option>
+                        <option value="price">Sắp xếp giá: thấp</option>
+                        <option value="price-desc">Sắp xếp giá: cao</option>
                     </select>
                 </div>
             </li>
@@ -167,6 +187,14 @@
         <!-- /col -->
         <div class="col-lg-9">
             <div class="row small-gutters">
+
+                <?php
+
+                // echo "<pre>";
+                // print_r($dataProduct);
+                // echo "</pre>";
+
+                ?>
                 <!-- -30 % -->
 
                 <?php foreach ($dataProduct as $key => $value) :  ?>
@@ -185,65 +213,86 @@
                     // echo "</pre>";
                     ?>
 
-                    <?php // if ($value['p_status'] == 'public') :  ?>
-                        <div class="col-6 col-md-4">
-                            <div class="grid_item">
-                                <!-- <span class="ribbon off">-30%</span> -->
-                                <span class="ribbon <?= $value['p_type'] == 'new' ? 'new' : ($value['p_type'] == 'hot' ? 'hot' : 'off') ?>">
-                                    <?php
-                                    if ($value['p_type'] == 'new') {
-                                        echo "New";
-                                    } elseif ($value['p_type'] == 'hot') {
-                                        echo "Hot";
-                                    } elseif ($value['p_type'] == 'sale') {
-                                        echo "-30%";
-                                    }
-                                    ?>
-                                </span>
+                    <?php // if ($value['p_status'] == 'public') :  
+                    ?>
+                    <div class="col-6 col-md-4">
+                        <div class="grid_item">
+                            <!-- <span class="ribbon off">-30%</span> -->
+                            <span class="ribbon <?= $value['p_type'] == 'new' ? 'new' : ($value['p_type'] == 'hot' ? 'hot' : 'off') ?>">
+                                <?php
+                                if ($value['p_type'] == 'new') {
+                                    echo "New";
+                                } elseif ($value['p_type'] == 'hot') {
+                                    echo "Hot";
+                                } elseif ($value['p_type'] == 'sale') {
+                                    echo "-30%";
+                                }
+                                ?>
+                            </span>
 
-                                <figure>
-                                    <a href="<?= BASE_URL ?>?act=product-detail&id=<?= $value['p_id'] ?>">
-                                        <img class="img-fluid lazy" src="data:image/jpeg;base64,<?= $value['p_image'] ?>" data-src="data:image/jpeg;base64,<?= $value['p_image'] ?>" alt="" style="width: 100%; height: 300px; object-fit: fill;">
-                                    </a>
-
-                                    <?php if ($value['p_type'] == 'sale') :  ?>
-                                        <div data-countdown="2024/3/18" class="countdown"></div>
-                                    <?php endif; ?>
-
-                                </figure>
+                            <figure>
                                 <a href="<?= BASE_URL ?>?act=product-detail&id=<?= $value['p_id'] ?>">
-                                    <h3><?= $value['p_name'] ?></h3>
+                                    <img class="img-fluid lazy" src="data:image/jpeg;base64,<?= $value['p_image'] ?>" data-src="data:image/jpeg;base64,<?= $value['p_image'] ?>" alt="" style="width: 100%; height: 300px; object-fit: fill;">
                                 </a>
-                                <div class=" price_box">
-                                    <span class="new_price"><?= number_format($value['p_price'], 0, '.', '.') ?>đ</span>
 
-                                    <?php if ($value['p_type'] == 'sale') :  ?>
-                                        <span class="old_price"><?= number_format($priceNew, 0, '.', '.') ?>đ</span>
-                                    <?php endif; ?>
-                                </div>
-                                <ul>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                                </ul>
+                                <?php if ($value['p_type'] == 'sale') :  ?>
+                                    <div data-countdown="2024/3/18" class="countdown"></div>
+                                <?php endif; ?>
+
+                            </figure>
+                            <a href="<?= BASE_URL ?>?act=product-detail&id=<?= $value['p_id'] ?>">
+                                <h3><?= $value['p_name'] ?></h3>
+                            </a>
+                            <div class=" price_box">
+                                <span class="new_price"><?= number_format($value['p_price'], 0, '.', '.') ?>đ</span>
+
+                                <?php if ($value['p_type'] == 'sale') :  ?>
+                                    <span class="old_price"><?= number_format($priceNew, 0, '.', '.') ?>đ</span>
+                                <?php endif; ?>
                             </div>
+                            <ul>
+                                <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
+                                <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
+                                <li onclick="addToCart()"><a href="" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                            </ul>
                         </div>
-                    <?php // endif; ?>
+                    </div>
+                    <?php // endif; 
+                    ?>
                 <?php endforeach; ?>
 
             </div>
             <!-- /row -->
             <div class="pagination__wrapper">
                 <ul class="pagination">
-                    <li><a href="<?= BASE_URL ?>?act=shop&page=<?= ($page > 1) ? ($page - 1) : 1 ?>" class="prev" title="previous page">&#10094;</a></li>
+                    <?php
+                    $urlPanigation = '';
+                    if ($act == 'shop') {
+                        $urlPanigation = '?act=shop&page=';
+                    }
+
+
+                    if (isset($_GET['category'])) {
+                        $category = $_GET['category'];
+                        if ($category == 'thoi-trang-nam') {
+                            $urlPanigation = '?act=shop&category=thoi-trang-nam&page=';
+                        } elseif ($category == 'thoi-trang-nu') {
+                            $urlPanigation = '?act=shop&category=thoi-trang-nu&page=';
+                        } elseif ($category == 'thoi-trang-tre-em') {
+                            $urlPanigation = '?act=shop&category=thoi-trang-tre-em&page=';
+                        }
+                    }
+
+                    ?>
+                    <li><a href="<?= BASE_URL ?><?= $urlPanigation ?><?= ($page > 1) ? ($page - 1) : 1 ?>" class="prev" title="previous page">&#10094;</a></li>
                     <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
                         <li>
-                            <a href="<?= BASE_URL ?>?act=shop&page=<?= $i ?>" <?= $i == $page ? 'class="active"' : '' ?>>
+                            <a href="<?= BASE_URL ?><?= $urlPanigation ?><?= $i ?>" <?= $i == $page ? 'class="active"' : '' ?>>
                                 <?= $i ?>
                             </a>
                         </li>
                     <?php endfor; ?>
-                    <li><a href="<?= BASE_URL ?>?act=shop&page=<?= ($page == $total_pages) ? $page : ($page + 1) ?>" class="next" title="next page">&#10095;</a></li>
+                    <li><a href="<?= BASE_URL ?><?= $urlPanigation ?><?= ($page == $total_pages) ? $page : ($page + 1) ?>" class="next" title="next page">&#10095;</a></li>
                 </ul>
             </div>
 

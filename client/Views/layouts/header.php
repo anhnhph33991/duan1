@@ -130,17 +130,18 @@
                                 </a>
                             </span>
                             <div id="menu">
-                                <ul>
-                                    <li><span><a href="#0">Quần Áo Nam</a></span>
+                                <ul style="height: 230px;" <?php // style inline height menu  
+                                                            ?>>
+                                    <li><span><a href="<?= BASE_URL ?>?act=shop&category=thoi-trang-nam">Quần Áo Nam</a></span>
                                         <ul>
-                                            <li><a href="listing-grid-1-full.html">Trending</a></li>
-                                            <li><a href="listing-grid-2-full.html">Life style</a></li>
-                                            <li><a href="listing-grid-3.html">Running</a></li>
+                                            <li><a href="listing-grid-1-full.html">Áo Phông</a></li>
+                                            <li><a href="listing-grid-2-full.html">Áo Polo</a></li>
+                                            <li><a href="listing-grid-3.html">Áo Khoác</a></li>
                                             <li><a href="listing-grid-4-sidebar-left.html">Training</a></li>
                                             <li><a href="listing-grid-5-sidebar-right.html">View all Collections</a></li>
                                         </ul>
                                     </li>
-                                    <li><span><a href="#">Quần Áo Nữ</a></span>
+                                    <li><span><a href="<?= BASE_URL ?>?act=shop&category=thoi-trang-nu">Quần Áo Nữ</a></span>
                                         <ul>
                                             <li><a href="listing-grid-6-sidebar-left.html">Offers</a></li>
                                             <li><a href="listing-grid-7-sidebar-right.html">Shoes</a></li>
@@ -149,7 +150,7 @@
                                             <li><a href="listing-row-4-sidebar-extended.html">Equipment</a></li>
                                         </ul>
                                     </li>
-                                    <li><span><a href="#">Quần Áo Trẻ Sơ Sinh</a></span>
+                                    <li><span><a href="<?= BASE_URL ?>?act=shop&category=thoi-trang-tre-em">Quần Áo Trẻ Em</a></span>
                                         <ul>
                                             <li><a href="listing-grid-1-full.html">Best Sellers</a></li>
                                             <li><a href="listing-grid-2-full.html">Clothing</a></li>

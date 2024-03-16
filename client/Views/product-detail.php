@@ -1,6 +1,7 @@
 <div class="container margin_30">
     <div class="countdown_inner">-20% This offer ends in <div data-countdown="2024/3/15" class="countdown"></div>
     </div>
+    <!-- Banner -->
     <div class="row">
         <div class="col-md-6">
             <div class="all">

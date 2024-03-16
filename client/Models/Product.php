@@ -12,10 +12,12 @@ function getAllProducts($limit, $initial_page)
         p.views as p_views,
         p.type as p_type,
         p.status as p_status,
-        c.name as c_name
+        c.name as c_name,
+        c.id as c_id
         FROM products as p
         INNER JOIN category as c
-        ON p.id_category = c.id ORDER BY p.id DESC
+        ON p.id_category = c.id 
+        ORDER BY p.id DESC
         LIMIT :limit OFFSET :offset";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -28,7 +30,7 @@ function getAllProducts($limit, $initial_page)
     }
 }
 
-function getAllProductWithCategory($limit, $initial_page)
+function getAllProductWithCategory($limit, $initial_page, $id_category)
 {
     try {
         $sql = "SELECT
@@ -40,14 +42,18 @@ function getAllProductWithCategory($limit, $initial_page)
         p.views as p_views,
         p.type as p_type,
         p.status as p_status,
-        c.name as c_name
+        c.name as c_name,
+        c.id as c_id
         FROM products as p
         INNER JOIN category as c
-        ON p.id_category = c.id ORDER BY p.id DESC
+        ON p.id_category = c.id 
+        WHERE c.id = :id_category
+        ORDER BY p.id DESC
         LIMIT :limit OFFSET :offset";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindParam(':offset', $initial_page, PDO::PARAM_INT);
+        $stmt->bindParam(':id_category', $id_category, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetchAll();
         return $result;
@@ -87,6 +93,19 @@ function getTotalPageProducts()
     try {
         $sql = "SELECT COUNT(*) FROM products";
         $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    } catch (PDOException $e) {
+        die($e->getMessage());
+    }
+}
+
+function getTotalPageProductsWithCategory($id_category)
+{
+    try {
+        $sql = "SELECT COUNT(*) FROM products WHERE id_category = :id_category";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt -> bindParam(":id_category", $id_category);
         $stmt->execute();
         return $stmt->fetchColumn();
     } catch (PDOException $e) {
