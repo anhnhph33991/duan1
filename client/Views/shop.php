@@ -73,7 +73,7 @@ if (isset($_GET['category'])) {
                             <?php foreach ($dataCategory as $key => $value) :  ?>
                                 <li>
                                     <label class="container_check"><?= $value['name'] ?> <small>12</small>
-                                        <input type="checkbox">
+                                        <input type="checkbox" class="category_checkbox" value="<?= $value['id'] ?>">
                                         <span class="checkmark"></span>
                                     </label>
                                 </li>
@@ -180,7 +180,8 @@ if (isset($_GET['category'])) {
                 </div>
                 <!-- /filter_type -->
                 <div class="buttons">
-                    <a href="#0" class="btn_1">Filter</a> <a href="#0" class="btn_1 gray">Reset</a>
+                    <a href="#0" class="btn_1 filter__button">Filter</a>
+                    <a href="#0" class="btn_1 gray reset__button">Reset</a>
                 </div>
             </div>
         </aside>
@@ -253,7 +254,7 @@ if (isset($_GET['category'])) {
                             <ul>
                                 <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
                                 <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                <li onclick="addToCart()"><a href="" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                                <li class="btn__addToCart" onclick="addToCart(event, '<?= $value['p_id'] ?>', '<?= $value['p_name'] ?>', '<?= $value['p_price'] ?>','<?= $value['p_image'] ?>','<?= $value['p_description'] ?>','<?= $value['p_type'] ?>','<?= $value['c_name'] ?>')"><a href="" class=" tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
                             </ul>
                         </div>
                     </div>

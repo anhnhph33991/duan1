@@ -1,3 +1,12 @@
+<?php
+
+echo "<pre>";
+print_r($product);
+echo "</pre>";
+
+
+?>
+
 <div class="container margin_30">
     <div class="countdown_inner">-20% This offer ends in <div data-countdown="2024/3/15" class="countdown"></div>
     </div>
