@@ -17,7 +17,7 @@ function getAllCategory($limit, $initial_page)
 function selectAllCategory()
 {
     try {
-        $sql = "SELECT * FROM category ORDER BY id DESC";
+        $sql = "SELECT * FROM category ORDER BY id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();

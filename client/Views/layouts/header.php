@@ -134,11 +134,9 @@
                                                             ?>>
                                     <li><span><a href="<?= BASE_URL ?>?act=shop&category=thoi-trang-nam">Quần Áo Nam</a></span>
                                         <ul>
-                                            <li><a href="listing-grid-1-full.html">Áo Phông</a></li>
-                                            <li><a href="listing-grid-2-full.html">Áo Polo</a></li>
-                                            <li><a href="listing-grid-3.html">Áo Khoác</a></li>
-                                            <li><a href="listing-grid-4-sidebar-left.html">Training</a></li>
-                                            <li><a href="listing-grid-5-sidebar-right.html">View all Collections</a></li>
+                                            <li><a href="<?= BASE_URL ?>?act=shop&slug=ao-phong">Áo Phông</a></li>
+                                            <li><a href="<?= BASE_URL ?>?act=shop&slug=quan-dsq-nam">Quần DSG Nam</a></li>
+                                            <li><a href="<?= BASE_URL ?>?act=shop&slug=ao-khoac-nam">Áo Khoác Nam</a></li>
                                         </ul>
                                     </li>
                                     <li><span><a href="<?= BASE_URL ?>?act=shop&category=thoi-trang-nu">Quần Áo Nữ</a></span>

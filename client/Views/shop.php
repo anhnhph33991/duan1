@@ -73,7 +73,7 @@ if (isset($_GET['category'])) {
                             <?php foreach ($dataCategory as $key => $value) :  ?>
                                 <li>
                                     <label class="container_check"><?= $value['name'] ?> <small>12</small>
-                                        <input type="checkbox" class="category_checkbox" value="<?= $value['id'] ?>">
+                                        <input type="checkbox" class="category_checkbox" value="<?= $value['slug'] ?>">
                                         <span class="checkmark"></span>
                                     </label>
                                 </li>
@@ -199,67 +199,59 @@ if (isset($_GET['category'])) {
                 <!-- -30 % -->
 
                 <?php foreach ($dataProduct as $key => $value) :  ?>
-                    <?php
-                    $priceOld = $value['p_price'];
-                    $discount = 0; // Giảm giá ban đầu là 0
-                    $mess = '';
-                    if ($value['p_type'] == 'sale') {
-                        $discount = 0.3;
-                    }
-                    $priceNew = $priceOld - ($priceOld * $discount);
-                    // echo $priceOld . '</br>';
+                    <?php if ($value['p_status'] == "public") :  ?>
+                        <?php
+                        $priceOld = $value['p_price'];
+                        $discount = 0; // Giảm giá ban đầu là 0
+                        $mess = '';
+                        if ($value['p_type'] == 'sale') {
+                            $discount = 0.3;
+                        }
+                        $priceNew = $priceOld - ($priceOld * $discount);
+                        ?>
+                        <div class="col-6 col-md-4">
+                            <div class="grid_item">
+                                <!-- <span class="ribbon off">-30%</span> -->
+                                <span class="ribbon <?= $value['p_type'] == 'new' ? 'new' : ($value['p_type'] == 'hot' ? 'hot' : 'off') ?>">
+                                    <?php
+                                    if ($value['p_type'] == 'new') {
+                                        echo "New";
+                                    } elseif ($value['p_type'] == 'hot') {
+                                        echo "Hot";
+                                    } elseif ($value['p_type'] == 'sale') {
+                                        echo "-30%";
+                                    }
+                                    ?>
+                                </span>
 
-                    // echo "<pre>";
-                    // print_r($value);
-                    // echo "</pre>";
-                    ?>
+                                <figure>
+                                    <a href="<?= BASE_URL ?>?act=product-detail&id=<?= $value['p_id'] ?>">
+                                        <img class="img-fluid lazy" src="data:image/jpeg;base64,<?= $value['p_image'] ?>" data-src="data:image/jpeg;base64,<?= $value['p_image'] ?>" alt="" style="width: 100%; height: 300px; object-fit: fill;">
+                                    </a>
 
-                    <?php // if ($value['p_status'] == 'public') :  
-                    ?>
-                    <div class="col-6 col-md-4">
-                        <div class="grid_item">
-                            <!-- <span class="ribbon off">-30%</span> -->
-                            <span class="ribbon <?= $value['p_type'] == 'new' ? 'new' : ($value['p_type'] == 'hot' ? 'hot' : 'off') ?>">
-                                <?php
-                                if ($value['p_type'] == 'new') {
-                                    echo "New";
-                                } elseif ($value['p_type'] == 'hot') {
-                                    echo "Hot";
-                                } elseif ($value['p_type'] == 'sale') {
-                                    echo "-30%";
-                                }
-                                ?>
-                            </span>
+                                    <?php if ($value['p_type'] == 'sale') :  ?>
+                                        <div data-countdown="2024/3/18" class="countdown"></div>
+                                    <?php endif; ?>
 
-                            <figure>
+                                </figure>
                                 <a href="<?= BASE_URL ?>?act=product-detail&id=<?= $value['p_id'] ?>">
-                                    <img class="img-fluid lazy" src="data:image/jpeg;base64,<?= $value['p_image'] ?>" data-src="data:image/jpeg;base64,<?= $value['p_image'] ?>" alt="" style="width: 100%; height: 300px; object-fit: fill;">
+                                    <h3><?= $value['p_name'] ?></h3>
                                 </a>
+                                <div class=" price_box">
+                                    <span class="new_price"><?= number_format($value['p_price'], 0, '.', '.') ?>đ</span>
 
-                                <?php if ($value['p_type'] == 'sale') :  ?>
-                                    <div data-countdown="2024/3/18" class="countdown"></div>
-                                <?php endif; ?>
-
-                            </figure>
-                            <a href="<?= BASE_URL ?>?act=product-detail&id=<?= $value['p_id'] ?>">
-                                <h3><?= $value['p_name'] ?></h3>
-                            </a>
-                            <div class=" price_box">
-                                <span class="new_price"><?= number_format($value['p_price'], 0, '.', '.') ?>đ</span>
-
-                                <?php if ($value['p_type'] == 'sale') :  ?>
-                                    <span class="old_price"><?= number_format($priceNew, 0, '.', '.') ?>đ</span>
-                                <?php endif; ?>
+                                    <?php if ($value['p_type'] == 'sale') :  ?>
+                                        <span class="old_price"><?= number_format($priceNew, 0, '.', '.') ?>đ</span>
+                                    <?php endif; ?>
+                                </div>
+                                <ul>
+                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
+                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
+                                    <li class="btn__addToCart" onclick="addToCart(event, '<?= $value['p_id'] ?>', '<?= $value['p_name'] ?>', '<?= $value['p_price'] ?>','<?= $value['p_image'] ?>','<?= $value['p_description'] ?>','<?= $value['p_type'] ?>','<?= $value['c_name'] ?>')"><a href="" class=" tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                                </ul>
                             </div>
-                            <ul>
-                                <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                                <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                <li class="btn__addToCart" onclick="addToCart(event, '<?= $value['p_id'] ?>', '<?= $value['p_name'] ?>', '<?= $value['p_price'] ?>','<?= $value['p_image'] ?>','<?= $value['p_description'] ?>','<?= $value['p_type'] ?>','<?= $value['c_name'] ?>')"><a href="" class=" tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                            </ul>
                         </div>
-                    </div>
-                    <?php // endif; 
-                    ?>
+                    <?php endif ?>
                 <?php endforeach; ?>
 
             </div>

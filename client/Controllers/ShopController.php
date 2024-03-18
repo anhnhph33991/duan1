@@ -20,7 +20,7 @@ function shopIndex()
 
     // all products
     $dataProduct = getAllProducts($limit, $initial_page);
-    $total_rows = intval(getTotalPageProducts());
+    $total_rows = getTotalPageProducts();
 
     if (isset($_GET['category'])) {
         $category = $_GET['category'];
@@ -41,11 +41,18 @@ function shopIndex()
                 $dataProduct = getAllProductWithCategory($limit, $initial_page, $id_TreEm);
                 $total_rows = intval(getTotalPageProductsWithCategory($id_TreEm));
                 break;
+            case 'vay-nu':
+                $id_VayNu = 4;
+                $dataProduct = getAllProductWithCategory($limit, $initial_page, $id_VayNu);
+                $total_rows = intval(getTotalPageProductsWithCategory($id_VayNu));
+                break;
             default:
                 $dataProduct = getAllProducts($limit, $initial_page);
                 $total_rows = intval(getTotalPageProducts());
         }
     }
+
+    
 
     $total_pages = ceil($total_rows / $limit);
 

@@ -1,8 +1,8 @@
-<?php if(isset($_COOKIE['message'])) : ?>
-<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-    <strong><?= $_COOKIE['message'] ?? '' ?></strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+<?php if (isset($_COOKIE['message'])) : ?>
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong><?= $_COOKIE['message'] ?? '' ?></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 <?php endif ?>
 
 <div class="container margin_30">
@@ -31,10 +31,16 @@
                     </div>
                     <div class="divider"><span>Or</span></div>
                     <div class="form-group">
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email*">
+                        <input type="email" class="form-control <?= !empty($_SESSION['errors']['email']) ? 'is-invalid' : '' ?>" name="email" id="email" placeholder="Email*">
+                        <div class="invalid-feedback">
+                            <?= !empty($_SESSION['errors']['email']) ? $_SESSION['errors']['email'] : '' ?>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" name="password" id="password_in" value="" placeholder="Password*">
+                        <input type="password" class="form-control <?= !empty($_SESSION['errors']['password']) ? 'is-invalid' : '' ?>" name="password" id="password_in" value="" placeholder="Password*">
+                        <div class="invalid-feedback">
+                            <?= !empty($_SESSION['errors']['password']) ? $_SESSION['errors']['password'] : '' ?>
+                        </div>
                     </div>
                     <div class="clearfix add_bottom_15">
                         <div class="checkboxes float-start">

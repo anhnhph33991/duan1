@@ -109,3 +109,16 @@ function deleteUser($id)
         debug($e->getMessage());
     }
 }
+
+
+function authLogin($email){
+    try {
+        $sql = "SELECT * FROM users WHERE email = :email";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(":email", $email);
+        $stmt->execute();
+        return $stmt->fetch();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}

@@ -10,15 +10,20 @@ function loginIndex()
     if (isset($_POST['submit'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $user = authLogin($email); // sql check user where email
 
         if (empty($email)) {
-            $_SESSION['errors']['email'] = 'Vui lòng nhập email';
+            $_SESSION['errors']['email'] = 'Vui lòng nhập email 😡';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['errors']['email'] = 'Vui lòng nhập đúng định dạng email 😕';
         } else {
             unset($_SESSION['errors']['email']);
         }
 
         if (empty($password)) {
             $_SESSION['errors']['password'] = 'Vui lòng nhập password';
+        } elseif (strlen($password) < 5) {
+            $_SESSION['errors']['password'] = 'Password phải hơn 5 kí tự';
         } else {
             unset($_SESSION['errors']['password']);
         }
@@ -26,13 +31,26 @@ function loginIndex()
         if (!empty($_SESSION['errors'])) {
             header('location: ' . BASE_URL . '?act=login');
         } else {
-            if ($email == 'admin@luxchill.com' && $password == '123456') {
+
+            // echo "<pre>";
+            // print_r($user);
+            // echo "</pre>";
+
+            if ($user && $password == $user['password']) {
                 setcookie("message", "Đăng nhập thành công", time() + 1);
                 $_SESSION['user'] = [
-                    'username' => 'Hoàng Anh',
-                    'email' => $email
+                    'id' => $user['id'],
+                    'username' => $user['username'],
+                    'email' => $user['email'],
+                    'address' => $user['address'],
+                    'tel' => $user['tel'],
+                    'image' => $user['image'],
+                    'role' => $user['role']
                 ];
                 header('location: ' . BASE_URL);
+            } else {
+                setcookie("message", "Email or Password không đúng. Vui lòng kiểm tra lại ? ", time() + 1);
+                header('location: ' . BASE_URL . '?act=login');
             }
         }
     }
@@ -94,14 +112,16 @@ function registerIndex()
 }
 
 
-function forgotPassword(){
+function forgotPassword()
+{
     $title = 'Forgot Password';
     $view = 'auth/forgotPassword';
 
     require_once VIEW . 'layouts/master.php';
 }
 
-function logout(){
+function logout()
+{
     unset($_SESSION['user']);
     setcookie("message", "Đăng xuất thành công", time() + 1);
     header('location: ' . BASE_URL);
