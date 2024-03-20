@@ -22,6 +22,9 @@ match ($act) {
     'cart' => cartIndex(),
     'checkout' => checkoutIndex(),
     'confirm' => confirmIndex(),
+    
+
+    'leave-review' => reviewIndex(),
 
     // profile
     'check-your-order' => checkOrderIndex(),
@@ -29,6 +32,8 @@ match ($act) {
     'my-profile' => profileIndex(),
 
     // 
+    'handleAddToCart' => handleAddToCart(),
+    'remove-product' => handleRemoveProduct(),
 
 
     // auth route

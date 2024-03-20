@@ -2,6 +2,7 @@
 
 require_once MODELS_ADMIN . 'Product.php';
 require_once MODELS_ADMIN . 'Category.php';
+require_once MODELS_ADMIN . 'VariantProduct.php';
 // require_once '../core/configCloudinary.php';
 
 function productIndex()
@@ -165,3 +166,41 @@ function productDelete()
     header('location: ' . BASE_URL_ADMIN . '?act=products');
 }
 
+function variantProductIndex()
+{
+    $id = $_GET['id'] ?? null;
+    // echo $id;
+    $title = 'Variant Product';
+    $view = 'products/variant-table';
+    $data = selectAllVariantProduct($id);
+    require_once VIEW_ADMIN . 'layouts/master.php';
+}
+
+function variantProductCreate()
+{
+    $id = $_GET['id'] ?? null;
+    $title = 'Variant Product';
+    $view = 'products/variant-create';
+    $script = 'variant';
+    if (isset($_POST['submit'])) {
+        $uploaded_files = $_FILES['multiple_file'];
+
+        foreach ($uploaded_files as $key => $tmp_name) {
+            if ($uploaded_files['error'][$key] === UPLOAD_ERR_OK) {
+                // Di chuyển tệp tải lên vào vị trí lưu trữ mong muốn
+
+                // $destination = "uploads/" . $uploaded_files['name'][$key];
+                $destination = $uploaded_files['name'][$key];
+                // move_uploaded_file($tmp_name, $destination);
+
+                // Hiển thị hình ảnh tải lên
+                // echo "<img src='$destination' alt='Uploaded Image'>";
+                echo $destination . '</>';
+            } else {
+                // Xử lý lỗi nếu có
+                echo "Error uploading file: " . $uploaded_files['name'][$key];
+            }
+        }
+    }
+    require_once VIEW_ADMIN . 'layouts/master.php';
+}           

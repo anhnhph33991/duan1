@@ -1,10 +1,10 @@
 <?php
-
+require_once MODELS . 'Cart.php';
 function cartIndex()
 {
     $title = 'Cart - LuxChill';
     $view = 'cart';
-    // $script = 'cart';
+    $script = 'cart';
 
 
     require_once VIEW . 'layouts/master.php';

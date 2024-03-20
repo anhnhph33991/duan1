@@ -9,6 +9,12 @@ if (isset($_SESSION['user'])) {
 }
 
 
+if (isset($_SESSION['user'])) {
+    echo '';
+} else {
+    header('location: ' . BASE_URL . '?act=login');
+}
+
 ?>
 
 <ul class="nav flex-column">

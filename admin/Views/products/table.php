@@ -19,9 +19,9 @@
         // echo "</pre>";
 
         ?>
-       
-       <?php require_once "../core/toast.php"?>
-       
+
+        <?php require_once "../core/toast.php" ?>
+
         <h2 class="section-title">Table</h2>
         <p class="section-lead">Hiển Thị Products</p>
 
@@ -82,6 +82,19 @@
                                                 <a href="<?= BASE_URL_ADMIN ?>?act=delete-product&id=<?= $value['p_id'] ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa product: <?= $value['p_name'] ?>')">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </a>
+                                                <div class="btn-group dropleft">
+                                                    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa-solid fa-sliders"></i>
+
+                                                    </button>
+                                                    <div class="dropdown-menu dropleft" x-placement="left-start" style="position: absolute; transform: translate3d(-202px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                        <a class="dropdown-item" href="<?=  BASE_URL_ADMIN?>?act=variant-product&id=<?= $value['p_id'] ?>">Biến Thể</a>
+                                                        <a class="dropdown-item" href="#">Another action</a>
+                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="#">Separated link</a>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     <?php endforeach;  ?>

@@ -40,6 +40,9 @@ match ($act) {
     'update-product' => productUpdate(),
     'show-product' => productShow(),
     'delete-product' => productDelete(),
+    // route biến thể product
+    'variant-product' => variantProductIndex(),
+    'add-variant-product' => variantProductCreate(),
     // // route category
     'categorys' => categoryIndex(),
     'add-category' => categoryCreate(),

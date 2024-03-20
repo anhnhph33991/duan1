@@ -48,12 +48,11 @@ function loginIndex()
                     'role' => $user['role']
                 ];
 
-                if($user['role'] != 1){
+                if ($user['role'] != 1) {
                     header('location: ' . BASE_URL);
-                }else{
+                } else {
                     header('location: ' . BASE_URL_ADMIN);
                 }
-
             } else {
                 setcookie("message", "Email or Password không đúng. Vui lòng kiểm tra lại ? ", time() + 1);
                 header('location: ' . BASE_URL . '?act=login');
@@ -122,6 +121,26 @@ function forgotPassword()
 {
     $title = 'Forgot Password';
     $view = 'auth/forgotPassword';
+
+    if (isset($_POST['submit'])) {
+        $email = $_POST['email'];
+        echo $email;
+
+        if (empty($email)) {
+            $_SESSION['errors']['email'] = 'Thế thì chịu 😡';
+        } else {
+            unset($_SESSION['errors']['email']);
+        }
+
+
+        if (!empty($_SESSION['errors'])) {
+            header('Location: ' . BASE_URL . '?act=forgotPassword');
+        } else {
+            $token = bin2hex(random_bytes(16));
+            $token_hash = hash("sha56", $token);
+            $expiry = date("Y-m-d H:i:s", time() + 60 * 30);
+        }
+    }
 
     require_once VIEW . 'layouts/master.php';
 }

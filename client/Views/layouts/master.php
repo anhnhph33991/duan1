@@ -35,8 +35,8 @@
     <link href="<?= BASE_URL ?>public/assets/css/checkout.css" rel="stylesheet">
     <!-- Auth -->
     <link href="<?= BASE_URL ?>public/assets/css/account.css" rel="stylesheet">
-
-
+    <!-- Track -->
+    <link href="<?= BASE_URL ?>public/assets/css/leave_review.css" rel="stylesheet">
 
     <!-- YOUR CUSTOM CSS -->
     <link href="<?= BASE_URL ?>public/assets/css/custom.css" rel="stylesheet">
@@ -46,6 +46,13 @@
 
     <!-- Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+    <!-- ABc -->
 
 </head>
 

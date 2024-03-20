@@ -1,8 +1,25 @@
 <?php
 
 // echo "<pre>";
-// print_r($product);
+// print_r($listColor);
 // echo "</pre>";
+
+if (!empty($dataColor)) {
+    foreach ($dataColor as $color) {
+        $listColor[] = $color['name'];
+    }
+}
+
+if (!empty($dataSize)) {
+    foreach ($dataSize as $size) {
+        $listSize[] = $size['name'];
+    }
+}
+
+// echo "<pre>";
+// print_r($listColor);
+// echo "</pre>";
+
 
 ?>
 
@@ -30,7 +47,7 @@
                 $merge = array_merge($product, $listImage);
 
                 // echo "<pre>";
-                // print_r($merge);
+                // print_r($productRelated);
                 // echo "</pre>";
 
                 // $slideShow = [$product['p_image'], $listImage];
@@ -38,9 +55,9 @@
                 $slideShow = array_merge(array($product['p_image']), array_column($listImage, 'image'));
 
 
-                echo "<pre>";
-                print_r($slideShow);
-                echo "</pre>";
+                // echo "<pre>";
+                // print_r($slideShow);
+                // echo "</pre>";
                 // $dataImage2 = [];
 
                 // foreach ($listImage as $key => $value) {
@@ -56,8 +73,12 @@
                 // print_r($dataImage2);
                 // echo "</pre>";
 
-                // for ($i = 0; $i < $listImage; $i++) {
-                //     echo $i;
+                // for ($i = 0; $i <br $slideShow; $i++) {
+                //     echo '<div style="background-image: url(' . BASE_URL . $slideShow . ');" class="item-box"></div>';
+                // }
+
+                // foreach ($slideShow as $slide) {
+                //     echo $slide . '</br>';
                 // }
 
 
@@ -65,24 +86,18 @@
                 <div class="slider">
                     <div class="owl-carousel owl-theme main">
 
-                        <div style="background-image: url(data:image/jpeg;base64,<?= $product['p_image'] ?>);" class="item-box"></div>
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/2.jpg);" class="item-box"></div>
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/3.jpg);" class="item-box"></div>
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/4.jpg);" class="item-box"></div>
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/5.jpg);" class="item-box"></div>
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/6.jpg);" class="item-box"></div>
+                        <?php foreach ($slideShow as $slide) :  ?>
+                            <div style="background-image: url(<?= BASE_URL . $slide ?>);" class="item-box"></div>
+                        <?php endforeach  ?>
                     </div>
                     <div class="left nonl"><i class="ti-angle-left"></i></div>
                     <div class="right"><i class="ti-angle-right"></i></div>
                 </div>
                 <div class="slider-two">
                     <div class="owl-carousel owl-theme thumbs">
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/1.jpg);" class="item active"></div>
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/2.jpg);" class="item"></div>
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/3.jpg);" class="item"></div>
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/4.jpg);" class="item"></div>
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/5.jpg);" class="item"></div>
-                        <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/6.jpg);" class="item"></div>
+                        <?php foreach ($slideShow as $slide) :  ?>
+                            <div style="background-image: url(<?= BASE_URL . $slide ?>" class="item active"></div>
+                        <?php endforeach  ?>
                     </div>
                     <div class="left-t nonl-t"></div>
                     <div class="right-t"></div>
@@ -94,13 +109,15 @@
                 <ul>
                     <li><a href="<?= BASE_URL ?>">Home</a></li>
                     <li><a href="<?= BASE_URL ?>?act=shop">Shop</a></li>
-                    <li>Name Product</li>
+                    <li><?= $product['p_name'] ?></li>
                 </ul>
             </div>
             <!-- /page_header -->
             <div class="prod_info">
                 <h1><?= $product['p_name'] ?></h1>
                 <span class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i><em><?= $product['p_views'] ?? '0' ?> reviews</em></span>
+                <br>
+                <small>SL: <?= $product['p_qty'] ?? '0' ?></small>
                 <p><small>SKU: MTKRY-001</small><br><?= $product['p_description'] ?>.</p>
                 <div class="prod_options">
                     <div class="row">
@@ -119,10 +136,10 @@
                         <div class="col-xl-4 col-lg-5 col-md-6 col-6">
                             <div class="custom-select-form">
                                 <select class="wide">
-                                    <option value="" selected>Small (S)</option>
-                                    <option value="">M</option>
-                                    <option value=" ">L</option>
-                                    <option value=" ">XL</option>
+                                    <option value="S" selected>Small (S)</option>
+                                    <?php foreach ($listSize as $size) :  ?>
+                                        <option value="<?= $size ?>"><?= $size ?></option>
+                                    <?php endforeach  ?>
                                 </select>
                             </div>
                         </div>
@@ -138,7 +155,12 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-5 col-md-6">
-                        <div class="price_main"><span class="new_price">$<?= $product['p_price'] ?></span><span class="percentage">-20%</span> <span class="old_price">$160.00</span></div>
+                        <div class="price_main"><span class="new_price"><?= number_format($product['p_price'], 0, '.', '.') ?>đ</span>
+                            <?php if ($product['p_type'] == 'sale') : ?>
+                                <?php $product['p_price'] = $product['p_price'] * 0.8;   ?>
+                                <span class="percentage">-20%</span> <span class="old_price"><?= number_format($product['p_price'], 0, '.', '.') ?>đ</span>
+                            <?php endif ?>
+                        </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <div class="btn_add_to_cart"><a href="#0" class="btn_1 " onclick="handleAddToCart( '<?= $product['p_id'] ?>','<?= $product['p_name'] ?>', '<?= $product['p_price'] ?>', '<?= $product['p_image'] ?>', '<?= $product['c_name'] ?>', '<?= $product['p_type'] ?>')">Add to Cart</a></div>
@@ -203,7 +225,11 @@
                                         <tbody>
                                             <tr>
                                                 <td><strong>Color</strong></td>
-                                                <td>Blue, Purple</td>
+                                                <td style="display: flex; gap: 5px;">
+                                                    <?php foreach ($listSize as $size) :  ?>
+                                                        <p><?= $size ?></p> |
+                                                    <?php endforeach  ?>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td><strong>Size</strong></td>
@@ -238,29 +264,22 @@
                 <div id="collapse-B" class="collapse" role="tabpanel" aria-labelledby="heading-B">
                     <div class="card-body">
                         <div class="row justify-content-between">
-                            <div class="col-lg-6">
-                                <div class="review_content">
-                                    <div class="clearfix add_bottom_10">
-                                        <span class="rating"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><em>5.0/5.0</em></span>
-                                        <em>Published 54 minutes ago</em>
+                            <?php foreach ($dataComment as $key => $value) :  ?>
+                                <div class="col-lg-6" data-id="<?= $value['comment_id'] ?>">
+                                    <div class="review_content">
+                                        <div class="clearfix add_bottom_10">
+                                            <span class="rating"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><em>5.0/5.0</em></span>
+                                            <em>Published 54 minutes ago</em>
+                                        </div>
+                                        <img class="avatar" src="<?= BASE_URL . $value['user_image'] ?>" style="width: 30px; height: 30x; border-radius: 50%;" />
+                                        <h4><?= $value['user_name'] ?></h4>
+                                        <p><?= $value['comment_content'] ?></p>
                                     </div>
-                                    <h4>"Commpletely satisfied"</h4>
-                                    <p>Eos tollit ancillae ea, lorem consulatu qui ne, eu eros eirmod scaevola sea. Et nec tantas accusamus salutatus, sit commodo veritus te, erat legere fabulas has ut. Rebum laudem cum ea, ius essent fuisset ut. Viderer petentium cu his.</p>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="review_content">
-                                    <div class="clearfix add_bottom_10">
-                                        <span class="rating"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star empty"></i><i class="icon-star empty"></i><em>4.0/5.0</em></span>
-                                        <em>Published 1 day ago</em>
-                                    </div>
-                                    <h4>"Always the best"</h4>
-                                    <p>Et nec tantas accusamus salutatus, sit commodo veritus te, erat legere fabulas has ut. Rebum laudem cum ea, ius essent fuisset ut. Viderer petentium cu his.</p>
-                                </div>
-                            </div>
+                            <?php endforeach  ?>
                         </div>
                         <!-- /row -->
-                        <div class="row justify-content-between">
+                        <!-- <div class="row justify-content-between">
                             <div class="col-lg-6">
                                 <div class="review_content">
                                     <div class="clearfix add_bottom_10">
@@ -281,7 +300,7 @@
                                     <p>Sit commodo veritus te, erat legere fabulas has ut. Rebum laudem cum ea, ius essent fuisset ut. Viderer petentium cu his.</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /row -->
                         <p class="text-end"><a href="<?= BASE_URL ?>?act=leave-review" class="btn_1">Đánh giá sản phẩm</a></p>
                     </div>
@@ -298,59 +317,46 @@
 
 <div class="container margin_60_35">
     <div class="main_title">
-        <h2>Related</h2>
+        <h2>Sản Phẩm Liên Quan</h2>
         <span>Products</span>
-        <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+        <p>Những sản phẩm bạn có thể thích ♨️.</p>
     </div>
     <div class="owl-carousel owl-theme products_carousel">
-        <div class="item">
-            <div class="grid_item">
-                <span class="ribbon new">New</span>
-                <figure>
+        <?php foreach ($productRelated as $key => $value) :  ?>
+            <div class="item">
+                <div class="grid_item">
+                    <span class="ribbon <?= $value['type'] == 'new' ? 'new' : ($value['type'] == 'hot' ? 'hot' : 'off') ?>">
+                        <?php
+                        if ($value['type'] == 'new') {
+                            echo "New";
+                        } elseif ($value['type'] == 'hot') {
+                            echo "Hot";
+                        } elseif ($value['type'] == 'sale') {
+                            echo "-30%";
+                        }
+                        ?>
+                    </span>
+                    <figure>
+                        <a href="<?= BASE_URL ?>?act=product-detail&id=<?= $value['id'] ?>">
+                            <img class="owl-lazy" src="<?= BASE_URL . $value['image'] ?>" data-src="<?= BASE_URL . $value['image'] ?>" alt="">
+                        </a>
+                    </figure>
+                    <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
                     <a href="product-detail-1.html">
-                        <img class="owl-lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/4.jpg" alt="">
+                        <h3><?= $value['name'] ?></h3>
                     </a>
-                </figure>
-                <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
-                <a href="product-detail-1.html">
-                    <h3>ACG React Terra</h3>
-                </a>
-                <div class="price_box">
-                    <span class="new_price">$110.00</span>
+                    <div class="price_box">
+                        <span class="new_price"><?= number_format($value['price'], 0, '.', '.') ?>đ</span>
+                    </div>
+                    <ul>
+                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
+                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
+                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                    </ul>
                 </div>
-                <ul>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                </ul>
+                <!-- /grid_item -->
             </div>
-            <!-- /grid_item -->
-        </div>
-        <!-- /item -->
-        <div class="item">
-            <div class="grid_item">
-                <span class="ribbon new">New</span>
-                <figure>
-                    <a href="product-detail-1.html">
-                        <img class="owl-lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/5.jpg" alt="">
-                    </a>
-                </figure>
-                <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
-                <a href="product-detail-1.html">
-                    <h3>Air Zoom Alpha</h3>
-                </a>
-                <div class="price_box">
-                    <span class="new_price">$140.00</span>
-                </div>
-                <ul>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                </ul>
-            </div>
-            <!-- /grid_item -->
-        </div>
-        <!-- /item -->
+        <?php endforeach ?>
         <div class="item">
             <div class="grid_item">
                 <span class="ribbon hot">Hot</span>
@@ -374,7 +380,6 @@
             </div>
             <!-- /grid_item -->
         </div>
-        <!-- /item -->
         <div class="item">
             <div class="grid_item">
                 <span class="ribbon off">-30%</span>
@@ -399,7 +404,6 @@
             </div>
             <!-- /grid_item -->
         </div>
-        <!-- /item -->
         <div class="item">
             <div class="grid_item">
                 <span class="ribbon off">-50%</span>

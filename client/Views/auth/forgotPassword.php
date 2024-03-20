@@ -15,7 +15,10 @@
             <div class="box_account">
                 <form class="form_container" action="" method="post">
                     <div class="form-group">
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email*">
+                        <input type="email" class="form-control <?= !empty($_SESSION['errors']['email']) ? 'is-invalid' : '' ?>" name="email" id="email" placeholder="Email*">
+                        <div class="invalid-feedback">
+                            <?= !empty($_SESSION['errors']['email']) ? $_SESSION['errors']['email'] : '' ?>
+                        </div>
                     </div>
                     <div class="text-center"><input type="submit" name="submit" value="Submit" class="btn_1 full-width"></div>
                     <div class="py-3">

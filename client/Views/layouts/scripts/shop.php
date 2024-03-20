@@ -30,27 +30,30 @@
 
     })
 
-    // btn_addToCart.forEach((btn) => {
-    //     btn.addEventListener('click', (e) => {
-    //         e.preventDefault();
-    //         console.log('success add cart');
-    //     })
-    // })
-
     function addToCart(e, id, name, price, image, description, type, cName) {
         e.preventDefault();
-        console.log('success');
-        let data = {
-            idProduct: id,
-            nameProduct: name,
-            priceProduct: price,
-            imageProduct: image,
-            descriptionProduct: description,
-            typeProduct: type,
-            nameCategory: cName
-        };
-
-        console.log(data);
+        let idUser = "<?= $_SESSION['user']['id'] ?? '' ?>";
+        $.ajax({
+            type: "POST",
+            url: "<?= BASE_URL . '?act=handleAddToCart' ?>",
+            data: {
+                idProduct: id,
+                nameProduct: name,
+                priceProduct: price,
+                imageProduct: image,
+                descriptionProduct: description,
+                typeProduct: type,
+                cName: cName,
+                idUser: idUser
+            },
+            success: function(res) {
+                $('.qty_cart').text(res.cartItemCount);
+                toastr.success('Thêm vào giỏ hàng thành công 🛒');
+            },
+            error: function(xhr, status, error) {
+                toastr.error('Có lỗi xảy ra. Vui lòng thử lại sau!');
+            }
+        })
 
     }
 </script>

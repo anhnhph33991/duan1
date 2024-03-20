@@ -196,6 +196,12 @@ if (isset($_GET['category'])) {
                     // print_r($dataProduct);
                     // echo "</pre>";
 
+
+                    // echo "<pre>";
+                    // print_r($_SESSION['cart']);
+                    // echo "</pre>";
+
+
                     ?>
                     <!-- -30 % -->
 
@@ -248,7 +254,7 @@ if (isset($_GET['category'])) {
                                     <ul>
                                         <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
                                         <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                        <li class="btn__addToCart" onclick="addToCart(event, '<?= $value['p_id'] ?>', '<?= $value['p_name'] ?>', '<?= $value['p_price'] ?>','<?= $value['p_image'] ?>','<?= $value['p_description'] ?>','<?= $value['p_type'] ?>','<?= $value['c_name'] ?>')"><a href="" class=" tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                                        <li class="btn__addToCart" onclick="addToCart(event, '<?= $value['p_id'] ?>', '<?= $value['p_name'] ?>', '<?= $value['p_price'] ?>','<?= $value['p_image'] ?>','<?= $value['p_description'] ?>','<?= $value['p_type'] ?>','<?= $value['c_name'] ?>')"><a href="#1" class=" tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
                                     </ul>
                                 </div>
                             </div>

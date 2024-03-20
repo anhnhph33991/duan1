@@ -162,6 +162,9 @@ function selectOneProduct($id)
         p.views as p_views,
         p.type as p_type,
         p.status as p_status,
+        p.sub_category_id as p_sub_category_id,
+        p.product_type as p_product_type,
+        p.qty as p_qty,
         c.name as c_name,
         c.id as c_id
         FROM products as p
@@ -189,6 +192,22 @@ function updateProduct($id, $name, $price, $image, $description, $id_category, $
         $stmt->bindParam(":description", $description);
         $stmt->bindParam(":id_category", $id_category);
         $stmt->bindParam(":status", $status);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+
+// update views
+
+function updateProductView($id, $views)
+{
+    try {
+        $sql = "UPDATE products SET views = :views WHERE id = :id";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":views", $views);
         $stmt->execute();
     } catch (PDOException $e) {
         debug($e->getMessage());
@@ -227,6 +246,48 @@ function selectListImages($product_id)
         $sql = "SELECT * FROM product_images WHERE product_id = :product_id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+function selectColorProduct($idProduct, $id)
+{
+    try {
+        $sql = "SELECT * FROM product_variants WHERE variant_type = :variant_type AND product_id = :id";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(':variant_type', $idProduct);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+function selectSizeProduct($idProduct, $id)
+{
+    try {
+        $sql = "SELECT * FROM product_variants WHERE variant_type = :variant_type AND product_id = :id";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(':variant_type', $idProduct);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+
+function selectProductWithCategory($id_category)
+{
+    try {
+        $sql = "SELECT * FROM products WHERE id_category = :id_category LIMIT 5";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(':id_category', $id_category, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
     } catch (PDOException $e) {
