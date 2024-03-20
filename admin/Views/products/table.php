@@ -19,6 +19,9 @@
         // echo "</pre>";
 
         ?>
+       
+       <?php require_once "../core/toast.php"?>
+       
         <h2 class="section-title">Table</h2>
         <p class="section-lead">Hiển Thị Products</p>
 
@@ -56,7 +59,7 @@
                                             <td><?= $key + 1 ?></td>
                                             <td>
                                                 <div class="gallery">
-                                                    <div class="gallery-item" data-image="data:image/jpeg;base64,<?= $value['p_image'] ?>" data-title="<?= $value['p_name'] ?>"></div>
+                                                    <div class="gallery-item" data-image="<?= BASE_URL . $value['p_image'] ?>" data-title="<?= $value['p_name'] ?>"></div>
                                                 </div>
                                             </td>
                                             <td><?= $value['p_name'] ?></td>

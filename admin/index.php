@@ -62,6 +62,11 @@ match ($act) {
     'update-slides' => slideUpdate(),
     'delete-slides' => slideDelete(),
     'show-slides' => slideShow(),
+
+    // route test
+    'upload-image' => craeteImage(),
+    'table_upload' => ImageIndeexTest(),
+    'delete-image' => deleteImage(),
         // 404
     default => require_once VIEW_ADMIN . 'layouts/404.php',
 };

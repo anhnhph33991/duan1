@@ -9,6 +9,7 @@ const CONTROLLER_ADMIN = __DIR__ . '/../admin/Controllers/';
 const MODELS_ADMIN = __DIR__ . '/../admin/Models/';
 
 
+const PATH_UPLOAD = __DIR__ . '/../';
 
 
 

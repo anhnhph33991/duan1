@@ -52,7 +52,7 @@ function shopIndex()
         }
     }
 
-    
+
 
     $total_pages = ceil($total_rows / $limit);
 
@@ -67,9 +67,7 @@ function detailProduct()
     $script = 'detailProduct';
     $components = 'detail-product';
     $product = selectOneProduct($_GET['id'] ?? null);
-
-
-
+    $listImage = selectListImages($_GET['id'] ?? null);
 
     require_once VIEW . 'layouts/master.php';
 }

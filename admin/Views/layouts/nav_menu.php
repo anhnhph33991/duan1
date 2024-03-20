@@ -56,6 +56,13 @@ $menuAdmin = [
         'act' => ['slides', 'create-slides', 'update-slides', 'delete-slides'],
         'url' => BASE_URL_ADMIN . '?act=slides',
         'icon' => '<i class="far fa-square"></i>'
+    ],
+    [
+        'id' => 9,
+        'name' => 'Upload',
+        'act' => ['table_upload', 'upload-image', 'upload-image', 'upload-image'],
+        'url' => BASE_URL_ADMIN . '?act=table_upload',
+        'icon' => '<i class="far fa-square"></i>'
     ]
 ];
 

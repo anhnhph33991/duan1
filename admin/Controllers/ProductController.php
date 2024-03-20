@@ -31,7 +31,7 @@ function productCreate()
     if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         $price = str_replace('.', '', $_POST['price']);
-        $image = $_FILES['image']['tmp_name'];
+        $image = $_FILES['image'];
         $description = $_POST['description'];
         $id_category = $_POST['id_category'] ?? null;
 
@@ -69,9 +69,8 @@ function productCreate()
             header('location: ' . BASE_URL_ADMIN . '?act=add-product');
         } else {
             $convertDesc = strip_tags($description); // xóa bỏ tag html ở description
-            $img = file_get_contents($image);
-            $imgBase64 = base64_encode($img);
-            insertOneProduct($name, $price, $imgBase64, $convertDesc, $id_category);
+            $image = upload_file($image, 'public/image/'); // gọi function handle image
+            insertOneProduct($name, $price, $image, $convertDesc, $id_category);
             header('location: ' . BASE_URL_ADMIN . '?act=products');
         }
     }
@@ -94,7 +93,7 @@ function productUpdate()
         $id = $_POST['id'];
         $name = $_POST['name'];
         $price = $_POST['price'];
-        $image = $_FILES['image']['tmp_name'];
+        $image = $_FILES['image'];
         $imageOld = $_POST['imageOld'];
         $description = $_POST['description'];
         $descOld = $_POST['descOld'];
@@ -107,10 +106,9 @@ function productUpdate()
 
         if (empty($name)) {
             $_SESSION['errors']['name'] = 'Vui lòng nhập name';
-        }elseif(strlen($name) < 5){
-            
-        }
-         else {
+        } elseif (strlen($name) < 5) {
+            $_SESSION['errors']['name'] = 'Name phải lớn hơn 5 kí tự';
+        } else {
             unset($_SESSION['errors']['name']);
         }
 
@@ -120,12 +118,10 @@ function productUpdate()
             unset($_SESSION['errors']['price']);
         }
 
-        if (empty($image)) {
+        if (empty($image['name'])) {
             $imageSaveDb = $imageOld;
         } else {
-            $img = file_get_contents($image);
-            $imgBase64 = base64_encode($img);
-            $imageSaveDb = $imgBase64;
+            $imageSaveDb = upload_file($image, 'public/image/');
         }
 
         if (empty($description)) {
@@ -138,6 +134,8 @@ function productUpdate()
             header('Location: ' . BASE_URL_ADMIN . '?act=update-product&id=' . $id);
         } else {
             updateProduct($id, $name, $price, $imageSaveDb, $descSaveDb, $id_category, $status);
+            setcookie("message", "Update thành công 🎊", time() + 1);
+            setcookie("type_mess", "success", time() + 1);
             header('Location: ' . BASE_URL_ADMIN . '?act=products');
         }
     }
@@ -162,5 +160,39 @@ function productDelete()
 {
     $id = $_GET['id'] ?? null;
     deleteOneProduct($id);
+    setcookie("message", "Xóa thành công 🎊", time() + 1);
+    setcookie("type_mess", "success", time() + 1);
     header('location: ' . BASE_URL_ADMIN . '?act=products');
+}
+
+function craeteImage()
+{
+    $title = "Upload Image";
+    $view = 'products/test';
+
+    if (isset($_POST['submit'])) {
+        $avatar = $_FILES['image'] ?? null;
+        if (!empty($avatar) && $avatar['size'] > 0) {
+            $avatar = upload_file($avatar, 'public/image/');
+            insertTestImage($avatar);
+        }
+        header('location: ' . BASE_URL_ADMIN . '?act=table_upload');
+    }
+
+    require_once VIEW_ADMIN . 'layouts/master.php';
+}
+
+function ImageIndeexTest()
+{
+    $title = "Upload Image";
+    $view = 'products/table-test';
+    $data = selectTestImage();
+    require_once VIEW_ADMIN . 'layouts/master.php';
+}
+
+function deleteImage()
+{
+    $id = $_GET['id'] ?? null;
+    deleteOneImage($id);
+    header('location: ' . BASE_URL_ADMIN . '?act=table_upload');
 }

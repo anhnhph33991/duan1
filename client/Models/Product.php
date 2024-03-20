@@ -207,3 +207,29 @@ function deleteOneProduct($id)
         debug($e->getMessage());
     }
 }
+
+
+function selectWithColors($variant_type)
+{
+    try {
+        $sql = "SELECT * FROM product_variants WHERE variant_type = :variant_type";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(':variant_type', $variant_type);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+function selectListImages($product_id)
+{
+    try {
+        $sql = "SELECT * FROM product_images WHERE product_id = :product_id";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}

@@ -46,7 +46,7 @@
                             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Image</label>
                             <div class="col-sm-12 col-md-7">
                                 <div class="gallery gallery-md">
-                                    <div class="gallery-item" data-image="data:image/jpeg;base64,<?= $product['p_image'] ?>" data-title="<?= $product['p_image'] ?>" style="width: 100%; height: 500px"></div>
+                                    <div class="gallery-item" data-image="<?= BASE_URL . $product['p_image'] ?>" data-title="<?= $product['p_image'] ?>" style="width: 100%; height: 500px"></div>
                                 </div>
                             </div>
                         </div>

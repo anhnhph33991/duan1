@@ -1,22 +1,70 @@
 <?php
 
-echo "<pre>";
-print_r($product);
-echo "</pre>";
-
+// echo "<pre>";
+// print_r($product);
+// echo "</pre>";
 
 ?>
 
 <div class="container margin_30">
-    <div class="countdown_inner">-20% This offer ends in <div data-countdown="2024/3/15" class="countdown"></div>
+    <!-- <div class="countdown_inner">-20% This offer ends in <div data-countdown="2024/3/20" class="countdown"></div> -->
+
+    <div class="countdown_inner title__render">-20% This offer ends in <div data-countdown="2024/3/20" class="countdown"></div>
     </div>
     <!-- Banner -->
     <div class="row">
         <div class="col-md-6">
             <div class="all">
-                $product
+                <?php
+
+                // echo "<pre>";
+                // print_r($product);
+                // echo "</pre>";
+
+                // echo "</br>";
+
+                // echo "<pre>";
+                // print_r($listImage);
+                // echo "</pre>";
+
+                $merge = array_merge($product, $listImage);
+
+                // echo "<pre>";
+                // print_r($merge);
+                // echo "</pre>";
+
+                // $slideShow = [$product['p_image'], $listImage];
+
+                $slideShow = array_merge(array($product['p_image']), array_column($listImage, 'image'));
+
+
+                echo "<pre>";
+                print_r($slideShow);
+                echo "</pre>";
+                // $dataImage2 = [];
+
+                // foreach ($listImage as $key => $value) {
+                //     $dataImage2[] = $value;
+                //   }
+
+                // foreach ($product as $key => $value) {
+                //     $dataImage2[] = $value['p_image'];
+                // }
+
+
+                // echo "<pre>";
+                // print_r($dataImage2);
+                // echo "</pre>";
+
+                // for ($i = 0; $i < $listImage; $i++) {
+                //     echo $i;
+                // }
+
+
+                ?>
                 <div class="slider">
                     <div class="owl-carousel owl-theme main">
+
                         <div style="background-image: url(data:image/jpeg;base64,<?= $product['p_image'] ?>);" class="item-box"></div>
                         <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/2.jpg);" class="item-box"></div>
                         <div style="background-image: url(<?= BASE_URL ?>public/assets/img/products/shoes/3.jpg);" class="item-box"></div>
@@ -51,9 +99,9 @@ echo "</pre>";
             </div>
             <!-- /page_header -->
             <div class="prod_info">
-                <h1>Armor Air X Fear</h1>
-                <span class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i><em>4 reviews</em></span>
-                <p><small>SKU: MTKRY-001</small><br>Sed ex labitur adolescens scriptorem. Te saepe verear tibique sed. Et wisi ridens vix, lorem iudico blandit mel cu. Ex vel sint zril oportere, amet wisi aperiri te cum.</p>
+                <h1><?= $product['p_name'] ?></h1>
+                <span class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i><em><?= $product['p_views'] ?? '0' ?> reviews</em></span>
+                <p><small>SKU: MTKRY-001</small><br><?= $product['p_description'] ?>.</p>
                 <div class="prod_options">
                     <div class="row">
                         <label class="col-xl-5 col-lg-5  col-md-6 col-6 pt-0"><strong>Color</strong></label>
@@ -90,10 +138,10 @@ echo "</pre>";
                 </div>
                 <div class="row">
                     <div class="col-lg-5 col-md-6">
-                        <div class="price_main"><span class="new_price">$148.00</span><span class="percentage">-20%</span> <span class="old_price">$160.00</span></div>
+                        <div class="price_main"><span class="new_price">$<?= $product['p_price'] ?></span><span class="percentage">-20%</span> <span class="old_price">$160.00</span></div>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="btn_add_to_cart"><a href="#0" class="btn_1">Add to Cart</a></div>
+                        <div class="btn_add_to_cart"><a href="#0" class="btn_1 " onclick="handleAddToCart( '<?= $product['p_id'] ?>','<?= $product['p_name'] ?>', '<?= $product['p_price'] ?>', '<?= $product['p_image'] ?>', '<?= $product['c_name'] ?>', '<?= $product['p_type'] ?>')">Add to Cart</a></div>
                     </div>
                 </div>
             </div>
