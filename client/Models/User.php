@@ -111,13 +111,33 @@ function deleteUser($id)
 }
 
 
-function authLogin($email){
+function authLogin($email)
+{
     try {
         $sql = "SELECT * FROM users WHERE email = :email";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":email", $email);
         $stmt->execute();
         return $stmt->fetch();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+
+function resetPassword($token_hash, $expiry, $email)
+{
+    try {
+        $sql = "UPDATE users 
+                SET reset_token_hash = ?, 
+                reset_token_expires_at = ? 
+                WHERE email = ?";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindValue(1, $token_hash);
+        $stmt->bindValue(2, $expiry);
+        $stmt->bindValue(3, $email);
+        $stmt->execute();
+        return $stmt->rowCount();
     } catch (PDOException $e) {
         debug($e->getMessage());
     }

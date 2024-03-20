@@ -137,8 +137,32 @@ function forgotPassword()
             header('Location: ' . BASE_URL . '?act=forgotPassword');
         } else {
             $token = bin2hex(random_bytes(16));
-            $token_hash = hash("sha56", $token);
+            $token_hash = hash("sha256", $token);
             $expiry = date("Y-m-d H:i:s", time() + 60 * 30);
+            // resetPassword($token_hash, $expiry, $email);
+            $affectedRows = resetPassword($token_hash, $expiry, $email);
+            $urlToken = BASE_URL . '?act=forgotPassword' . "&token=" . $token;
+
+            if ($affectedRows > 0) {
+                $mail =  require_once "./core/mailer.php";
+                $mail->setFrom('noreply@example.com');
+                $mail->addAddress($email);
+                $mail->Subject = 'Password Reset - To: LuxChill';
+                $mail->Body = <<<END
+                
+    Click <a href="$urlToken">Click to here</a>
+    reset your password
+                
+END;
+                try {
+                    $mail->send();
+                } catch (Exception $e) {
+                    debug($mail->ErrorInfo);
+                }
+            }
+
+            echo "success. checkinbox";
+            // header('location: ' . BASE_URL);
         }
     }
 
