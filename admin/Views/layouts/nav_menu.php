@@ -56,13 +56,6 @@ $menuAdmin = [
         'act' => ['slides', 'create-slides', 'update-slides', 'delete-slides'],
         'url' => BASE_URL_ADMIN . '?act=slides',
         'icon' => '<i class="far fa-square"></i>'
-    ],
-    [
-        'id' => 9,
-        'name' => 'Upload',
-        'act' => ['table_upload', 'upload-image', 'upload-image', 'upload-image'],
-        'url' => BASE_URL_ADMIN . '?act=table_upload',
-        'icon' => '<i class="far fa-square"></i>'
     ]
 ];
 
@@ -102,5 +95,10 @@ $menuAdmin = [
         <!--            </ul>-->
         <!--        </li>-->
     </ul>
+    <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+        <a href="<?= BASE_URL ?>" class="btn btn-primary btn-lg btn-block btn-icon-split">
+            <i class="fas fa-rocket"></i> Web
+        </a>
+    </div>
 
 </aside>

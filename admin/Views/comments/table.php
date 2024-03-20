@@ -33,8 +33,9 @@
                             <table class="table table-bordered table-md">
                                 <tr>
                                     <th>User Image</th>
-                                    <th>Comment Content</th>
                                     <th>User Name</th>
+                                    <th>Image Comment</th>
+                                    <th>Comment Content</th>
                                     <th>Product Name</th>
                                     <th>Comment Time</th>
                                     <th>Action</th>
@@ -50,11 +51,16 @@
                                     <tr>
                                         <td>
                                             <div class="gallery">
-                                                <div class="gallery-item" data-image="data:image/jpeg;base64,<?= $value['user_image'] ?>" data-title="<?= $value['user_name'] ?>"></div>
+                                                <div class="gallery-item" data-image="<?= BASE_URL . $value['user_image'] ?>" data-title="<?= $value['user_name'] ?>"></div>
+                                            </div>
+                                        </td>
+                                        <td><?= $value['user_name'] ?></td>
+                                        <td>
+                                            <div class="gallery">
+                                                <div class="gallery-item" data-image="<?= BASE_URL . $value['comment_image'] ?>" data-title="<?= $value['comment_content'] ?>"></div>
                                             </div>
                                         </td>
                                         <td><?= $value['comment_content'] ?></td>
-                                        <td><?= $value['user_name'] ?></td>
                                         <td>
                                             <?= $value['product_name'] ?>
                                         </td>

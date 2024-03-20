@@ -142,39 +142,3 @@ function deleteOneProduct($id)
 }
 
 
-function insertTestImage($image)
-{
-    try {
-        $sql = "INSERT INTO test (image) VALUES (:image)";
-        $stmt = $GLOBALS['connect']->prepare($sql);
-        $stmt->bindParam(':image', $image);
-        $stmt->execute();
-    } catch (PDOException $e) {
-        debug($e->getMessage());
-    }
-}
-
-function selectTestImage()
-{
-    try {
-        $sql = "SELECT * FROM test";
-        $stmt = $GLOBALS['connect']->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll();
-    } catch (PDOException $e) {
-        debug($e->getMessage());
-    }
-}
-
-function deleteOneImage($id)
-{
-    try {
-        $sql = "DELETE FROM test WHERE id = :id";
-        $stmt = $GLOBALS['connect']->prepare($sql);
-        $stmt->bindParam(":id", $id);
-        $stmt->execute();
-        return $stmt->fetchAll();
-    } catch (PDOException $e) {
-        debug($e->getMessage());
-    }
-}

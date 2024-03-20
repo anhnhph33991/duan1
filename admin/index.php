@@ -21,6 +21,17 @@ require_once CONTROLLER_ADMIN . 'SlideShowController.php';
 $act = $_GET['act'] ?? '/';
 $page = $_GET['page'] ?? 1;
 
+
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+
+    if ($user['role'] != 1) {
+        header('location: ' . BASE_URL);
+    }
+} else {
+    header('location: ' . BASE_URL);
+}
+
 match ($act) {
     '/' => dashboardIndex(),
     // route product
@@ -62,11 +73,6 @@ match ($act) {
     'update-slides' => slideUpdate(),
     'delete-slides' => slideDelete(),
     'show-slides' => slideShow(),
-
-    // route test
-    'upload-image' => craeteImage(),
-    'table_upload' => ImageIndeexTest(),
-    'delete-image' => deleteImage(),
         // 404
     default => require_once VIEW_ADMIN . 'layouts/404.php',
 };

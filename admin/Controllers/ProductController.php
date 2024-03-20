@@ -165,34 +165,3 @@ function productDelete()
     header('location: ' . BASE_URL_ADMIN . '?act=products');
 }
 
-function craeteImage()
-{
-    $title = "Upload Image";
-    $view = 'products/test';
-
-    if (isset($_POST['submit'])) {
-        $avatar = $_FILES['image'] ?? null;
-        if (!empty($avatar) && $avatar['size'] > 0) {
-            $avatar = upload_file($avatar, 'public/image/');
-            insertTestImage($avatar);
-        }
-        header('location: ' . BASE_URL_ADMIN . '?act=table_upload');
-    }
-
-    require_once VIEW_ADMIN . 'layouts/master.php';
-}
-
-function ImageIndeexTest()
-{
-    $title = "Upload Image";
-    $view = 'products/table-test';
-    $data = selectTestImage();
-    require_once VIEW_ADMIN . 'layouts/master.php';
-}
-
-function deleteImage()
-{
-    $id = $_GET['id'] ?? null;
-    deleteOneImage($id);
-    header('location: ' . BASE_URL_ADMIN . '?act=table_upload');
-}

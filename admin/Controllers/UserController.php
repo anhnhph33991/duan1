@@ -31,7 +31,7 @@ function userCreate()
         $password = $_POST['password'];
         $address = $_POST['address'];
         $tel = $_POST['tel'];
-        $image = $_FILES['image']['tmp_name'];
+        $image = $_FILES['image'];
 
         if (empty($username)) {
             $_SESSION['errors']['name'] = 'Vui lòng nhập name 😡';
@@ -75,7 +75,7 @@ function userCreate()
             unset($_SESSION['errors']['tel']);
         }
 
-        if (empty($image)) {
+        if (empty($image['name'])) {
             $_SESSION['errors']['image'] = 'Vui lòng tải image 😡';
         } else {
             unset($_SESSION['errors']['image']);
@@ -84,9 +84,12 @@ function userCreate()
         if (!empty($_SESSION['errors'])) {
             header('location: ' . BASE_URL_ADMIN . '?act=add-user');
         } else {
-            $img = file_get_contents($image);
-            $imgBase64 = base64_encode($img);
-            insertUser($username, $email, $password, $address, $tel, $imgBase64);
+            // $img = file_get_contents($image);
+            // $imgBase64 = base64_encode($img);
+            $image = upload_file($image, 'public/image/');
+            setcookie("message", "Create user thành công 🎊", time() + 1);
+            setcookie("type_mess", "success", time() + 1);
+            insertUser($username, $email, $password, $address, $tel, $image);
             header('location: ' . BASE_URL_ADMIN . '?act=users');
         }
     }
@@ -152,16 +155,19 @@ function userUpdate()
             unset($_SESSION['errors']['tel']);
         }
 
-        if (empty($image)) {
-            $imgSaveDb = $imageOld;
+        if (empty($image['name'])) {
+            $imageSaveDb = $imageOld;
         } else {
-            $img = file_get_contents($image);
-            $imgSaveDb = base64_encode($img);
+            $imageSaveDb = upload_file($image, 'public/image/');
         }
 
         if (!empty($_SESSION['errors'])) {
+            setcookie("message", "Update lỗi 😿", time() + 1);
+            setcookie("type_mess", "error", time() + 1);
             header('location: ' . BASE_URL_ADMIN . '?act=update-user&id=' . $id);
         } else {
+            setcookie("message", "Update user thành công 🎊", time() + 1);
+            setcookie("type_mess", "success", time() + 1);
             updateUser($id, $username, $email, $password, $address, $tel, $imgSaveDb);
             header('location: ' . BASE_URL_ADMIN . '?act=users');
         }

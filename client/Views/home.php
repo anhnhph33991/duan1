@@ -8,7 +8,7 @@
 <?php
 
 // echo "<pre>";
-// print_r($dataSlide);
+// print_r($dataCategory);
 // echo "</pre>";
 
 // foreach ($dataSlide as $key => $value) {
@@ -59,33 +59,17 @@
 
 <!-- Banner Category -->
 <ul id="banners_grid" class="clearfix">
-    <li>
-        <a href="<?= BASE_URL ?>?act=shop&category=thoi-trang-nam" class="img_container">
-            <img src="<?= BASE_URL ?>public/image/bannerThoitrangnam.jpg" data-src="<?= BASE_URL ?>public/image/bannerThoitrangnam.jpg" alt="" class="lazy">
-            <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-                <h3>Men's Collection</h3>
-                <div><span class="btn_1">Shop Now</span></div>
-            </div>
-        </a>
-    </li>
-    <li>
-        <a href="<?= BASE_URL ?>?act=shop&category=thoi-trang-nu" class="img_container">
-            <img src="<?= BASE_URL ?>public/image/bannerThoitrangnu.jpg" data-src="<?= BASE_URL ?>public/image/bannerThoitrangnu.jpg" alt="" class="lazy">
-            <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-                <h3>Womens's Collection</h3>
-                <div><span class="btn_1">Shop Now</span></div>
-            </div>
-        </a>
-    </li>
-    <li>
-        <a href="<?= BASE_URL ?>?act=shop&category=thoi-trang-tre-em" class="img_container">
-            <img src="<?= BASE_URL ?>public/image/bannerThoitrangtreem.jpg" data-src="<?= BASE_URL ?>public/image/bannerThoitrangtreem.jpg" alt="" class="lazy">
-            <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-                <h3>Kids's Collection</h3>
-                <div><span class="btn_1">Shop Now</span></div>
-            </div>
-        </a>
-    </li>
+    <?php foreach ($dataCategory as $key => $value) :  ?>
+        <li>
+            <a href="<?= BASE_URL . '?act=shop&category=' . $value['slug'] ?>" class="img_container">
+                <img src="<?= BASE_URL . $value['image'] ?>" data-src="<?= BASE_URL . $value['image'] ?>" alt="" class="lazy">
+                <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
+                    <h3><?= $value['name'] ?></h3>
+                    <div><span class="btn_1">Shop Now</span></div>
+                </div>
+            </a>
+        </li>
+    <?php endforeach  ?>
 </ul>
 <!--/banners_grid -->
 

@@ -39,12 +39,14 @@ function getTotalPageCategory()
     }
 }
 
-function insertCategory($name)
+function insertCategory($name, $slug, $image)
 {
     try {
-        $sql = "INSERT INTO category (name) VALUES (:name)";
+        $sql = "INSERT INTO category (name, slug, image) VALUES (:name, :slug, :image)";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":slug", $slug);
+        $stmt->bindParam(":image", $image);
         $stmt->execute();
     } catch (PDOException $e) {
         debug($e->getMessage());

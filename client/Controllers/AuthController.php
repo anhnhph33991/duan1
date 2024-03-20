@@ -47,7 +47,13 @@ function loginIndex()
                     'image' => $user['image'],
                     'role' => $user['role']
                 ];
-                header('location: ' . BASE_URL);
+
+                if($user['role'] != 1){
+                    header('location: ' . BASE_URL);
+                }else{
+                    header('location: ' . BASE_URL_ADMIN);
+                }
+
             } else {
                 setcookie("message", "Email or Password không đúng. Vui lòng kiểm tra lại ? ", time() + 1);
                 header('location: ' . BASE_URL . '?act=login');

@@ -26,6 +26,7 @@
                             <table class="table table-bordered table-md">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                                 <?php foreach ($data as $key => $value) :  ?>
@@ -38,6 +39,11 @@
                                     ?>
                                     <tr>
                                         <td class="col-6"><?= $value['name'] ?></td>
+                                        <td>
+                                            <div class="gallery">
+                                                <div class="gallery-item" data-image="<?= BASE_URL . $value['image'] ?>" data-title="<?= $value['name'] ?>"></div>
+                                            </div>
+                                        </td>
                                         <td class="col-6">
                                             <a href="<?= BASE_URL_ADMIN ?>?act=show-category&id=<?= $value['id'] ?>" class="btn btn-secondary"><i class="fa-regular fa-eye"></i></a>
                                             <a href="<?= BASE_URL_ADMIN ?>?act=update-category&id=<?= $value['id'] ?>" class="btn btn-warning">

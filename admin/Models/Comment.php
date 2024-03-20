@@ -6,6 +6,8 @@ function getAllComment($limit, $initial_page)
         $sql = "SELECT
         comments.id AS comment_id,
         comments.content AS comment_content,
+        comments.image AS comment_image,
+        comments.stars AS comment_stars,
         users.username AS user_name,
         users.image AS user_image,
         products.name AS product_name,
