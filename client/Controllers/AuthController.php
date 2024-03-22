@@ -6,11 +6,17 @@ function loginIndex()
 {
     $title = 'Login - LuxChill';
     $view = 'auth/login';
+    // nếu login từ btn comment sẽ có biến này url của sản phẩm
+    $auth = $_GET['auth'] ?? null;
+    $idProduct = $_GET['id'] ?? null;
+
 
     if (isset($_POST['submit'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
         $user = authLogin($email); // sql check user where email
+
+        $auth = $_GET['auth'] ?? null;
 
         if (empty($email)) {
             $_SESSION['errors']['email'] = 'Vui lòng nhập email 😡';
@@ -47,9 +53,18 @@ function loginIndex()
                     'image' => $user['image'],
                     'role' => $user['role']
                 ];
+                // if(isset($auth)){
+                //     header('location: ' . BASE_URL . $auth);
+                // }
 
                 if ($user['role'] != 1) {
-                    header('location: ' . BASE_URL);
+                    // nếu có biến auth sau khi đăng nhập back về sản phẩm trước đó
+                    if (isset($auth)) {
+                        header('location: ' . BASE_URL . $auth . '&id=' . $idProduct);
+                    } else {
+                        // nếu k có sẽ vào trang home
+                        header('location: ' . BASE_URL);
+                    }
                 } else {
                     header('location: ' . BASE_URL_ADMIN);
                 }
@@ -107,7 +122,7 @@ function registerIndex()
         if (!empty($_SESSION['errors'])) {
             header('location: ' . BASE_URL . '?act=register');
         } else {
-            // insertUser($username, $email, $password);
+            insertUser($username, $email, $password);
             setcookie("message", "Đăng kí thành công", time() + 1);
             header('location: ' . BASE_URL . '?act=login');
         }

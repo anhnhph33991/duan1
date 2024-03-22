@@ -3,7 +3,15 @@
     <div class="row justify-content-center">
         <form action="" method="post" class="col-lg-8">
             <div class="write_review">
-                <h1>Write a review for Armor Air X Fear</h1>
+                <h1>Write a review for <b class="text-warning"><?= $product['p_name'] ?></b></h1>
+                <?php
+
+                // echo "<pre>";
+                // print_r($product);
+                // echo "</pre>";
+
+
+                ?>
                 <div class="rating_submit">
                     <div class="form-group">
                         <label class="d-block">Overall rating</label>
@@ -21,6 +29,12 @@
                     <label>Title of your review</label>
                     <input class="form-control" type="text" placeholder="If you could say it in one sentence, what would you say?">
                 </div> -->
+
+                <!-- Id Product -->
+                <input type="text" value="<?= $product['p_id'] ?>" name="idProduct" class="d-none">
+                <!-- Id User -->
+                <input type="text" value="<?= $_SESSION['user']['id'] ?>" name="idUser" class="d-none">
+
                 <div class="form-group">
                     <label>Your review</label>
                     <textarea class="form-control" style="height: 180px;" placeholder="Write your review to help others learn about this online business" name="content"></textarea>

@@ -285,7 +285,7 @@ function selectSizeProduct($idProduct, $id)
 function selectProductWithCategory($id_category)
 {
     try {
-        $sql = "SELECT * FROM products WHERE id_category = :id_category LIMIT 5";
+        $sql = "SELECT * FROM products WHERE id_category = :id_category AND status = 'public' LIMIT 10";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(':id_category', $id_category, PDO::PARAM_INT);
         $stmt->execute();

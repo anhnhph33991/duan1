@@ -32,7 +32,7 @@
 
     function addToCart(e, id, name, price, image, description, type, cName) {
         e.preventDefault();
-        let idUser = "<?= $_SESSION['user']['id'] ?? '' ?>";
+        let idUser = "<?php echo isset($_SESSION['user']) ? $_SESSION['user']['id'] : 0 ?>";
         $.ajax({
             type: "POST",
             url: "<?= BASE_URL . '?act=handleAddToCart' ?>",
