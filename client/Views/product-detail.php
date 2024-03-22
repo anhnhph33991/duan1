@@ -47,7 +47,7 @@ if (!empty($dataSize)) {
                 $merge = array_merge($product, $listImage);
 
                 // echo "<pre>";
-                // print_r($productRelated);
+                // print_r($product);
                 // echo "</pre>";
 
                 // $slideShow = [$product['p_image'], $listImage];
@@ -157,13 +157,15 @@ if (!empty($dataSize)) {
                     <div class="col-lg-5 col-md-6">
                         <div class="price_main"><span class="new_price"><?= number_format($product['p_price'], 0, '.', '.') ?>đ</span>
                             <?php if ($product['p_type'] == 'sale') : ?>
-                                <?php $product['p_price'] = $product['p_price'] * 0.8;   ?>
-                                <span class="percentage">-20%</span> <span class="old_price"><?= number_format($product['p_price'], 0, '.', '.') ?>đ</span>
+                                <?php $productPriceSale = $product['p_price'] * 0.8;   ?>
+                                <span class="percentage">-20%</span> <span class="old_price"><?= number_format($productPriceSale, 0, '.', '.') ?>đ</span>
                             <?php endif ?>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="btn_add_to_cart"><a href="#0" class="btn_1 " onclick="handleAddToCart( '<?= $product['p_id'] ?>','<?= $product['p_name'] ?>', '<?= $product['p_price'] ?>', '<?= $product['p_image'] ?>', '<?= $product['c_name'] ?>', '<?= $product['p_type'] ?>')">Add to Cart</a></div>
+                        <div class="btn_add_to_cart"><a href="#0" class="btn_1 " onclick="handleAddToCart('<?= $product['p_id'] ?>', '<?= $product['p_name'] ?>', '<?= $product['p_price'] ?>','<?= $product['p_image'] ?>','<?= $product['p_description'] ?>','<?= $product['p_type'] ?>','<?= $product['c_name'] ?>')">Add to Cart</a></div>
+
+
                     </div>
                 </div>
             </div>
@@ -214,9 +216,7 @@ if (!empty($dataSize)) {
                         <div class="row justify-content-between">
                             <div class="col-lg-6">
                                 <h3>Details</h3>
-                                <p>Lorem ipsum dolor sit amet, in eleifend <strong>inimicus elaboraret</strong> his, harum efficiendi mel ne. Sale percipit vituperata ex mel, sea ne essent aeterno sanctus, nam ea laoreet civibus electram. Ea vis eius explicari. Quot iuvaret ad has.</p>
-                                <p>Vis ei ipsum conclusionemque. Te enim suscipit recusabo mea, ne vis mazim aliquando, everti insolens at sit. Cu vel modo unum quaestio, in vide dicta has. Ut his laudem explicari adversarium, nisl <strong>laboramus hendrerit</strong> te his, alia lobortis vis ea.</p>
-                                <p>Perfecto eleifend sea no, cu audire voluptatibus eam. An alii praesent sit, nobis numquam principes ea eos, cu autem constituto suscipiantur eam. Ex graeci elaboraret pro. Mei te omnis tantas, nobis viderer vivendo ex has.</p>
+                                <?= $product['p_description'] ?>
                             </div>
                             <div class="col-lg-5">
                                 <h3>Specifications</h3>
@@ -240,8 +240,8 @@ if (!empty($dataSize)) {
                                                 <td>0.6kg</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Manifacturer</strong></td>
-                                                <td>Manifacturer</td>
+                                                <td><strong>Người Đăng</strong></td>
+                                                <td>LuxChill</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -302,7 +302,11 @@ if (!empty($dataSize)) {
                             </div>
                         </div> -->
                         <!-- /row -->
-                        <p class="text-end"><a href="<?= BASE_URL ?>?act=leave-review" class="btn_1">Đánh giá sản phẩm</a></p>
+                        <?php if (isset($_SESSION['user'])) : ?>
+                            <p class="text-end"><a href="<?= BASE_URL . '?act=leave-review&id=' . $product['p_id'] ?>" class="btn_1">Đánh giá sản phẩm</a></p>
+                        <?php else :  ?>
+                            <p class="text-end"><a href="<?= BASE_URL . '?act=login&auth=?act=product-detail&id=36' ?>" class="btn_1">Login để bình luận</a></p>
+                        <?php endif  ?>
                     </div>
                     <!-- /card-body -->
                 </div>
@@ -357,77 +361,6 @@ if (!empty($dataSize)) {
                 <!-- /grid_item -->
             </div>
         <?php endforeach ?>
-        <div class="item">
-            <div class="grid_item">
-                <span class="ribbon hot">Hot</span>
-                <figure>
-                    <a href="product-detail-1.html">
-                        <img class="owl-lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/8.jpg" alt="">
-                    </a>
-                </figure>
-                <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
-                <a href="product-detail-1.html">
-                    <h3>Air Color 720</h3>
-                </a>
-                <div class="price_box">
-                    <span class="new_price">$120.00</span>
-                </div>
-                <ul>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                </ul>
-            </div>
-            <!-- /grid_item -->
-        </div>
-        <div class="item">
-            <div class="grid_item">
-                <span class="ribbon off">-30%</span>
-                <figure>
-                    <a href="product-detail-1.html">
-                        <img class="owl-lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/2.jpg" alt="">
-                    </a>
-                </figure>
-                <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
-                <a href="product-detail-1.html">
-                    <h3>Okwahn II</h3>
-                </a>
-                <div class="price_box">
-                    <span class="new_price">$90.00</span>
-                    <span class="old_price">$170.00</span>
-                </div>
-                <ul>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                </ul>
-            </div>
-            <!-- /grid_item -->
-        </div>
-        <div class="item">
-            <div class="grid_item">
-                <span class="ribbon off">-50%</span>
-                <figure>
-                    <a href="product-detail-1.html">
-                        <img class="owl-lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/3.jpg" alt="">
-                    </a>
-                </figure>
-                <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
-                <a href="product-detail-1.html">
-                    <h3>Air Wildwood ACG</h3>
-                </a>
-                <div class="price_box">
-                    <span class="new_price">$75.00</span>
-                    <span class="old_price">$155.00</span>
-                </div>
-                <ul>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                </ul>
-            </div>
-            <!-- /grid_item -->
-        </div>
         <!-- /item -->
     </div>
     <!-- /products_carousel -->

@@ -19,6 +19,9 @@
                         Product
                     </th>
                     <th>
+                        Id
+                    </th>
+                    <th>
                         Price
                     </th>
                     <th>
@@ -34,12 +37,23 @@
             </thead>
             <tbody>
                 <?php foreach ($_SESSION['cart'] as $key => $value) : ?>
+                    <?php
+
+                    // echo "<pre>";
+                    // print_r($value);
+                    // echo "</pre>";
+
+
+                    ?>
                     <tr>
                         <td>
                             <div class="thumb_cart">
                                 <img src="<?= BASE_URL . $value['imageProduct'] ?>" data-src="<?= BASE_URL . $value['imageProduct'] ?>" class="lazy" alt="Image">
                             </div>
                             <span class="item_cart"><?= $value['nameProduct'] ?></span>
+                        </td>
+                        <td>
+                            <strong><?= $value['idUser'] ?></strong>
                         </td>
                         <td>
                             <strong><?= number_format($value['priceProduct'], 0, '.', '.') ?>đ</strong>

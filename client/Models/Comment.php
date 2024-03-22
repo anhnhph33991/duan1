@@ -101,6 +101,22 @@ function selectOneComment($id)
     }
 }
 
+function insertComment($content, $idUser, $idProduct, $timeComment)
+{
+    try {
+        $sql = "INSERT INTO comments (content, id_user, id_product, time_comment) VALUES (:content, :id_user, :id_product, :time_comment)";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(":content", $content);
+        $stmt->bindParam(":id_user", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":id_product", $idProduct, PDO::PARAM_INT);
+        $stmt->bindParam(":time_comment", $timeComment);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+
 function updateComment($id, $content)
 {
     try {

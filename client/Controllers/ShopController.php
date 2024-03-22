@@ -69,11 +69,11 @@ function detailProduct()
     $components = 'detail-product';
     $product = selectOneProduct($_GET['id'] ?? null);
     $countView = $product['p_views'] + 1;
-    if ($product){
+    if ($product) {
         updateProductView($_GET['id'], $countView);
     }
 
-        $listImage = selectListImages($_GET['id'] ?? null);
+    $listImage = selectListImages($_GET['id'] ?? null);
     $dataComment = selectAllComment();
     // data biến thể
     $dataColor = selectColorProduct('colors', $_GET['id'] ?? null);
@@ -115,6 +115,8 @@ function handleAddToCart()
         $typeProduct = $_POST['typeProduct'];
         $cName = $_POST['cName'];
         $idUser = $_POST['idUser'];
+
+        // $checkAuth = isset($_SESSION['user']) ? 'yes' : 'no';
 
 
 
@@ -160,10 +162,12 @@ function reviewIndex()
 {
     $title = 'Rite Comment';
     $view = 'leave-review';
-
+    $product = selectOneProduct($_GET['id'] ?? null);
 
     if (isset($_POST['submit'])) {
         $content = $_POST['content'];
+        $idProduct = $_POST['idProduct'];
+        $idUser = $_POST['idUser'];
 
 
         if (empty($content)) {
@@ -173,9 +177,14 @@ function reviewIndex()
         }
 
         if (!empty($_SESSION['error'])) {
-            header('location: ' . BASE_URL . '?act=leave-review');
+            header('location: ' . BASE_URL . '?act=leave-review&id=' . $idProduct);
         } else {
-            header('location: ');
+            // echo $title . '</br>';
+            // echo $idProduct . '</br>';
+            // echo $idUser . '</br>';
+            $timeComment = date("Y-m-d H:i:s", time() + 60 * 30);
+            insertComment($content, $idUser, $idProduct, $timeComment);
+            header('location: ' . BASE_URL . '?act=product-detail&id=' . $idProduct);
         }
     }
 
