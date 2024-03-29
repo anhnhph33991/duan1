@@ -101,7 +101,7 @@
                                                         <i class="fa-solid fa-sliders"></i>
 
                                                     </button>
-                                                    <div class="dropdown-menu dropleft" x-placement="left-start" style="position: absolute; transform: translate3d(-202px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                    <div class="dropdown-menu dropleft" x-placement="left-start" style="position: absolute; transform: translate3d(-202px, 0px, 0px); top: 0px; left: 0px; will-change: transform; border: 1px solid black;">
                                                         <a class="dropdown-item" href="<?= BASE_URL_ADMIN ?>?act=show-product&id=<?= $value['p_id'] ?>"><i class="fa-regular fa-eye" style="color: #ababab;"></i><span style="margin-left: 0.5rem">Show</span></a>
                                                         <a class="dropdown-item" href="<?= BASE_URL_ADMIN ?>?act=update-product&id=<?= $value['p_id'] ?>"><i class="fa-regular fa-pen-to-square" style="color: #FFD43B;"></i><span style="margin-left: 0.5rem">Edit</span></a>
                                                         <a class="dropdown-item" href="<?= BASE_URL_ADMIN ?>?act=delete-product&id=<?= $value['p_id'] ?>" onclick="return confirm('Bạn có chắc muốn xóa product: <?= $value['p_name'] ?>')"><i class="fa-solid fa-trash" style="color: #f50529;"></i><span style="margin-left: 0.5rem">Delete</span></a>
