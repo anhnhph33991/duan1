@@ -37,6 +37,8 @@
     <link href="<?= BASE_URL ?>public/assets/css/account.css" rel="stylesheet">
     <!-- Track -->
     <link href="<?= BASE_URL ?>public/assets/css/leave_review.css" rel="stylesheet">
+    <!-- YOUR CUSTOM CSS -->
+    <link href="<?= BASE_URL ?>public/assets/css/error_track.css" rel="stylesheet">
 
     <!-- YOUR CUSTOM CSS -->
     <link href="<?= BASE_URL ?>public/assets/css/custom.css" rel="stylesheet">
@@ -88,6 +90,7 @@
     <!-- scipt chung - global -->
     <script src="<?= BASE_URL ?>public/assets/js/common_scripts.min.js"></script>
     <script src="<?= BASE_URL ?>public/assets/js/main.js"></script>
+    <script src="<?= BASE_URL ?>public/js/global.js"></script>
 
     <!-- File js cụ thể -->
     <?php

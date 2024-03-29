@@ -40,7 +40,7 @@
                                         <th>Image</th>
                                         <th>Name</th>
                                         <th>Price</th>
-                                        <th>Description</th>
+                                        <!-- <th>Description</th> -->
                                         <th>Views</th>
                                         <th>Categorys</th>
                                         <th>Status</th>
@@ -62,37 +62,51 @@
                                                     <div class="gallery-item" data-image="<?= BASE_URL . $value['p_image'] ?>" data-title="<?= $value['p_name'] ?>"></div>
                                                 </div>
                                             </td>
-                                            <td><?= $value['p_name'] ?></td>
+                                            <td><?= strlen($value['p_name']) > 15 ? substr($value['p_description'], 0, 10) . '...' : $value['p_description'] ?></td>
                                             <td><?= number_format($value['p_price'], 0, '.', '.') ?> đ</td>
-                                            <td>
+                                            <!-- <td>
                                                 <?=
                                                 strlen($value['p_description']) > 30 ? substr($value['p_description'], 0, 30) . '...' : $value['p_description']
                                                 ?>
-                                            </td>
+                                            </td> -->
                                             <td><?= $value['p_views'] ?></td>
                                             <td><?= $value['c_name'] ?></td>
                                             <td>
                                                 <div class="badge <?= $checkStyleStatus ?>"><?= $value['p_status'] ?></div>
                                             </td>
                                             <td>
-                                                <a href="<?= BASE_URL_ADMIN ?>?act=show-product&id=<?= $value['p_id'] ?>" class="btn btn-secondary"><i class="fa-regular fa-eye"></i></a>
+                                                <!-- <a href="<?= BASE_URL_ADMIN ?>?act=show-product&id=<?= $value['p_id'] ?>" class="btn btn-secondary"><i class="fa-regular fa-eye"></i></a>
                                                 <a href="<?= BASE_URL_ADMIN ?>?act=update-product&id=<?= $value['p_id'] ?>" class="btn btn-warning">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                                 <a href="<?= BASE_URL_ADMIN ?>?act=delete-product&id=<?= $value['p_id'] ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa product: <?= $value['p_name'] ?>')">
                                                     <i class="fa-solid fa-trash-can"></i>
-                                                </a>
+                                                </a> -->
+
+                                                <!-- <div class="btn-group dropleft">
+                                                    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa-solid fa-sliders"></i>
+
+                                                    </button>
+                                                    <div class="dropdown-menu dropleft" x-placement="left-start" style="position: absolute; transform: translate3d(-202px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                        <a class="dropdown-item" href="<?= BASE_URL_ADMIN ?>?act=variant-product&id=<?= $value['p_id'] ?>">Biến Thể</a>
+                                                        <a class="dropdown-item" href="#">Another action</a>
+                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="#">Separated link</a>
+                                                    </div>
+                                                </div> -->
                                                 <div class="btn-group dropleft">
                                                     <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa-solid fa-sliders"></i>
 
                                                     </button>
                                                     <div class="dropdown-menu dropleft" x-placement="left-start" style="position: absolute; transform: translate3d(-202px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item" href="<?=  BASE_URL_ADMIN?>?act=variant-product&id=<?= $value['p_id'] ?>">Biến Thể</a>
-                                                        <a class="dropdown-item" href="#">Another action</a>
-                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                                        <a class="dropdown-item" href="<?= BASE_URL_ADMIN ?>?act=show-product&id=<?= $value['p_id'] ?>"><i class="fa-regular fa-eye" style="color: #ababab;"></i><span style="margin-left: 0.5rem">Show</span></a>
+                                                        <a class="dropdown-item" href="<?= BASE_URL_ADMIN ?>?act=update-product&id=<?= $value['p_id'] ?>"><i class="fa-regular fa-pen-to-square" style="color: #FFD43B;"></i><span style="margin-left: 0.5rem">Edit</span></a>
+                                                        <a class="dropdown-item" href="<?= BASE_URL_ADMIN ?>?act=delete-product&id=<?= $value['p_id'] ?>" onclick="return confirm('Bạn có chắc muốn xóa product: <?= $value['p_name'] ?>')"><i class="fa-solid fa-trash" style="color: #f50529;"></i><span style="margin-left: 0.5rem">Delete</span></a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">Separated link</a>
+                                                        <a class="dropdown-item" href="<?= BASE_URL_ADMIN ?>?act=variant-product&id=<?= $value['p_id'] ?>"><i class="fa-solid fa-list" style="color: #00ccff;"></i><span style="margin-left: 0.5rem;">Biến thể</span></a>
                                                     </div>
                                                 </div>
                                             </td>

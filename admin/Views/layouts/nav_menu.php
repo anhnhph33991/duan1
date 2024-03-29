@@ -56,6 +56,13 @@ $menuAdmin = [
         'act' => ['slides', 'create-slides', 'update-slides', 'delete-slides'],
         'url' => BASE_URL_ADMIN . '?act=slides',
         'icon' => '<i class="far fa-square"></i>'
+    ],
+    [
+        'id' => 9,
+        'name' => 'Sale Setting',
+        'act' => ['sale-setting', 'create-sale-setting', 'update-sale-setting', 'delete-sale-setting'],
+        'url' => BASE_URL_ADMIN . '?act=sale-setting',
+        'icon' => '<i class="far fa-square"></i>'
     ]
 ];
 

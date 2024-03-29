@@ -140,12 +140,6 @@
                                                 <?php $subCategory = selectAllSubCategory($value['id']);
                                                 // select theo id cua mainCategory
                                                 ?>
-
-                                                <?php
-                                                // echo "<pre>";
-                                                // print_r($subCategory);
-                                                // echo "</pre>";
-                                                ?>
                                                 <?php foreach ($subCategory as $key => $value) :  ?>
                                                     <li><a href="<?= BASE_URL . '?act=shop&slug=' . $value['slug'] ?>"><?= $value['name'] ?></a></li>
                                                 <?php endforeach  ?>
@@ -160,8 +154,8 @@
             </div>
             <div class="col-xl-6 col-lg-7 col-md-6 d-none d-md-block">
                 <div class="custom-search-input">
-                    <input type="text" placeholder="Search over 10.000 products">
-                    <button type="submit"><i class="header-icon_search_custom"></i></button>
+                    <input type="text" placeholder="Search over 10.000 products" class="input__search">
+                    <button type="submit" onclick="handleSearch()"><i class="header-icon_search_custom"></i></button>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-2 col-md-3">
@@ -171,11 +165,16 @@
                             <a href="<?= BASE_URL ?>?act=cart" class="cart_bt">
                                 <strong class="qty_cart">
                                     <?php
-                                    if (isset($_SESSION['cart'])) {
+                                    if (isset($_SESSION['user'])) {
+                                        // biến lấy từ controller cart
+                                        $countCart = getCountRowsCart($_SESSION['user']['id']);
+                                        echo $countCart;
+                                    } elseif (isset($_SESSION['cart'])) {
                                         echo count($_SESSION['cart']);
                                     } else {
-                                        echo "0";
-                                    } ?>
+                                        echo '0';
+                                    }
+                                    ?>
                                 </strong>
                             </a>
                             <div class="dropdown-menu">
@@ -205,7 +204,7 @@
                         <!-- /dropdown-cart-->
                     </li>
                     <li>
-                        <a href="#0" class="wishlist"><span>Wishlist</span></a>
+                        <a href="<?= BASE_URL ?>?act=wishlists" class="wishlist"><span>Wishlist</span></a>
                     </li>
                     <li>
                         <div class="dropdown dropdown-access">
@@ -215,7 +214,7 @@
                                 <?php if (!empty($_SESSION['user'])) :  ?>
 
                                     <a href="<?= BASE_URL ?>?act=my-profile" class="btn_1">
-                                        <?= $_SESSION['user']['username'] ?>
+                                        <?= $_SESSION['user']['username'] ?><?= '-' . $_SESSION['user']['id'] ?>
                                     </a>
                                     <ul>
                                         <li>

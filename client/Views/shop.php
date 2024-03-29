@@ -193,7 +193,7 @@ if (isset($_GET['category'])) {
                     <?php
 
                     // echo "<pre>";
-                    // print_r($dataProduct);
+                    // print_r($dataGetCount);
                     // echo "</pre>";
 
 
@@ -252,9 +252,9 @@ if (isset($_GET['category'])) {
                                         <?php endif; ?>
                                     </div>
                                     <ul>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                        <li class="btn__addToCart" onclick="addToCart(event, '<?= $value['p_id'] ?>', '<?= $value['p_name'] ?>', '<?= $value['p_price'] ?>','<?= $value['p_image'] ?>','<?= $value['p_description'] ?>','<?= $value['p_type'] ?>','<?= $value['c_name'] ?>')"><a href="#1" class=" tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Thêm vào danh mục yêu thích"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
+                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Thêm vào so sánh"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
+                                        <li class="btn__addToCart" onclick="addToCart(event, '<?= $value['p_id'] ?>', '<?= $value['p_name'] ?>', '<?= $value['p_price'] ?>','<?= $value['p_image'] ?>','<?= $value['p_description'] ?>','<?= $value['p_type'] ?>','<?= $value['c_name'] ?>')"><a href="#1" class=" tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Thêm vào giỏ hàng"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -263,6 +263,7 @@ if (isset($_GET['category'])) {
 
                 </div>
                 <!-- /row -->
+                <!-- Phân Trang  -->
                 <div class="pagination__wrapper">
                     <ul class="pagination">
                         <?php
@@ -297,6 +298,7 @@ if (isset($_GET['category'])) {
                 </div>
 
             </div>
+            <!-- Nếu k có biến dataProduct -->
         <?php else : ?>
             <div class="col-lg-9">
                 <div class="card">
@@ -319,6 +321,12 @@ if (isset($_GET['category'])) {
         <?php endif ?>
         <!-- /col -->
     </div>
+
+    <?php
+
+
+
+    ?>
     <!-- /row -->
 
 </div>

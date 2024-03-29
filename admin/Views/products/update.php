@@ -66,7 +66,7 @@
                         <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Description</label>
                             <div class="col-sm-12 col-md-7">
-                                <textarea class="summernote-simple" name="description"></textarea>
+                                <textarea class="summernote-simple" name="description"><?= $product['p_description'] ?></textarea>
                                 <div style="color: #dc3545; font-size: 80%; margin-top: 0.25rem; width: 100%;">
                                     <?= !empty($_SESSION['errors']['description']) ? $_SESSION['errors']['description'] : '' ?>
                                 </div>

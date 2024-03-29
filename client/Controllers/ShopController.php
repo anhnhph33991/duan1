@@ -3,15 +3,14 @@
 require_once MODELS . 'Category.php';
 require_once MODELS . 'Product.php';
 require_once MODELS . 'Comment.php';
+require_once MODELS . 'Cart.php';
 
 function shopIndex()
 {
     $title = 'Shop';
     $view = 'shop';
     $script = 'shop';
-
-    $dataCategory = selectAllCategory();
-    // $dataProduct = selectAllProducts();
+    $dataCategory = selectAllCategory(); // select all category
 
     $page = $GLOBALS['page'] ?? 1;
     $limit = 12;
@@ -22,6 +21,11 @@ function shopIndex()
     // all products
     $dataProduct = getAllProducts($limit, $initial_page);
     $total_rows = getTotalPageProducts();
+
+    if (isset($_SESSION['user'])) {
+        $idUser = $_SESSION['user']['id'];
+        $dataGetCount = getCountRowsCart($idUser);
+    }
 
     if (isset($_GET['category'])) {
         $category = $_GET['category'];
@@ -53,7 +57,10 @@ function shopIndex()
         }
     }
 
-
+    if (isset($_GET['search'])) {
+        $dataProduct = getSearchProduct($_GET['search'], $limit, $initial_page);
+        $total_rows = getTotalPageProductsWithSearch($_GET['search']);
+    }
 
     $total_pages = ceil($total_rows / $limit);
 
@@ -102,42 +109,184 @@ function detailProduct()
 
 function handleAddToCart()
 {
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
+    // if ($_POST) {
+    //     $idProduct = $_POST['idProduct'];
+    //     $nameProduct = $_POST['nameProduct'];
+    //     $priceProduct = $_POST['priceProduct'];
+    //     $imageProduct = $_POST['imageProduct'];
+    //     $descriptionProduct = $_POST['descriptionProduct'];
+    //     $typeProduct = $_POST['typeProduct'];
+    //     $cName = $_POST['cName'];
+    //     $idUser = $_POST['idUser'] ?? 0;
+
+    //     $cartItemCount = 0;
+    //     $dataCart = [];
+
+    //     // $checkAuth = isset($_SESSION['user']) ? 'yes' : 'no';
+
+    //     // if ($idUser !== 0) {
+    //     //     insertOneCartProduct($nameProduct, $imageProduct, $priceProduct, $idUser, $idProduct, $descriptionProduct, $typeProduct,$cName);
+    //     // }    
+
+    //     // 2 Luồng:
+    //     /*
+    //      *
+    //      * 1. Khi có login
+    //      * 2. Khi k login 
+    //      * 
+    //      *
+    //      */
+
+    //     // if ($idUser == 0) {
+    //     //     // tạo session cart
+    //     //     if (!isset($_SESSION['cart'])) {
+    //     //         $_SESSION['cart'] = array();
+    //     //     }
+
+    //     //     // lưu vào ss
+    //     //     $newProduct = array(
+    //     //         'product_id' => $idProduct,
+    //     //         'name' => $nameProduct,
+    //     //         'price' => $priceProduct,
+    //     //         'image' => $imageProduct,
+    //     //         'descriptionProduct' => $descriptionProduct,
+    //     //         'typeProduct' => $typeProduct,
+    //     //         'cName' => $cName,
+    //     //         'idUser' => $idUser
+    //     //     );
+
+    //     //     $_SESSION['cart'][] = $newProduct;
+    //     //     $cartItemCount = count($_SESSION['cart']);
+    //     // }else{
+    //     //     insertOneCartProduct($nameProduct, $imageProduct, $priceProduct, $idUser, $idProduct, $descriptionProduct, $typeProduct, $cName);
+    //     //     $dataCart = getAllCart($idUser);
+    //     //     $cartItemCount = count($dataCart);
+    //     // }
+
+
+    //     // $_SESSION['cart'][] = $newProduct;
+    //     // $cartItemCount = count($_SESSION['cart']);
+
+    //     // return res
+    //     // $response = array(
+    //     //     'cartItemCount' => $cartItemCount,
+    //     //     'cartItem' => $newProduct,
+    //     //     'countIdUser' => $idUser,
+    //     // );
+
+    //     // // Trả về dữ liệu dưới dạng JSON
+    //     // header('Content-Type: application/json');
+    //     // echo json_encode($response);
+    //     // exit; // Kết thúc script PHP sau khi gửi dữ liệu JSON
+
+    //     if ($idUser == 0) {
+    //         // tạo session cart
+    //         if (!isset($_SESSION['cart'])) {
+    //             $_SESSION['cart'] = array();
+    //         }
+
+    //         // lưu vào ss
+    //         $newProduct = array(
+    //             'product_id' => $idProduct,
+    //             'name' => $nameProduct,
+    //             'price' => $priceProduct,
+    //             'image' => $imageProduct,
+    //             'descriptionProduct' => $descriptionProduct,
+    //             'typeProduct' => $typeProduct,
+    //             'cName' => $cName,
+    //             'idUser' => $idUser
+    //         );
+
+    //         $_SESSION['cart'][] = $newProduct;
+    //         $cartItemCount = count($_SESSION['cart']);
+
+    //         // Gửi $newProduct trong trường hợp không đăng nhập
+    //         $response = array(
+    //             'cartItemCount' => $cartItemCount,
+    //             'cartItem' => $newProduct,
+    //             'countIdUser' => $idUser,
+    //         );
+    //     } else {
+    //         // Thực hiện thêm sản phẩm vào giỏ hàng cho người dùng đã đăng nhập
+    //         insertOneCartProduct($nameProduct, $imageProduct, $priceProduct, $idUser, $idProduct, $descriptionProduct, $typeProduct, $cName);
+    //         $dataCart = getAllCart($idUser);
+    //         $cartItemCount = count($dataCart);
+
+    //         // Gửi một phản hồi không có giá trị cartItem trong trường hợp đã đăng nhập
+    //         $response = array(
+    //             'cartItemCount' => $cartItemCount,
+    //             'countIdUser' => $idUser,
+    //         );
+    //     }
+
+    //     // Trả về dữ liệu dưới dạng JSON
+    //     header('Content-Type: application/json');
+    //     echo json_encode($response);
+    //     exit; // Kết thúc script PHP sau khi gửi dữ liệu JSON
+
+    // }
+
+    // Khởi tạo biến để lưu số lượng sản phẩm trong giỏ hàng
+    $cartItemCount = 0;
+
+    if (!isset($_SESSION['user'])) {
+        // Nếu người dùng không đăng nhập, thêm sản phẩm vào giỏ hàng phiên
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = array();
+        }
     }
 
     if ($_POST) {
-        $idProduct = $_POST['idProduct'];
-        $nameProduct = $_POST['nameProduct'];
-        $priceProduct = $_POST['priceProduct'];
-        $imageProduct = $_POST['imageProduct'];
-        $descriptionProduct = $_POST['descriptionProduct'];
-        $typeProduct = $_POST['typeProduct'];
-        $cName = $_POST['cName'];
-        $idUser = $_POST['idUser'];
+        // Lấy thông tin sản phẩm từ POST
+        $idProduct = isset($_POST['idProduct']) ? $_POST['idProduct'] : null;
+        $nameProduct = isset($_POST['nameProduct']) ? $_POST['nameProduct'] : null;
+        $priceProduct = isset($_POST['priceProduct']) ? $_POST['priceProduct'] : null;
+        $imageProduct = isset($_POST['imageProduct']) ? $_POST['imageProduct'] : null;
+        $descriptionProduct = isset($_POST['descriptionProduct']) ? $_POST['descriptionProduct'] : null;
+        $typeProduct = isset($_POST['typeProduct']) ? $_POST['typeProduct'] : null;
+        $cName = isset($_POST['cName']) ? $_POST['cName'] : null;
+        $idUser = isset($_POST['idUser']) ? $_POST['idUser'] : 0;
 
-        // $checkAuth = isset($_SESSION['user']) ? 'yes' : 'no';
+        if ($idUser == 0) {
+            // $idRandom = uniqid();
+            // Lưu thông tin sản phẩm vào giỏ hàng phiên
+            $newProduct = array(
+                'product_id' => $idProduct,
+                'name' => $nameProduct,
+                'price' => $priceProduct,
+                'image' => $imageProduct,
+                'descriptionProduct' => $descriptionProduct,
+                'typeProduct' => $typeProduct,
+                'cName' => $cName,
+                'idUser' => $idUser
+            );
 
+            $_SESSION['cart'][] = $newProduct;
+            $cartItemCount = count($_SESSION['cart']);
+        } else {
 
+            // Nếu người dùng đã đăng nhập, thêm sản phẩm vào giỏ hàng cơ sở dữ liệu
+            insertOneCartProduct($nameProduct, $imageProduct, $priceProduct, $idUser, $idProduct, $descriptionProduct, $typeProduct, $cName);
+            $cartItemCount =  getCountRowsCart($idUser);
+        }
 
-        $newProduct = array(
-            'idProduct' => $idProduct,
-            'nameProduct' => $nameProduct,
-            'priceProduct' => $priceProduct,
-            'imageProduct' => $imageProduct,
-            'descriptionProduct' => $descriptionProduct,
-            'typeProduct' => $typeProduct,
-            'cName' => $cName,
-            'idUser' => $idUser
-        );
+        // success
+        // if($idUser == 0){
+        //     $hello = 'k login';
+        //     $cartItemCount = 6;
+        // }else{
+        //     $hello = 'có login';
+        //     insertOneCartProduct($nameProduct, $imageProduct, $priceProduct, $idUser, $idProduct, $descriptionProduct, $typeProduct, $cName);
+        //     $sayCount = getAllCart($idUser);
+        //     $soluong = count($sayCount);
+        //     $cartItemCount = $soluong;
+        // }
 
-        $_SESSION['cart'][] = $newProduct;
-        $cartItemCount = count($_SESSION['cart']);
-
-        // return res
+        // Tạo mảng phản hồi JSON
         $response = array(
-            'cartItemCount' => $cartItemCount
-            // 'cartItem' => $_SESSION['cart']
+            'cartItemCount' => $cartItemCount,
+            'countIdUser' => $idUser,
+            // 'id' => $idRandom,
         );
 
         // Trả về dữ liệu dưới dạng JSON
@@ -150,12 +299,35 @@ function handleAddToCart()
 function handleRemoveProduct()
 {
     $id = $_GET['id'] ?? null;
-    $name = $_GET['name'] ?? null;
 
-    unset($_SESSION['cart'][$id]);
-    setcookie("message", "Xóa thành công - $name 🎊", time() + 1);
-    setcookie("type_mess", "success", time() + 1);
-    header('Location: ' . BASE_URL . '?act=cart');
+    $dataCart = [];
+
+    if ($id !== 0) {
+        $dataCart = getAllCart($id);
+    } else {
+        $dataCart = $_SESSION['cart'] ?? null;
+    }
+
+    if (isset($_SESSION['user'])) {
+        // call function delete product in cart
+        deleteQtyProduct($id);
+    } else {
+        $key = array_search($id, array_column($dataCart, 'product_id'));
+        // echo "<script>console.log('$key')</script>";
+        if ($key !== false) {
+            unset($dataCart[$key]);
+        }
+        // if ($_SESSION['cart']['product_id'] == $id) {
+        //     unset($_SESSION['cart']['product_id']);
+        // }
+    }
+
+    // echo $id;
+
+    // unset($_SESSION['cart'][$id]);
+    // setcookie("message", "Xóa thành công 🎊", time() + 1);
+    // setcookie("type_mess", "success", time() + 1);
+    // header('Location: ' . BASE_URL . '?act=cart');
 }
 
 function reviewIndex()

@@ -1,5 +1,5 @@
 <?php
-
+// select all product - có chia page
 function getAllProducts($limit, $initial_page)
 {
     try {
@@ -31,7 +31,7 @@ function getAllProducts($limit, $initial_page)
     }
 }
 
-// sub_category
+// sub category
 
 function getAllSubCate()
 {
@@ -48,6 +48,7 @@ function getAllSubCate()
     }
 }
 
+// select all product với category - có chia page
 function getAllProductWithCategory($limit, $initial_page, $id_category)
 {
     try {
@@ -80,6 +81,7 @@ function getAllProductWithCategory($limit, $initial_page, $id_category)
     }
 }
 
+// select all product k chia page
 function selectAllProducts()
 {
     try {
@@ -107,7 +109,7 @@ function selectAllProducts()
     }
 }
 
-
+// lấy số lượng record tất cả products
 function getTotalPageProducts()
 {
     try {
@@ -120,6 +122,7 @@ function getTotalPageProducts()
     }
 }
 
+// lấy số lượng record tất cả products theo category
 function getTotalPageProductsWithCategory($id_category)
 {
     try {
@@ -133,6 +136,123 @@ function getTotalPageProductsWithCategory($id_category)
     }
 }
 
+// search product
+function getSearchProduct($name, $limit, $initial_page)
+{
+    try {
+        $keywords = explode('-', $name);
+        $keywordConditions = [];
+        foreach ($keywords as $keyword) {
+            $keywordConditions[] = "p.name LIKE '%$keyword%'";
+        }
+        $condition = implode(' AND ', $keywordConditions);
+        // AND sẽ tìm đúng theo value phải thỏa mãn tất cả mới render
+        // OR Tìm theo từng value 
+        $sql = "SELECT
+            p.id as p_id,
+            p.name as p_name,
+            p.price as p_price,
+            p.image as p_image,
+            p.description as p_description,
+            p.views as p_views,
+            p.type as p_type,
+            p.status as p_status,
+            c.name as c_name,
+            c.id as c_id
+            FROM products as p
+            INNER JOIN category as c
+            ON p.id_category = c.id 
+            WHERE p.status = 'public' AND ($condition)
+            ORDER BY p.id DESC
+            LIMIT :limit OFFSET :offset";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $initial_page, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        die($e->getMessage());
+    }
+}
+
+// lấy số lượng record tất cả products theo search
+function getTotalPageProductsWithSearch($name)
+{
+    try {
+        // handle slug -
+        $keywords = explode('-', $name);
+        $keywordConditions = [];
+        foreach ($keywords as $keyword) {
+            $keywordConditions[] = "name LIKE '%$keyword%'";
+        }
+        $condition = implode(' AND ', $keywordConditions);
+
+        $sql = "SELECT COUNT(*) FROM products WHERE ($condition) AND status = 'public'";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    } catch (PDOException $e) {
+        die($e->getMessage());
+    }
+}
+
+// select top 10 products
+
+function selectGet8Products()
+{
+    try {
+        $sql = "SELECT
+        p.id as p_id,
+        p.name as p_name,
+        p.price as p_price,
+        p.image as p_image,
+        p.description as p_description,
+        p.views as p_views,
+        p.type as p_type,
+        p.status as p_status,
+        c.name as c_name
+        FROM products as p
+        INNER JOIN category as c
+        ON p.id_category = c.id
+        WHERE p.status = 'public' 
+        ORDER BY p.id DESC LIMIT 10";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+function selectTopProductViews()
+{
+    try {
+        $sql = "SELECT * FROM products ORDER BY views DESC LIMIT 8";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        die($e->getMessage());
+    }
+}
+
+
+// get count record search product
+// function getTotalPageProductsWithSearch($id_category)
+// {
+//     try {
+//         $sql = "SELECT * FROM products WHERE name = :name";
+//         $stmt = $GLOBALS['connect']->prepare($sql);
+//         $stmt->bindParam(":name", $name);
+//         $stmt->execute();
+//         return $stmt->fetchColumn();
+//     } catch (PDOException $e) {
+//         die($e->getMessage());
+//     }
+// }
+
+
+// Thêm product
 function insertOneProduct($name, $price, $image, $description, $id_category)
 {
     try {
@@ -148,6 +268,8 @@ function insertOneProduct($name, $price, $image, $description, $id_category)
         debug($e->getMessage());
     }
 }
+
+
 
 
 function selectOneProduct($id)

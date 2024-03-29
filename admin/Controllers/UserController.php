@@ -69,9 +69,9 @@ function userCreate()
             $_SESSION['errors']['tel'] = 'Vui lòng nhập number phone 😡';
         } elseif (!is_numeric($tel)) {
             $_SESSION['errors']['tel'] = 'Number Phone Phải là số 😤';
-        } elseif(strlen($tel) > 10){
+        } elseif (strlen($tel) > 10) {
             $_SESSION['errors']['tel'] = 'Number Phone dài thế ? 😤';
-        }else {
+        } else {
             unset($_SESSION['errors']['tel']);
         }
 
@@ -113,7 +113,7 @@ function userUpdate()
         $password = $_POST['password'];
         $address = $_POST['address'];
         $tel = $_POST['tel'];
-        $image = $_FILES['image']['tmp_name'];
+        $image = $_FILES['image'];
         $imageOld = $_POST['imageOld'];
         $imgSaveDb = '';
 
@@ -156,9 +156,9 @@ function userUpdate()
         }
 
         if (empty($image['name'])) {
-            $imageSaveDb = $imageOld;
+            $imgSaveDb = $imageOld;
         } else {
-            $imageSaveDb = upload_file($image, 'public/image/');
+            $imgSaveDb = upload_file($image, 'public/image/');
         }
 
         if (!empty($_SESSION['errors'])) {

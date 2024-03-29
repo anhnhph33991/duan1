@@ -46,13 +46,6 @@
                                             <th>User Name</th>
                                             <th>Action</th>
                                         </tr>
-                                        <?php
-
-                                        // echo "<pre>";
-                                        // print_r($data);
-                                        // echo "</pre>";
-
-                                        ?>
                                         <?php foreach ($data as $key => $value) :  ?>
                                             <?php
                                             // class change status color

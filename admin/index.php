@@ -7,7 +7,8 @@ require_once "../core/env.php";
 require_once "../core/helper.php";
 require_once "../core/connect.php";
 // require_once "../core/configCloudinary.php";
-// Require controllers
+
+// Require controllers start
 require_once CONTROLLER_ADMIN . 'DashboardController.php';
 require_once CONTROLLER_ADMIN . 'ProductController.php';
 require_once CONTROLLER_ADMIN . 'CategoryController.php';
@@ -16,6 +17,10 @@ require_once CONTROLLER_ADMIN . 'CommentController.php';
 require_once CONTROLLER_ADMIN . 'OrderController.php';
 require_once CONTROLLER_ADMIN . 'VoucherController.php';
 require_once CONTROLLER_ADMIN . 'SlideShowController.php';
+require_once CONTROLLER_ADMIN . 'VariantProductController.php';
+require_once CONTROLLER_ADMIN . 'ProfileController.php';
+require_once CONTROLLER_ADMIN . 'SaleSettingController.php';
+// Require controllers end
 
 // Handle Routes
 $act = $_GET['act'] ?? '/';
@@ -76,6 +81,17 @@ match ($act) {
     'update-slides' => slideUpdate(),
     'delete-slides' => slideDelete(),
     'show-slides' => slideShow(),
+
+    // show profile admin
+    'show-profile' => profileIndex(),
+
+
+
+    // sale manage
+    "sale-setting" => saleSettingIndex(),
+
+    // handle variant product
+    'variant-product' => variantProduct(),
         // 404
     default => require_once VIEW_ADMIN . 'layouts/404.php',
 };

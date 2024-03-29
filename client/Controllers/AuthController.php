@@ -44,6 +44,8 @@ function loginIndex()
 
             if ($user && $password == $user['password']) {
                 setcookie("message", "Đăng nhập thành công", time() + 1);
+                setcookie("welcome", "Chào mừng bạn quay trở lại web 🎊", time() + 30);
+                setcookie("type_mess", "success", time() + 1);
                 $_SESSION['user'] = [
                     'id' => $user['id'],
                     'username' => $user['username'],

@@ -13,14 +13,14 @@
         event.preventDefault();
 
 
-        var selectedCategories = Array.from(checkboxes).filter(function(checkbox) {
+        let selectedCategories = Array.from(checkboxes).filter(function(checkbox) {
             return checkbox.checked;
         }).map(function(checkbox) {
             return checkbox.value;
         });
 
-        var categoryParam = selectedCategories.length > 0 ? 'category=' + selectedCategories.join(',') : '';
-        var url = 'http://localhost/duan1/?act=shop';
+        let categoryParam = selectedCategories.length > 0 ? 'category=' + selectedCategories.join(',') : '';
+        let url = 'http://localhost/duan1/?act=shop';
 
         if (categoryParam !== '') {
             url += '&' + categoryParam;
@@ -48,6 +48,10 @@
             },
             success: function(res) {
                 $('.qty_cart').text(res.cartItemCount);
+                // console.log(res.cartItem);
+                console.log(`Số lượng sản phẩm trong giỏ hàng: ${res.cartItemCount}`);
+                console.log(res.countIdUser);
+                // console.log(res.id);
                 toastr.success('Thêm vào giỏ hàng thành công 🛒');
             },
             error: function(xhr, status, error) {

@@ -11,15 +11,12 @@
         <h1>Cart page</h1>
     </div>
     <!-- /page_header -->
-    <?php if (!empty($_SESSION['cart'])) : ?>
+    <?php if (!empty($dataCart)) : ?>
         <table class="table table-striped cart-list">
             <thead>
                 <tr>
                     <th>
                         Product
-                    </th>
-                    <th>
-                        Id
                     </th>
                     <th>
                         Price
@@ -36,7 +33,19 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($_SESSION['cart'] as $key => $value) : ?>
+                <?php
+                // $_SESSION['cart'] = array();
+                // echo "<pre>";
+                // print_r($dataCart);
+                // echo "</pre>";
+                // echo "</br>";
+
+                // echo "data cart";
+                // echo "<pre>";
+                // print_r($_SESSION['cart']);
+                // echo "</pre>";
+                ?>
+                <?php foreach ($dataCart as $key => $value) : ?>
                     <?php
 
                     // echo "<pre>";
@@ -48,15 +57,12 @@
                     <tr>
                         <td>
                             <div class="thumb_cart">
-                                <img src="<?= BASE_URL . $value['imageProduct'] ?>" data-src="<?= BASE_URL . $value['imageProduct'] ?>" class="lazy" alt="Image">
+                                <img src="<?= BASE_URL . $value['image'] ?>" data-src="<?= BASE_URL . $value['image'] ?>" class="lazy" alt="Image">
                             </div>
-                            <span class="item_cart"><?= $value['nameProduct'] ?></span>
+                            <span class="item_cart"><?= $value['name'] ?></span>
                         </td>
                         <td>
-                            <strong><?= $value['idUser'] ?></strong>
-                        </td>
-                        <td>
-                            <strong><?= number_format($value['priceProduct'], 0, '.', '.') ?>đ</strong>
+                            <strong><?= number_format($value['price'], 0, '.', '.') ?>đ</strong>
                         </td>
                         <td>
                             <!-- <div class="numbers-row"> -->
@@ -74,35 +80,30 @@
                             <strong>$140.00</strong>
                         </td>
                         <td class="options">
-                            <a href="<?= BASE_URL ?>?act=remove-product&id=<?= $key ?>&name=<?= $value['nameProduct'] ?>"><i class="ti-trash"></i></a>
+                            <!-- Dựa vào id product sẽ xóa product đó -->
+                            <a href="<?= BASE_URL ?>?act=remove-product&id=<?= $value['product_id'] ?>"><i class="ti-trash"></i></a>
                         </td>
                     </tr>
                 <?php endforeach ?>
             </tbody>
         </table>
-    <?php else : ?>
-        <h1>Ko co data</h1>
-        <a href="<?= BASE_URL ?>?act=shop">Shopping</a>
-    <?php endif ?>
 
-
-
-    <div class="row add_top_30 flex-sm-row-reverse cart_actions">
-        <div class="col-sm-4 text-end">
-            <button type="button" class="btn_1 gray">Update Cart</button>
-        </div>
-        <div class="col-sm-8">
-            <div class="apply-coupon">
-                <div class="form-group">
-                    <div class="row g-2">
-                        <div class="col-md-6"><input type="text" name="coupon-code" value="" placeholder="Promo code" class="form-control"></div>
-                        <div class="col-md-4"><button type="button" class="btn_1 outline">Apply Coupon</button></div>
+        <div class="row add_top_30 flex-sm-row-reverse cart_actions">
+            <div class="col-sm-4 text-end">
+                <button type="button" class="btn_1 gray">Update Cart</button>
+            </div>
+            <div class="col-sm-8">
+                <div class="apply-coupon">
+                    <div class="form-group">
+                        <div class="row g-2">
+                            <div class="col-md-6"><input type="text" name="coupon-code" value="" placeholder="Promo code" class="form-control"></div>
+                            <div class="col-md-4"><button type="button" class="btn_1 outline">Apply Coupon</button></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- /cart_actions -->
+        <!-- /cart_actions -->
 
 </div>
 <!-- /container -->
@@ -128,3 +129,10 @@
     </div>
 </div>
 <!-- /box_cart -->
+
+<?php else : ?>
+    <div class="text-center">
+        <h1>Chưa có sản phẩm nào trong giỏ hàng</h1>
+        <a href="<?= BASE_URL ?>?act=shop">Shopping Ngay</a>
+    </div>
+<?php endif ?>

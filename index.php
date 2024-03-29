@@ -22,7 +22,8 @@ match ($act) {
     'cart' => cartIndex(),
     'checkout' => checkoutIndex(),
     'confirm' => confirmIndex(),
-    
+    // 'wishlists' => wishlistsIndex(),
+
 
     'leave-review' => reviewIndex(),
 
