@@ -182,25 +182,48 @@ function variantProductCreate()
     $title = 'Variant Product';
     $view = 'products/variant-create';
     $script = 'variant';
+
+    // if (isset($_POST['submit'])) {
+    //     $uploadDir = PATH_UPLOAD . 'public/'; // Thư mục lưu trữ ảnh
+    //     $uploadedFiles = []; // Mảng lưu trữ tên các ảnh đã upload
+
+    //     // Loop qua từng file được upload từ form
+    //     foreach ($_FILES['files']['tmp_name'] as $key => $tmp_name) {
+    //         $fileName = $_FILES['files']['name'][$key];
+    //         $fileSize = $_FILES['files']['size'][$key];
+    //         $fileTmp = $_FILES['files']['tmp_name'][$key];
+    //         $fileType = $_FILES['files']['type'][$key];
+
+    //         // Kiểm tra xem file có phải là ảnh không
+    //         $allowedExtensions = array("jpeg", "jpg", "png");
+    //         $fileParts = explode('.', $fileName);
+    //         $fileExtension = strtolower(end($fileParts));
+
+    //         if (in_array($fileExtension, $allowedExtensions) === false) {
+    //             echo "Chỉ cho phép upload file ảnh có định dạng JPEG, JPG, PNG.";
+    //             exit();
+    //         }
+
+    //         // Di chuyển file vào thư mục uploads
+    //         $uploadPath = $uploadDir . basename($fileName);
+    //         if (move_uploaded_file($fileTmp, $uploadPath)) {
+    //             $uploadedFiles[] = $fileName; // Lưu tên file vào mảng
+    //         }
+    //     }
+
+    //     // Tạo chuỗi string từ tên các ảnh
+    //     $imageString = implode(",", $uploadedFiles);
+    //     echo "Các ảnh đã được upload: " . $imageString;
+    // }
+
     if (isset($_POST['submit'])) {
-        $uploaded_files = $_FILES['multiple_file'];
-
-        foreach ($uploaded_files as $key => $tmp_name) {
-            if ($uploaded_files['error'][$key] === UPLOAD_ERR_OK) {
-                // Di chuyển tệp tải lên vào vị trí lưu trữ mong muốn
-
-                // $destination = "uploads/" . $uploaded_files['name'][$key];
-                $destination = $uploaded_files['name'][$key];
-                // move_uploaded_file($tmp_name, $destination);
-
-                // Hiển thị hình ảnh tải lên
-                // echo "<img src='$destination' alt='Uploaded Image'>";
-                echo $destination . '</>';
-            } else {
-                // Xử lý lỗi nếu có
-                echo "Error uploading file: " . $uploaded_files['name'][$key];
-            }
-        }
+        $uploadMultifile = upload_multifile($_FILES['files'], 'public/');
+        $_SESSION['images'] = $uploadMultifile;
+        setcookie("message", "Upload file thành công", time() + 1);
+        setcookie("type_mess", "success", time() + 1);
+		header("location: ". BASE_URL_ADMIN . '?act=add-variant-product&id=' . $id);
     }
+
+
     require_once VIEW_ADMIN . 'layouts/master.php';
-}           
+}

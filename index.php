@@ -1,6 +1,8 @@
 <?php
 session_start();
 ob_start();
+// Require autoload
+require_once "./vendor/autoload.php";
 // Require filde core
 require_once "./core/env.php";
 require_once "./core/helper.php";
@@ -24,6 +26,8 @@ match ($act) {
     'confirm' => confirmIndex(),
     // 'wishlists' => wishlistsIndex(),
 
+    'momoPay' => handleDataMomo(),
+
 
     'leave-review' => reviewIndex(),
 
@@ -32,10 +36,10 @@ match ($act) {
     'my-order' => myOrderIndex(),
     'my-profile' => profileIndex(),
 
-    // 
+    // handle cart
     'handleAddToCart' => handleAddToCart(),
     'remove-product' => handleRemoveProduct(),
-
+    'updateCart' => updateCart(),
 
     // auth route
     'login' => loginIndex(),

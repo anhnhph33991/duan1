@@ -141,7 +141,7 @@ function forgotPassword()
 
     if (isset($_POST['submit'])) {
         $email = $_POST['email'];
-        echo $email;
+        // echo $email;
 
         if (empty($email)) {
             $_SESSION['errors']['email'] = 'Thế thì chịu 😡';
@@ -160,25 +160,28 @@ function forgotPassword()
             $affectedRows = resetPassword($token_hash, $expiry, $email);
             $urlToken = BASE_URL . '?act=forgotPassword' . "&token=" . $token;
 
+            $body = '<div>
+            
+            <div>Xin chào,</div>
+            <div>
+                <p>Hãy nhấn vào <a href=" ' . 'http://localhost/duan1/?act=forgotPassword&token=' . $token  . ' ">Click</a> để đặt lại mật khẩu </p>
+            </div>
+            
+            
+            </div>';
+
             if ($affectedRows > 0) {
-                $mail =  require_once "./core/mailer.php";
-                $mail->setFrom('noreply@example.com');
-                $mail->addAddress($email);
-                $mail->Subject = 'Password Reset - To: LuxChill';
-                $mail->Body = <<<END
-                
-    Click <a href="$urlToken">Click to here</a>
-    reset your password
-                
-END;
-                try {
-                    $mail->send();
-                } catch (Exception $e) {
-                    debug($mail->ErrorInfo);
-                }
+                sendMail($email, 'hoanganh', 'Confim Forgot Password', $body);
+                setcookie("title_confirm", "Xác nhận email thành công", time() + 1);
+                setcookie("subTitle_confirm", "Vui lòng check mail để đổi lại mật khẩu", time() + 1);
+                header('location: ' . BASE_URL . '?act=confirm');
+            } else {
+                setcookie("message", "Email này không tồn tại", time() + 1);
+                setcookie("type_mess", "error", time() + 1);
+                header('location: ' . BASE_URL . '?act=forgotPassword');
             }
 
-            echo "success. checkinbox";
+            // echo "success. checkinbox";
             // header('location: ' . BASE_URL);
         }
     }

@@ -28,10 +28,10 @@ function getCountRowsCart($idUser)
 }
 
 
-function insertOneCartProduct($nameProduct, $imageProduct, $priceProduct, $idUser, $idProduct, $descriptionProduct, $typeProduct, $cName)
+function insertOneCartProduct($nameProduct, $imageProduct, $priceProduct, $idUser, $idProduct, $descriptionProduct, $typeProduct, $cName, $qty)
 {
     try {
-        $sql = "INSERT INTO cart (name, image, price, user_id, product_id, descriptionProduct, typeProduct, cName) VALUES (:name, :image, :price, :user_id, :product_id, :descriptionProduct, :typeProduct, :cName)";
+        $sql = "INSERT INTO cart (name, image, price, user_id, product_id, descriptionProduct, typeProduct, cName, qty) VALUES (:name, :image, :price, :user_id, :product_id, :descriptionProduct, :typeProduct, :cName, :qty)";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":name", $nameProduct);
         $stmt->bindParam(":image", $imageProduct);
@@ -41,31 +41,34 @@ function insertOneCartProduct($nameProduct, $imageProduct, $priceProduct, $idUse
         $stmt->bindParam(":descriptionProduct", $descriptionProduct);
         $stmt->bindParam(":typeProduct", $typeProduct);
         $stmt->bindParam(":cName", $cName);
-
+        $stmt->bindParam(":qty", $qty);
         $stmt->execute();
     } catch (PDOException $e) {
         debug($e->getMessage());
     }
 }
 
-function updateQtyProduct($idProduct)
+function updateQtyProduct($idProduct, $qtyProduct, $idUser)
 {
     try {
-        $sql = "UPDATE cart SET qty = qty + 1 WHERE product_id = :product_id";
+        $sql = "UPDATE cart SET qty = :qty_product WHERE product_id = :product_id AND user_id = :user_id";
         $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(":qty_product", $qtyProduct);
         $stmt->bindParam(":product_id", $idProduct);
+        $stmt->bindParam(":user_id", $idUser);
         $stmt->execute();
     } catch (PDOException $e) {
         debug($e->getMessage());
     }
 }
 
-function deleteQtyProduct($idProduct)
+function deleteQtyProduct($idProduct, $idUser)
 {
     try {
-        $sql = "DELETE FROM cart WHERE product_id = :product_id";
+        $sql = "DELETE FROM cart WHERE product_id = :product_id AND user_id = :user_id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":product_id", $idProduct);
+        $stmt->bindParam(":user_id", $idUser);
         $stmt->execute();
     } catch (PDOException $e) {
         debug($e->getMessage());
@@ -125,6 +128,38 @@ function deleteOneProductCart($id)
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+
+
+// 
+function checkProductCart($userId, $productId)
+{
+    try {
+        $sql = "SELECT * FROM cart WHERE user_id = :user_id AND product_id = :product_id";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->bindParam(':product_id', $productId);
+        $stmt->execute();
+        return $stmt->rowCount();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+function getQtyProduct($idProduct, $idUser)
+{
+    try {
+        $sql = "SELECT * FROM cart WHERE user_id = :user_id AND product_id = :product_id";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(':user_id', $idUser);
+        $stmt->bindParam(':product_id', $idProduct);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result ? $result['qty'] : 0;
     } catch (PDOException $e) {
         debug($e->getMessage());
     }

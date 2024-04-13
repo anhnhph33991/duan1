@@ -215,7 +215,7 @@ function selectGet8Products()
         INNER JOIN category as c
         ON p.id_category = c.id
         WHERE p.status = 'public' 
-        ORDER BY p.id DESC LIMIT 10";
+        ORDER BY p.id DESC LIMIT 8";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();

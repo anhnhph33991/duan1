@@ -27,15 +27,7 @@ $act = $_GET['act'] ?? '/';
 $page = $_GET['page'] ?? 1;
 
 
-if (isset($_SESSION['user'])) {
-    $user = $_SESSION['user'];
-
-    if ($user['role'] != 1) {
-        header('location: ' . BASE_URL);
-    }
-} else {
-    header('location: ' . BASE_URL);
-}
+middlewareAuthThor();
 
 match ($act) {
     '/' => dashboardIndex(),

@@ -33,25 +33,12 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                // $_SESSION['cart'] = array();
-                // echo "<pre>";
-                // print_r($dataCart);
-                // echo "</pre>";
-                // echo "</br>";
-
-                // echo "data cart";
-                // echo "<pre>";
-                // print_r($_SESSION['cart']);
-                // echo "</pre>";
-                ?>
+                <?php $priceSum = 0;  ?>
                 <?php foreach ($dataCart as $key => $value) : ?>
                     <?php
-
-                    // echo "<pre>";
-                    // print_r($value);
-                    // echo "</pre>";
-
+                    $priceSubTotal = $value['price'] * $value['qty'];
+                    $priceSum += $priceSubTotal;
+                    // echo $priceSum;
 
                     ?>
                     <tr>
@@ -59,10 +46,10 @@
                             <div class="thumb_cart">
                                 <img src="<?= BASE_URL . $value['image'] ?>" data-src="<?= BASE_URL . $value['image'] ?>" class="lazy" alt="Image">
                             </div>
-                            <span class="item_cart"><?= $value['name'] ?></span>
+                            <span class="item_cart"><a href="<?= BASE_URL . '?act=product-detail&id=' . $value['product_id'] ?>"><?= $value['name'] ?></a></span>
                         </td>
                         <td>
-                            <strong><?= number_format($value['price'], 0, '.', '.') ?>đ</strong>
+                            <strong class="priceProduct-<?= $value['product_id'] ?>" data-price="<?= $value['price'] ?>"><?= number_format($value['price'], 0, '.', '.') ?>đ</strong>
                         </td>
                         <td>
                             <!-- <div class="numbers-row"> -->
@@ -70,14 +57,14 @@
                                 <div class="inc button_inc plus__button">+</div>
                                 <div class="dec button_inc dash__button">-</div> -->
                             <div class="d-flex">
-                                <button class="plus__button btn btn-outline-primary" style="width: 30px; ">+</button>
-                                <input type="tel" value="1" name="qty_product_cart" style="width: 30%;" class="qtyInput-<?= $key ?>">
-                                <button class="dash__button btn btn-outline-primary" style="width: 30px; ">-</button>
+                                <button class="plus__button btn btn-outline-primary" style="width: 30px;  " data-product-id="<?= $value['product_id'] ?>">+</button>
+                                <input type="tel" value="<?= $value['qty'] ?>" name="qty_product_cart" style="width: 30%;" class="qtyInput-<?= $value['product_id'] ?>">
+                                <button class="dash__button btn btn-outline-primary" style="width: 30px; " data-product-id="<?= $value['product_id'] ?>">-</button>
                             </div>
                             <!-- </div> -->
                         </td>
                         <td>
-                            <strong>$140.00</strong>
+                            <strong class="subTotal-<?= $value['product_id'] ?>" data-product-id="<?= $value['product_id'] ?>" id="priceSubTotal"><?= number_format($priceSubTotal, 0, '.', '.') ?>đ</strong>
                         </td>
                         <td class="options">
                             <!-- Dựa vào id product sẽ xóa product đó -->
@@ -114,13 +101,7 @@
             <div class="col-xl-4 col-lg-4 col-md-6">
                 <ul>
                     <li>
-                        <span>Subtotal</span> $240.00
-                    </li>
-                    <li>
-                        <span>Shipping</span> $7.00
-                    </li>
-                    <li>
-                        <span>Total</span> $247.00
+                        <span>Tổng Tiền</span> <label class="sumPriceCart"><?= number_format($priceSum, 0, '.', '.') ?>đ</label>
                     </li>
                 </ul>
                 <a href="<?= BASE_URL ?>?act=checkout" class="btn_1 full-width cart">Thanh Toán</a>

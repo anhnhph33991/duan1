@@ -39,10 +39,10 @@ function getTotalPageOrder()
     }
 }
 
-function insertOrder($payment, $address, $status, $total_amount, $idProduct, $timeAt, $codeAt)
+function insertOrder($payment, $address, $status, $total_amount, $idProduct, $timeAt, $codeAt, $username)
 {
     try {
-        $sql = "INSERT INTO orders (payments, address, status, total_amount, idProduct_cart, time_at, code_order) VALUES (:payments, :address, :status, :total_amount, :idProduct_cart, :time_at,:code_order)";
+        $sql = "INSERT INTO orders (payments, address, status, total_amount, idProduct_cart, time_at, code_order, username) VALUES (:payments, :address, :status, :total_amount, :idProduct_cart, :time_at,:code_order, :username)";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":payments", $payment);
         $stmt->bindParam(":address", $address);
@@ -51,6 +51,7 @@ function insertOrder($payment, $address, $status, $total_amount, $idProduct, $ti
         $stmt->bindParam(":idProduct_cart", $idProduct);
         $stmt->bindParam(":time_at", $timeAt);
         $stmt->bindParam(":code_order", $codeAt);
+        $stmt->bindParam(":username", $username);
         $stmt->execute();
     } catch (PDOException $e) {
         debug($e->getMessage());
@@ -60,9 +61,22 @@ function insertOrder($payment, $address, $status, $total_amount, $idProduct, $ti
 function selectOneOrder($id)
 {
     try {
-        $sql = "SELECT * FROM orders WHERE id = :id";
+        $sql = "SELECT * FROM slideshow WHERE id = :id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        return $stmt->fetch();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+function selectCodeOrder($codeOrder)
+{
+    try {
+        $sql = "SELECT * FROM orders WHERE code_order = :code_order";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(":code_order", $codeOrder);
         $stmt->execute();
         return $stmt->fetch();
     } catch (PDOException $e) {
@@ -84,19 +98,6 @@ function updateOrder($id, $username, $email, $password, $address, $tel, $image)
         $stmt->bindParam(":image", $image);
         $stmt->execute();
         return $stmt->fetch();
-    } catch (PDOException $e) {
-        debug($e->getMessage());
-    }
-}
-
-function updateStatusOrder($status, $id)
-{
-    try {
-        $sql = "UPDATE orders SET status = :status WHERE id = :id";
-        $stmt = $GLOBALS['connect']->prepare($sql);
-        $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":status", $status);
-        $stmt->execute();
     } catch (PDOException $e) {
         debug($e->getMessage());
     }

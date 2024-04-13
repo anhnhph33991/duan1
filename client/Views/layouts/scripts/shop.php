@@ -51,11 +51,15 @@
                 // console.log(res.cartItem);
                 console.log(`Số lượng sản phẩm trong giỏ hàng: ${res.cartItemCount}`);
                 console.log(res.countIdUser);
+                console.log(res.countProduct);
+                // console.log(res.successmess);
                 // console.log(res.id);
+                // console.log(res.checkProductAut);
                 toastr.success('Thêm vào giỏ hàng thành công 🛒');
             },
             error: function(xhr, status, error) {
                 toastr.error('Có lỗi xảy ra. Vui lòng thử lại sau!');
+                console.log(error);
             }
         })
 

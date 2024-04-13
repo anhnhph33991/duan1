@@ -12,29 +12,39 @@
     </div>
 
     <div class="section-body">
+		<?php require_once "../core/toast.php" ?>
         <h2 class="section-title">Biến Thể Mới</h2>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Multiple Upload</h4>
-                    </div>
-                    <div class="card-body">
-                        <form action="#" class="dropzone" id="mydropzone" method="post">
-                            <div class="fallback">
-                                <input name="multiple_file" type="file" multiple />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row mb-4">
-                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                <div class="col-sm-12 col-md-7">
-                    <button class="btn btn-primary btn__variantProduct" name="submit" type="button">Create Variant</button>
-                </div>
-            </div>
-        </div>
+<!--         <div class="row">-->
+<!--            <div class="col-12">-->
+<!--                <div class="card">-->
+<!--                    <div class="card-header">-->
+<!--                        <h4>Multiple Upload</h4>-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <form action="" class="dropzone" id="mydropzone" method="post" enctype="multipart/form-data">-->
+<!--                            <div class="fallback">-->
+<!--                                <input name="files[]" type="file" multiple />-->
+<!--                            </div>-->
+<!--                            <button class="btn btn-primary btn-variant-product" name="submit" type="button">Create Variant</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="form-group row mb-4">-->
+<!--                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>-->
+<!--                <div class="col-sm-12 col-md-7">-->
+<!--                    <button class="btn btn-primary btn__variantProduct" name="submit" type="button">Create Variant</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+        <form action="" method="post" enctype="multipart/form-data">
+            Chọn ảnh để upload (cho phép multiple): <br>
+            <input type="file" name="files[]" multiple /><br>
+            <input type="submit" name="submit" value="Submit" />
+        </form>
     </div>
+
 </section>

@@ -4,16 +4,27 @@
             <div class="col-xl-7 col-lg-9">
                 <img src="<?= BASE_URL ?>public/assets/img/track_order.svg" alt="" class="img-fluid add_bottom_15" width="200" height="177">
                 <p>Quick Tracking Order</p>
-                <form>
-                    <div class="search_bar">
-                        <input type="text" class="form-control" placeholder="Invoice ID">
-                        <input type="submit" value="Search">
-                    </div>
-                </form>
+                <!-- <form method="post" action=""> -->
+                <div class="search_bar">
+                    <input type="text" class="form-control checking" placeholder="Invoice ID" name="checkorder">
+                    <input type="submit" value="Search" onclick="searchCheckOrder()">
+                </div>
+                <!-- </form> -->
             </div>
         </div>
+
+        <?php if (isset($dataOrder)) : ?>
+
+            <div>
+                <h1>Khách Hàng: <span><?= $dataOrder['username'] ?></span></h1>
+                <h3>Đơn hàng: <span><?= $dataOrder['code_order'] ?></span></h3>
+                <h3>Trạng Thái: <span><?= $dataOrder['status'] ?></span></h3>
+            </div>
+        <?php endif ?>
         <!-- /row -->
     </div>
+
+
     <!-- /container -->
 </div>
 <!-- /track_order -->

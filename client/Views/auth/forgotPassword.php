@@ -1,9 +1,4 @@
-<?php if (isset($_COOKIE['message'])) : ?>
-    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        <strong><?= $_COOKIE['message'] ?? '' ?></strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-<?php endif ?>
+<?php require_once "./core/toast.php" ?>
 
 <div class="container margin_30">
     <div class="page_header">

@@ -19,7 +19,7 @@
         // echo "</pre>";
 
         ?>
-
+    
         <?php require_once "../core/toast.php" ?>
 
         <h2 class="section-title">Table</h2>
@@ -62,7 +62,7 @@
                                                     <div class="gallery-item" data-image="<?= BASE_URL . $value['p_image'] ?>" data-title="<?= $value['p_name'] ?>"></div>
                                                 </div>
                                             </td>
-                                            <td><?= strlen($value['p_name']) > 15 ? substr($value['p_description'], 0, 10) . '...' : $value['p_description'] ?></td>
+                                            <td><?= strlen($value['p_name']) > 10 ? substr($value['p_description'], 0, 30) . '...' : $value['p_description'] ?></td>
                                             <td><?= number_format($value['p_price'], 0, '.', '.') ?> đ</td>
                                             <!-- <td>
                                                 <?=

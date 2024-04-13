@@ -25,24 +25,26 @@
                         <div>
                             <div>
                                 <h5>Mã đơn hàng</h5>
-                                <p>LUXCHILL#239223</p>
+                                <p><?= $dataOrder['code_order'] ?></p>
                             </div>
                             <div>
                                 <h5>Địa chỉ nhận hàng</h5>
-                                <p>Thôn 1, xã song phương, hoài đức, hà nội</p>
+                                <p><?= $dataOrder['address'] ?></p>
                             </div>
                             <div>
                                 <h5>Hình thức thanh toán</h5>
-                                <p>Thanh toán tại nhà</p>
+                                <p><?= $dataOrder['payments'] ?></p>
                             </div>
                             <div>
-                                <h5>Tình trạng đơn hàng</h5>
-                                <select name="" id="">
-                                    <option value="" disabled selected>Chờ Xác Nhận</option>
-                                    <option value="">Đang Vận Chuyển</option>
-                                    <option value="">Đã Giao Hàng</option>
-                                </select>
-                                <button>Cập nhật đơn hàng</button>
+                                <form action="" method="post">
+                                    <h5>Tình trạng đơn hàng</h5>
+                                    <select name="status">
+                                        <option value="" disabled selected><?= $dataOrder['status'] ?></option>
+                                        <option value="Đang Vận Chuyển">Đang Vận Chuyển</option>
+                                        <option value="Đã Giao Hàng">Đã Giao Hàng</option>
+                                    </select>
+                                    <button type="submit" name="submit">Cập nhật đơn hàng</button>
+                                </form>
                             </div>
                         </div>
 
@@ -105,7 +107,7 @@
                     </div>
                     <div class="card-body">
                         <h1>Tổng số lượng: <span>15 sản phẩm</span></h1>
-                        <h1>Tổng Tiền: <span class="text-danger">999.999đ</span></h1>
+                        <h1>Tổng Tiền: <span class="text-danger"><?= number_format($dataOrder['total_amount'], 0, '.', '.') ?>đ</span></h1>
                     </div>
                 </div>
 

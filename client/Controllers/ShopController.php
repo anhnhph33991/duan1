@@ -228,6 +228,8 @@ function handleAddToCart()
 
     // Khởi tạo biến để lưu số lượng sản phẩm trong giỏ hàng
     $cartItemCount = 0;
+    $countproductId = 0;
+    $successmess = '';
 
     if (!isset($_SESSION['user'])) {
         // Nếu người dùng không đăng nhập, thêm sản phẩm vào giỏ hàng phiên
@@ -246,6 +248,7 @@ function handleAddToCart()
         $typeProduct = isset($_POST['typeProduct']) ? $_POST['typeProduct'] : null;
         $cName = isset($_POST['cName']) ? $_POST['cName'] : null;
         $idUser = isset($_POST['idUser']) ? $_POST['idUser'] : 0;
+        $qtyProduct = isset($_POST['qtyProduct']) ? $_POST['qtyProduct'] : 1;
 
         if ($idUser == 0) {
             // $idRandom = uniqid();
@@ -258,34 +261,41 @@ function handleAddToCart()
                 'descriptionProduct' => $descriptionProduct,
                 'typeProduct' => $typeProduct,
                 'cName' => $cName,
-                'idUser' => $idUser
+                'idUser' => $idUser,
+                'qty' => 1
             );
 
-            $_SESSION['cart'][] = $newProduct;
+            if (isset($_SESSION['cart'][$newProduct['product_id']])) {
+                $_SESSION['cart'][$newProduct['product_id']]['qty'] += 1;
+            } else {
+                $_SESSION['cart'][$newProduct['product_id']] = $newProduct;
+                $cartItemCount = count($_SESSION['cart']);
+            }
+
             $cartItemCount = count($_SESSION['cart']);
         } else {
+            // check xem có sản phẩm trong db chưa
+            $checkRowProduct = checkProductCart($idUser, $idProduct);
 
-            // Nếu người dùng đã đăng nhập, thêm sản phẩm vào giỏ hàng cơ sở dữ liệu
-            insertOneCartProduct($nameProduct, $imageProduct, $priceProduct, $idUser, $idProduct, $descriptionProduct, $typeProduct, $cName);
+            if ($checkRowProduct > 0) {
+                // nếu đã có sản phẩm trong table cart thì tăng qty
+                $qtyProduct = getQtyProduct($idProduct, $idUser);
+                updateQtyProduct($idProduct, $qtyProduct + 1, $idUser);
+            } else {
+                // Nếu người dùng đã đăng nhập, thêm sản phẩm vào giỏ hàng cơ sở dữ liệu
+                insertOneCartProduct($nameProduct, $imageProduct, $priceProduct, $idUser, $idProduct, $descriptionProduct, $typeProduct, $cName, $qtyProduct);
+                $cartItemCount =  getCountRowsCart($idUser);
+            }
             $cartItemCount =  getCountRowsCart($idUser);
         }
-
-        // success
-        // if($idUser == 0){
-        //     $hello = 'k login';
-        //     $cartItemCount = 6;
-        // }else{
-        //     $hello = 'có login';
-        //     insertOneCartProduct($nameProduct, $imageProduct, $priceProduct, $idUser, $idProduct, $descriptionProduct, $typeProduct, $cName);
-        //     $sayCount = getAllCart($idUser);
-        //     $soluong = count($sayCount);
-        //     $cartItemCount = $soluong;
-        // }
-
+        
         // Tạo mảng phản hồi JSON
         $response = array(
             'cartItemCount' => $cartItemCount,
             'countIdUser' => $idUser,
+            'countProduct' => $countproductId,
+            // 'checkProductAut' => $checkProductAut,
+            // 'successmess' => $successmess,
             // 'id' => $idRandom,
         );
 
@@ -298,36 +308,19 @@ function handleAddToCart()
 
 function handleRemoveProduct()
 {
-    $id = $_GET['id'] ?? null;
-
-    $dataCart = [];
-
-    if ($id !== 0) {
-        $dataCart = getAllCart($id);
-    } else {
-        $dataCart = $_SESSION['cart'] ?? null;
-    }
+    $id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : 0;
+    $idProduct = $_GET['id'] ?? null;
 
     if (isset($_SESSION['user'])) {
         // call function delete product in cart
-        deleteQtyProduct($id);
+        deleteQtyProduct($idProduct, $id);
     } else {
-        $key = array_search($id, array_column($dataCart, 'product_id'));
-        // echo "<script>console.log('$key')</script>";
-        if ($key !== false) {
-            unset($dataCart[$key]);
-        }
-        // if ($_SESSION['cart']['product_id'] == $id) {
-        //     unset($_SESSION['cart']['product_id']);
-        // }
+        unset($_SESSION['cart'][$idProduct]);
     }
 
-    // echo $id;
-
-    // unset($_SESSION['cart'][$id]);
-    // setcookie("message", "Xóa thành công 🎊", time() + 1);
-    // setcookie("type_mess", "success", time() + 1);
-    // header('Location: ' . BASE_URL . '?act=cart');
+    setcookie("message", "Xóa thành công 🎊", time() + 1);
+    setcookie("type_mess", "success", time() + 1);
+    header('Location: ' . BASE_URL . '?act=cart');
 }
 
 function reviewIndex()
