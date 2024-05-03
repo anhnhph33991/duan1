@@ -132,30 +132,20 @@
                             <div id="menu">
                                 <ul style="height: 230px;" <?php // style inline height menu  
                                                             ?>>
-                                    <li><span><a href="<?= BASE_URL ?>?act=shop&category=thoi-trang-nam">Quần Áo Nam</a></span>
-                                        <ul>
-                                            <li><a href="<?= BASE_URL ?>?act=shop&slug=ao-phong">Áo Phông</a></li>
-                                            <li><a href="<?= BASE_URL ?>?act=shop&slug=quan-dsq-nam">Quần DSG Nam</a></li>
-                                            <li><a href="<?= BASE_URL ?>?act=shop&slug=ao-khoac-nam">Áo Khoác Nam</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><span><a href="<?= BASE_URL ?>?act=shop&category=thoi-trang-nu">Quần Áo Nữ</a></span>
-                                        <ul>
-                                            <li><a href="listing-grid-6-sidebar-left.html">Offers</a></li>
-                                            <li><a href="listing-grid-7-sidebar-right.html">Shoes</a></li>
-                                            <li><a href="listing-row-1-sidebar-left.html">Clothing</a></li>
-                                            <li><a href="listing-row-3-sidebar-left.html">Accessories</a></li>
-                                            <li><a href="listing-row-4-sidebar-extended.html">Equipment</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><span><a href="<?= BASE_URL ?>?act=shop&category=thoi-trang-tre-em">Quần Áo Trẻ Em</a></span>
-                                        <ul>
-                                            <li><a href="listing-grid-1-full.html">Best Sellers</a></li>
-                                            <li><a href="listing-grid-2-full.html">Clothing</a></li>
-                                            <li><a href="listing-grid-3.html">Accessories</a></li>
-                                            <li><a href="listing-grid-4-sidebar-left.html">Shoes</a></li>
-                                        </ul>
-                                    </li>
+                                    <?php $mainCategory = selectAllCategory();   ?>
+                                    <?php foreach ($mainCategory as $key => $value) :  ?>
+
+                                        <li><span><a href="<?= BASE_URL . '?act=shop&category=' . $value['slug'] ?>"><?= $value['name'] ?></a></span>
+                                            <ul>
+                                                <?php $subCategory = selectAllSubCategory($value['id']);
+                                                // select theo id cua mainCategory
+                                                ?>
+                                                <?php foreach ($subCategory as $key => $value) :  ?>
+                                                    <li><a href="<?= BASE_URL . '?act=shop&slug=' . $value['slug'] ?>"><?= $value['name'] ?></a></li>
+                                                <?php endforeach  ?>
+                                            </ul>
+                                        </li>
+                                    <?php endforeach  ?>
                                 </ul>
                             </div>
                         </li>
@@ -164,15 +154,29 @@
             </div>
             <div class="col-xl-6 col-lg-7 col-md-6 d-none d-md-block">
                 <div class="custom-search-input">
-                    <input type="text" placeholder="Search over 10.000 products">
-                    <button type="submit"><i class="header-icon_search_custom"></i></button>
+                    <input type="text" placeholder="Search over 10.000 products" class="input__search">
+                    <button type="submit" onclick="handleSearch()"><i class="header-icon_search_custom"></i></button>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-2 col-md-3">
                 <ul class="top_tools">
                     <li>
                         <div class="dropdown dropdown-cart">
-                            <a href="<?= BASE_URL ?>?act=cart" class="cart_bt"><strong>2</strong></a>
+                            <a href="<?= BASE_URL ?>?act=cart" class="cart_bt">
+                                <strong class="qty_cart">
+                                    <?php
+                                    if (isset($_SESSION['user'])) {
+                                        // biến lấy từ controller cart
+                                        $countCart = getCountRowsCart($_SESSION['user']['id']);
+                                        echo $countCart;
+                                    } elseif (isset($_SESSION['cart'])) {
+                                        echo count($_SESSION['cart']);
+                                    } else {
+                                        echo '0';
+                                    }
+                                    ?>
+                                </strong>
+                            </a>
                             <div class="dropdown-menu">
                                 <ul>
                                     <li>
@@ -200,17 +204,17 @@
                         <!-- /dropdown-cart-->
                     </li>
                     <li>
-                        <a href="#0" class="wishlist"><span>Wishlist</span></a>
+                        <a href="<?= BASE_URL ?>?act=wishlists" class="wishlist"><span>Wishlist</span></a>
                     </li>
                     <li>
                         <div class="dropdown dropdown-access">
-                            <a href="account.html" class="access_link"><span>Account</span></a>
+                            <a href="<?= BASE_URL ?>?act=my-profile" class="access_link"><span>Account</span></a>
                             <div class="dropdown-menu">
 
                                 <?php if (!empty($_SESSION['user'])) :  ?>
 
                                     <a href="<?= BASE_URL ?>?act=my-profile" class="btn_1">
-                                        <?= $_SESSION['user']['username'] ?>
+                                        <?= $_SESSION['user']['username'] ?><?= '-' . $_SESSION['user']['id'] ?>
                                     </a>
                                     <ul>
                                         <li>

@@ -89,3 +89,17 @@ function deleteCategory($id)
         debug($e->getMessage());
     }
 }
+
+
+function selectAllSubCategory($id)
+{
+    try {
+        $sql = "SELECT * FROM sub_categorys WHERE category_id = :id ORDER BY id";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}

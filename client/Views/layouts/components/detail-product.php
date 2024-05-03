@@ -6,8 +6,8 @@
     <!-- /header_panel -->
     <div class="item">
         <div class="container">
-            <div class="row">
-                <div class="col-md-7">
+            <div class="row modal__detailProduct">
+                <!-- <div class="col-md-7">
                     <div class="item_panel">
                         <figure>
                             <img src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_small.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/1.jpg" class="lazy" alt="">
@@ -18,13 +18,13 @@
                 </div>
                 <div class="col-md-5 btn_panel">
                     <a href="<?= BASE_URL ?>?act=cart" class="btn_1 outline">View cart</a> <a href="<?= BASE_URL ?>?act=checkout" class="btn_1">Checkout</a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
     <!-- /item -->
     <div class="container related">
-        <h4>Who bought this product also bought</h4>
+        <h4>Những sản phẩm bạn có thể thích 😍</h4>
         <div class="row">
             <div class="col-md-4">
                 <div class="item_panel">

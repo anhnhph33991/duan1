@@ -19,10 +19,13 @@ function categoryCreate()
 {
     $title = 'Create';
     $view = 'categorys/create';
+    $script = 'category';
 
 
     if (isset($_POST['submit'])) {
         $name = $_POST['name'];
+        $slug = $_POST['slug'];
+        $image = $_FILES['image'];
 
         if (empty($name)) {
             $_SESSION['errors']['name'] = 'Vui lòng nhập name';
@@ -30,10 +33,23 @@ function categoryCreate()
             unset($_SESSION['errors']['name']);
         }
 
+        if (empty($slug)) {
+            $_SESSION['errors']['slug'] = 'Vui lòng nhập link thân thiện';
+        } else {
+            unset($_SESSION['errors']['slug']);
+        }
+
+        if (empty($image['name'])) {
+            $_SESSION['errors']['image'] = 'Vui lòng tải image';
+        } else {
+            unset($_SESSION['errors']['image']);
+        }
+
         if (!empty($_SESSION['errors'])) {
             header('location: ' . BASE_URL_ADMIN . '?act=add-category');
         } else {
-            insertCategory($name);
+            $image = upload_file($image, 'public/image/');
+            insertCategory($name, $slug, $image);
             header("location: " . BASE_URL_ADMIN . "?act=categorys");
         }
     }

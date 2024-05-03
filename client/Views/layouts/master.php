@@ -35,14 +35,27 @@
     <link href="<?= BASE_URL ?>public/assets/css/checkout.css" rel="stylesheet">
     <!-- Auth -->
     <link href="<?= BASE_URL ?>public/assets/css/account.css" rel="stylesheet">
-
-
+    <!-- Track -->
+    <link href="<?= BASE_URL ?>public/assets/css/leave_review.css" rel="stylesheet">
+    <!-- YOUR CUSTOM CSS -->
+    <link href="<?= BASE_URL ?>public/assets/css/error_track.css" rel="stylesheet">
 
     <!-- YOUR CUSTOM CSS -->
     <link href="<?= BASE_URL ?>public/assets/css/custom.css" rel="stylesheet">
 
     <!-- RemixIcon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css" integrity="sha512-MqL4+Io386IOPMKKyplKII0pVW5e+kb+PI/I3N87G3fHIfrgNNsRpzIXEi+0MQC0sR9xZNqZqCYVcC61fL5+Vg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+    <!-- ABc -->
+
 </head>
 
 <body>
@@ -77,6 +90,7 @@
     <!-- scipt chung - global -->
     <script src="<?= BASE_URL ?>public/assets/js/common_scripts.min.js"></script>
     <script src="<?= BASE_URL ?>public/assets/js/main.js"></script>
+    <script src="<?= BASE_URL ?>public/js/global.js"></script>
 
     <!-- File js cụ thể -->
     <?php

@@ -8,6 +8,8 @@
         </div>
     </div>
     <div class="section-body">
+        <?php require_once "../core/toast.php" ?>
+
         <?php
         // echo "<pre>";
         // print_r($data);
@@ -30,33 +32,30 @@
                                     <th>STT</th>
                                     <th>Mã Đơn Hàng</th>
                                     <th>Họ Tên</th>
-                                    <th>Số Sản Phẩm</th>
                                     <th>Tổng Giá</th>
                                     <th>Trạng Thái</th>
                                     <th>Thời Gian</th>
                                     <th>Action</th>
                                 </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td>LUXCHILL#239223</td>
-                                    <td>Nguyễn Hoàng Anh</td>
-                                    <td>10</td>
-                                    <td>1.200.999đ</td>
-                                    <td>Chờ xác nhận</td>
-                                    <td>10-3-2024</td>
-                                    <td>
-                                        <a href="<?= BASE_URL_ADMIN ?>?act=show-order" class="btn btn-success">SHOW</a>
-                                        <a href="" class="btn btn-warning">DELETE</a>
-                                    </td>
-                                </tr>
+                                <?php foreach ($dataOrder as $key => $value) :  ?>
                                     <?php
 
-                                    // echo "<pre>";
-                                    // print_r($value);
-                                    // echo "</pre>";
-
+                                    $status = $value['status'];
+                                    $status_text = ($status == 'Đang Xử Lý') ? 'badge-danger' : (($status == 'Đang Vận Chuyển') ? 'badge-warning' : 'badge-success');
                                     ?>
+                                    <tr>
+                                        <td><?= $value['id'] ?></td>
+                                        <td><?= $value['code_order'] ?></td>
+                                        <td><?= $value['username'] ?></td>
+                                        <td><?= number_format($value['total_amount'], 0, '.', '.') ?>đ</td>
+                                        <td class="badge <?= $status_text ?>"><?= $value['status'] ?></td>
+                                        <td><?= $value['time_at'] ?></td>
+                                        <td>
+                                            <a href="<?= BASE_URL_ADMIN ?>?act=show-order&id=<?= $value['id'] ?>" class="btn btn-success">SHOW</a>
+                                            <a href="<?= BASE_URL_ADMIN . '?act=delete-order&id=' . $value['id'] ?>" class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này không ?')">DELETE</a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach  ?>
                             </table>
                         </div>
                     </div>

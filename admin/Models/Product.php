@@ -140,3 +140,6 @@ function deleteOneProduct($id)
         debug($e->getMessage());
     }
 }
+
+
+

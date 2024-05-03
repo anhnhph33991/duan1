@@ -25,9 +25,16 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/modules/chocolat/dist/css/chocolat.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/modules/codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/modules/codemirror/theme/duotone-dark.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/modules/dropzonejs/dropzone.css">
     <!--   Template CSS -->
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/components.css">
+
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
 
 </head>
 
@@ -73,6 +80,7 @@
     <script src="<?= BASE_URL ?>assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <script src="<?= BASE_URL ?>assets/modules/codemirror/lib/codemirror.js"></script>
     <script src="<?= BASE_URL ?>assets/modules/codemirror/mode/javascript/javascript.js"></script>
+    <script src="<?= BASE_URL ?>assets/modules/dropzonejs/min/dropzone.min.js"></script>
 
     <!-- Script Riêng -->
     <?php

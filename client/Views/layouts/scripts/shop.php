@@ -5,6 +5,7 @@
     const filterButton = document.querySelector('.filter__button');
     const resetButton = document.querySelector('.reset__button');
     let checkboxes = document.querySelectorAll('.category_checkbox');
+    let checkboxesPrice = document.querySelectorAll('.price_checkbox');
 
     let btn_addToCart = document.querySelectorAll('.btn__addToCart');
 
@@ -12,45 +13,70 @@
     filterButton.addEventListener('click', (event) => {
         event.preventDefault();
 
-
-        var selectedCategories = Array.from(checkboxes).filter(function(checkbox) {
+        // handle category
+        let selectedCategories = Array.from(checkboxes).filter(function(checkbox) {
+            return checkbox.checked;
+        }).map(function(checkbox) {
+            return checkbox.value;
+        });
+        // handle price
+        let selectedPrices = Array.from(checkboxesPrice).filter(function(checkbox) {
             return checkbox.checked;
         }).map(function(checkbox) {
             return checkbox.value;
         });
 
-        var categoryParam = selectedCategories.length > 0 ? 'category=' + selectedCategories.join(',') : '';
-        var url = 'http://localhost/duan1/?act=shop';
+        // url category
+        let categoryParam = selectedCategories.length > 0 ? 'category=' + selectedCategories.join(',') : '';
+        // url price
+        let priceParam = selectedPrices.length > 0 ? 'price=' + selectedPrices.join(',') : '';
+
+        let url = 'http://localhost/duan1/?act=shop';
 
         if (categoryParam !== '') {
             url += '&' + categoryParam;
+        }
+
+        if (priceParam !== '') {
+            url += '&' + priceParam;
         }
 
         window.location.href = url;
 
     })
 
-    // btn_addToCart.forEach((btn) => {
-    //     btn.addEventListener('click', (e) => {
-    //         e.preventDefault();
-    //         console.log('success add cart');
-    //     })
-    // })
-
     function addToCart(e, id, name, price, image, description, type, cName) {
         e.preventDefault();
-        console.log('success');
-        let data = {
-            idProduct: id,
-            nameProduct: name,
-            priceProduct: price,
-            imageProduct: image,
-            descriptionProduct: description,
-            typeProduct: type,
-            nameCategory: cName
-        };
-
-        console.log(data);
+        let idUser = "<?php echo isset($_SESSION['user']) ? $_SESSION['user']['id'] : 0 ?>";
+        $.ajax({
+            type: "POST",
+            url: "<?= BASE_URL . '?act=handleAddToCart' ?>",
+            data: {
+                idProduct: id,
+                nameProduct: name,
+                priceProduct: price,
+                imageProduct: image,
+                descriptionProduct: description,
+                typeProduct: type,
+                cName: cName,
+                idUser: idUser
+            },
+            success: function(res) {
+                $('.qty_cart').text(res.cartItemCount);
+                // console.log(res.cartItem);
+                console.log(`Số lượng sản phẩm trong giỏ hàng: ${res.cartItemCount}`);
+                console.log(res.countIdUser);
+                console.log(res.countProduct);
+                // console.log(res.successmess);
+                // console.log(res.id);
+                // console.log(res.checkProductAut);
+                toastr.success('Thêm vào giỏ hàng thành công 🛒');
+            },
+            error: function(xhr, status, error) {
+                toastr.error('Có lỗi xảy ra. Vui lòng thử lại sau!');
+                console.log(error);
+            }
+        })
 
     }
 </script>

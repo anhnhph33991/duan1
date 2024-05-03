@@ -19,6 +19,7 @@
         // echo "</pre>";
 
         ?>
+        <?php require_once "../core/toast.php" ?>
         <h2 class="section-title">Table</h2>
         <p class="section-lead">Hiển Thị Users</p>
 
@@ -52,7 +53,7 @@
                                     <tr>
                                         <td>
                                             <div class="gallery">
-                                                <div class="gallery-item" data-image="data:image/jpeg;base64,<?= $value['image'] ?>" data-title="<?= $value['username'] ?>"></div>
+                                                <div class="gallery-item" data-image="<?= BASE_URL . $value['image'] ?>" data-title="<?= $value['username'] ?>"></div>
                                             </div>
                                         </td>
                                         <td><?= $value['username'] ?></td>
@@ -73,6 +74,19 @@
                                             <a href="<?= BASE_URL_ADMIN ?>?act=delete-user&id=<?= $value['id'] ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa user: <?= $value['username'] ?>')" data-toggle="tooltip" data-placement="bottom" data-original-title="Delete">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </a>
+                                            <div class="btn-group dropleft">
+                                                <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa-solid fa-sliders"></i>
+
+                                                </button>
+                                                <div class="dropdown-menu dropleft" x-placement="left-start" style="position: absolute; transform: translate3d(-202px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                    <a class="dropdown-item" href="#">Action</a>
+                                                    <a class="dropdown-item" href="#">Another action</a>
+                                                    <a class="dropdown-item" href="#">Something else here</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="#">Separated link</a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach;  ?>

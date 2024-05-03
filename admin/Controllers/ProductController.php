@@ -2,6 +2,7 @@
 
 require_once MODELS_ADMIN . 'Product.php';
 require_once MODELS_ADMIN . 'Category.php';
+require_once MODELS_ADMIN . 'VariantProduct.php';
 // require_once '../core/configCloudinary.php';
 
 function productIndex()
@@ -31,7 +32,7 @@ function productCreate()
     if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         $price = str_replace('.', '', $_POST['price']);
-        $image = $_FILES['image']['tmp_name'];
+        $image = $_FILES['files'];
         $description = $_POST['description'];
         $id_category = $_POST['id_category'] ?? null;
 
@@ -47,10 +48,10 @@ function productCreate()
             unset($_SESSION['errors']['price']);
         }
 
-        if (empty($image)) {
-            $_SESSION['errors']['image'] = 'Vui lòng tải image';
-        } else {
+        if (validateImage($image)) {
             unset($_SESSION['errors']['image']);
+        } else {
+            $_SESSION['errors']['image'] = 'Vui lòng tải image';
         }
 
         if (empty($description)) {
@@ -67,11 +68,18 @@ function productCreate()
 
         if (!empty($_SESSION['errors'])) {
             header('location: ' . BASE_URL_ADMIN . '?act=add-product');
+
+            // echo "<pre>";
+            // print_r($image['name']);
+            // echo "</pre>";
+
         } else {
             $convertDesc = strip_tags($description); // xóa bỏ tag html ở description
-            $img = file_get_contents($image);
-            $imgBase64 = base64_encode($img);
-            insertOneProduct($name, $price, $imgBase64, $convertDesc, $id_category);
+            // $image = upload_file($image, 'public/image/'); // gọi function handle image
+            $uploadMultifile = upload_multifile($_FILES['files'], 'public/image/');
+            insertOneProduct($name, $price, $uploadMultifile, $convertDesc, $id_category);
+            setcookie("message", "Thêm sản phẩm thành công 🎊", time() + 1);
+            setcookie("type_mess", "success", time() + 1);
             header('location: ' . BASE_URL_ADMIN . '?act=products');
         }
     }
@@ -94,7 +102,7 @@ function productUpdate()
         $id = $_POST['id'];
         $name = $_POST['name'];
         $price = $_POST['price'];
-        $image = $_FILES['image']['tmp_name'];
+        $image = $_FILES['files'];
         $imageOld = $_POST['imageOld'];
         $description = $_POST['description'];
         $descOld = $_POST['descOld'];
@@ -107,10 +115,9 @@ function productUpdate()
 
         if (empty($name)) {
             $_SESSION['errors']['name'] = 'Vui lòng nhập name';
-        }elseif(strlen($name) < 5){
-            
-        }
-         else {
+        } elseif (strlen($name) < 5) {
+            $_SESSION['errors']['name'] = 'Name phải lớn hơn 5 kí tự';
+        } else {
             unset($_SESSION['errors']['name']);
         }
 
@@ -120,12 +127,16 @@ function productUpdate()
             unset($_SESSION['errors']['price']);
         }
 
-        if (empty($image)) {
-            $imageSaveDb = $imageOld;
+        // if (empty($image['name'])) {
+        //     $imageSaveDb = $imageOld;
+        // } else {
+        //     $imageSaveDb = upload_file($image, 'public/image/');
+        // }
+
+        if (validateImage($image)) {
+            $imageSaveDb = upload_multifile($_FILES['files'], 'public/image/');
         } else {
-            $img = file_get_contents($image);
-            $imgBase64 = base64_encode($img);
-            $imageSaveDb = $imgBase64;
+            $imageSaveDb = $imageOld;
         }
 
         if (empty($description)) {
@@ -138,6 +149,8 @@ function productUpdate()
             header('Location: ' . BASE_URL_ADMIN . '?act=update-product&id=' . $id);
         } else {
             updateProduct($id, $name, $price, $imageSaveDb, $descSaveDb, $id_category, $status);
+            setcookie("message", "Update thành công 🎊", time() + 1);
+            setcookie("type_mess", "success", time() + 1);
             header('Location: ' . BASE_URL_ADMIN . '?act=products');
         }
     }
@@ -152,6 +165,7 @@ function productShow()
     $view = 'products/show';
     $id = $_GET['id'] ?? null;
     $product = selectOneProduct($id);
+    $listImage = explode(',', $product['p_image']);
 
     require_once VIEW_ADMIN . 'layouts/master.php';
 }
@@ -162,5 +176,18 @@ function productDelete()
 {
     $id = $_GET['id'] ?? null;
     deleteOneProduct($id);
+    setcookie("message", "Xóa thành công 🎊", time() + 1);
+    setcookie("type_mess", "success", time() + 1);
     header('location: ' . BASE_URL_ADMIN . '?act=products');
 }
+
+function variantProductIndex()
+{
+    $id = $_GET['id'] ?? null;
+    // echo $id;
+    $title = 'Variant Product';
+    $view = 'products/variant-table';
+    $data = selectAllVariantProduct($id);
+    require_once VIEW_ADMIN . 'layouts/master.php';
+}
+

@@ -6,11 +6,17 @@ function loginIndex()
 {
     $title = 'Login - LuxChill';
     $view = 'auth/login';
+    // nếu login từ btn comment sẽ có biến này url của sản phẩm
+    $auth = $_GET['auth'] ?? null;
+    $idProduct = $_GET['id'] ?? null;
+
 
     if (isset($_POST['submit'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
         $user = authLogin($email); // sql check user where email
+
+        $auth = $_GET['auth'] ?? null;
 
         if (empty($email)) {
             $_SESSION['errors']['email'] = 'Vui lòng nhập email 😡';
@@ -38,6 +44,8 @@ function loginIndex()
 
             if ($user && $password == $user['password']) {
                 setcookie("message", "Đăng nhập thành công", time() + 1);
+                setcookie("welcome", "Chào mừng bạn quay trở lại web 🎊", time() + 30);
+                setcookie("type_mess", "success", time() + 1);
                 $_SESSION['user'] = [
                     'id' => $user['id'],
                     'username' => $user['username'],
@@ -47,7 +55,21 @@ function loginIndex()
                     'image' => $user['image'],
                     'role' => $user['role']
                 ];
-                header('location: ' . BASE_URL);
+                // if(isset($auth)){
+                //     header('location: ' . BASE_URL . $auth);
+                // }
+
+                if ($user['role'] != 1) {
+                    // nếu có biến auth sau khi đăng nhập back về sản phẩm trước đó
+                    if (isset($auth)) {
+                        header('location: ' . BASE_URL . $auth . '&id=' . $idProduct);
+                    } else {
+                        // nếu k có sẽ vào trang home
+                        header('location: ' . BASE_URL);
+                    }
+                } else {
+                    header('location: ' . BASE_URL_ADMIN);
+                }
             } else {
                 setcookie("message", "Email or Password không đúng. Vui lòng kiểm tra lại ? ", time() + 1);
                 header('location: ' . BASE_URL . '?act=login');
@@ -102,7 +124,7 @@ function registerIndex()
         if (!empty($_SESSION['errors'])) {
             header('location: ' . BASE_URL . '?act=register');
         } else {
-            // insertUser($username, $email, $password);
+            insertUser($username, $email, $password);
             setcookie("message", "Đăng kí thành công", time() + 1);
             header('location: ' . BASE_URL . '?act=login');
         }
@@ -116,6 +138,53 @@ function forgotPassword()
 {
     $title = 'Forgot Password';
     $view = 'auth/forgotPassword';
+
+    if (isset($_POST['submit'])) {
+        $email = $_POST['email'];
+        // echo $email;
+
+        if (empty($email)) {
+            $_SESSION['errors']['email'] = 'Thế thì chịu 😡';
+        } else {
+            unset($_SESSION['errors']['email']);
+        }
+
+
+        if (!empty($_SESSION['errors'])) {
+            header('Location: ' . BASE_URL . '?act=forgotPassword');
+        } else {
+            $token = bin2hex(random_bytes(16));
+            $token_hash = hash("sha256", $token);
+            $expiry = date("Y-m-d H:i:s", time() + 60 * 30);
+            // resetPassword($token_hash, $expiry, $email);
+            $affectedRows = resetPassword($token_hash, $expiry, $email);
+            $urlToken = BASE_URL . '?act=forgotPassword' . "&token=" . $token;
+
+            $body = '<div>
+            
+            <div>Xin chào,</div>
+            <div>
+                <p>Hãy nhấn vào <a href=" ' . 'http://localhost/duan1/?act=forgotPassword&token=' . $token  . ' ">Click</a> để đặt lại mật khẩu </p>
+            </div>
+            
+            
+            </div>';
+
+            if ($affectedRows > 0) {
+                sendMail($email, 'hoanganh', 'Confim Forgot Password', $body);
+                setcookie("title_confirm", "Xác nhận email thành công", time() + 1);
+                setcookie("subTitle_confirm", "Vui lòng check mail để đổi lại mật khẩu", time() + 1);
+                header('location: ' . BASE_URL . '?act=confirm');
+            } else {
+                setcookie("message", "Email này không tồn tại", time() + 1);
+                setcookie("type_mess", "error", time() + 1);
+                header('location: ' . BASE_URL . '?act=forgotPassword');
+            }
+
+            // echo "success. checkinbox";
+            // header('location: ' . BASE_URL);
+        }
+    }
 
     require_once VIEW . 'layouts/master.php';
 }

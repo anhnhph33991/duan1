@@ -195,7 +195,11 @@
         </div>
     </li>
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="https://mevn-public.s3-ap-southeast-1.amazonaws.com/marketenterprise.vn/wp-images/2020/06/12113245/Screen-Shot-2020-06-12-at-11.31.30-AM-1568x1447.png" class="rounded-circle mr-1" style="width: 40px; height: 40px">
+            <img alt="image" src="<?php if (isset($_SESSION['user'])) : ?>
+                <?= BASE_URL . $_SESSION['user']['image']  ?>
+            <?php else : ?>
+                <?= 'https://i.pinimg.com/originals/8d/a5/c3/8da5c3a06407303694d6381b23368f02.png' ?>
+            <?php endif ?>" class="rounded-circle mr-1" style="width: 40px; height: 40px">
             <div class="d-sm-none d-lg-inline-block">Hi, Hoang Anh</div>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
@@ -210,7 +214,7 @@
                 <i class="fas fa-cog"></i> Settings
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item has-icon text-danger">
+            <a href="<?= BASE_URL ?>?act=logout" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </div>
