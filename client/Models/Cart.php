@@ -3,7 +3,7 @@
 function getAllCart($idUser)
 {
     try {
-        $sql = "SELECT * FROM cart WHERE user_id = :user_id ORDER BY id";
+        $sql = "SELECT * FROM cart WHERE user_id = :user_id AND status = 'notSold' ORDER BY id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(':user_id', $idUser, PDO::PARAM_INT);
         $stmt->execute();
@@ -17,7 +17,7 @@ function getAllCart($idUser)
 function getCountRowsCart($idUser)
 {
     try {
-        $sql = "SELECT COUNT(*) FROM cart WHERE user_id = :user_id";
+        $sql = "SELECT COUNT(*) FROM cart WHERE user_id = :user_id AND status = 'notSold'";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(':user_id', $idUser, PDO::PARAM_INT);
         $stmt->execute();
@@ -164,3 +164,45 @@ function getQtyProduct($idProduct, $idUser)
         debug($e->getMessage());
     }
 }
+
+// update status cart
+// function updateStatusCart($idProduct, $status)
+// {
+//     try {
+
+//         $expId = explode(',', $idProduct);
+//         $condition = rtrim(str_repeat('?,', count($expId)), ',');
+
+//         $sql = "UPDATE cart SET status = :status WHERE id IN $condition";
+//         $stmt = $GLOBALS['connect']->prepare($sql);
+//         foreach ($expId as $key => $id) {
+//             $stmt->bindValue(($key + 1), $id, PDO::PARAM_INT);
+//         }
+//         $stmt->bindParam(':status', $status);
+//         $stmt->execute();
+//     } catch (PDOException $e) {
+//         debug($e->getMessage());
+//     }
+// }
+
+function updateStatusCart($idProduct, $status){
+    try {
+        $explodeId = explode(',', $idProduct);
+        $placeholders = rtrim(str_repeat('?,', count($explodeId)), ','); // Tạo chuỗi placeholders (?)
+
+        $sql = "UPDATE cart SET status = ? WHERE id IN ($placeholders)";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+
+        // Bind giá trị cho placeholders (?)
+        $stmt->bindValue(1, $status);
+        foreach ($explodeId as $key => $id) {
+            $stmt->bindValue(($key + 2), $id, PDO::PARAM_INT); // Bắt đầu từ 2 vì status đã được bind ở vị trí 1
+        }
+
+        $stmt->execute();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+

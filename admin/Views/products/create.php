@@ -42,10 +42,8 @@
                         <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Image</label>
                             <div class="col-sm-12 col-md-7">
-                                <div id="image-preview" class="image-preview">
-                                    <label for="image-upload" id="image-label">Choose File</label>
-                                    <input type="file" name="image" id="image-upload" class="<?= !empty($_SESSION['errors']['image']) ? 'is-invalid' : '' ?>" style="height: 100%" />
-                                </div>
+                                <label for="image-upload" id="image-label">Choose File</label>
+                                <input type="file" name="files[]" multiple class="form-control <?= !empty($_SESSION['errors']['image']) ? 'is-invalid' : '' ?>"/>
                                 <div style="color: #dc3545; font-size: 80%; margin-top: 0.25rem; width: 100%;">
                                     <?= !empty($_SESSION['errors']['image']) ? $_SESSION['errors']['image'] : '' ?>
                                 </div>

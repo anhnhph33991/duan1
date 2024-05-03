@@ -34,6 +34,8 @@ match ($act) {
     // profile
     'check-your-order' => checkOrderIndex(),
     'my-order' => myOrderIndex(),
+    'show-my-order' => showMyOrder(),
+    'delete-order' => deleteOneOrder(),
     'my-profile' => profileIndex(),
 
     // handle cart

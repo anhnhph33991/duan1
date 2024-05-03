@@ -127,15 +127,6 @@
         const priceProduct = document.querySelector(`.priceProduct-${productId}`);
         const priceOneProduct = parseInt(priceProduct.getAttribute('data-price'));
         const priceSubTotal = document.querySelector(`.subTotal-${productId}`);
-        // ########### đang bị lỗi hiển thị giá tiền chậm hơn 1 nhịp
-        // const allPriceSubTotal = document.querySelectorAll('#priceSubTotal');
-        // let totalPrice = 0;
-
-        // allPriceSubTotal.forEach((el) => {
-        //     const price = parseInt(el.innerHTML.replace(/\D/g, ''));
-        //     // console.log(price);
-        //     totalPrice += price;
-        // })
 
         $.ajax({
             type: "POST",
@@ -151,7 +142,6 @@
                 const priceFormat = res.productPrice.toLocaleString('vi-VN');
                 priceSubTotal.innerHTML = `${priceFormat}đ`;
 
-                // console.log(`id user ${res.idUser}`);
                 toastr.success('Thay đổi số lượng thành công');
                 // Thay đổi số lượng giá tiền tổng
                 const allPriceSubTotal = document.querySelectorAll('#priceSubTotal');
@@ -179,6 +169,16 @@
 
     dashButtons.forEach((btn) => {
         btn.addEventListener('click', () => {
+            const productId = btn.getAttribute('data-product-id');
+            const inputQty = document.querySelector(`.qtyInput-${productId}`);
+            let currentQty = parseInt(inputQty.value);
+
+            if (currentQty === 1) {
+                toastr.warning('Xóa đi. Giảm gì lắm thế 🤬🤬');
+                return;
+            }
+
+
             handleQtyChange(btn, -1); // Gọi hàm xử lý với changeAmount là -1 (giảm số lượng)
         });
     });

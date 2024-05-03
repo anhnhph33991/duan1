@@ -176,4 +176,14 @@ if (!function_exists('middlewareAuthThor')) {
 	}
 }
 
+if(!function_exists('validateImage')){
+	function validateImage($image){
+		if(!$image['error'][0] == UPLOAD_ERR_NO_FILE){
+            return true;
+        }else{
+            return false;
+        }
+	}
+}
+
 

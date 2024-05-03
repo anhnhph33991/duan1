@@ -84,94 +84,30 @@ if (isset($_GET['category'])) {
                 </div>
                 <!-- /filter_type -->
                 <div class="filter_type version_2">
-                    <h4><a href="#filter_2" data-bs-toggle="collapse" class="opened">Color</a></h4>
-                    <div class="collapse show" id="filter_2">
-                        <ul>
-                            <li>
-                                <label class="container_check">Blue <small>06</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="container_check">Red <small>12</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="container_check">Orange <small>17</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="container_check">Black <small>43</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /filter_type -->
-                <div class="filter_type version_2">
-                    <h4><a href="#filter_3" data-bs-toggle="collapse" class="closed">Brands</a></h4>
-                    <div class="collapse" id="filter_3">
-                        <ul>
-                            <li>
-                                <label class="container_check">Adidas <small>11</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="container_check">Nike <small>08</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="container_check">Vans <small>05</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="container_check">Puma <small>18</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /filter_type -->
-                <div class="filter_type version_2">
-                    <h4><a href="#filter_4" data-bs-toggle="collapse" class="closed">Price</a></h4>
-                    <div class="collapse" id="filter_4">
+                    <h4><a href="#filter_4" data-bs-toggle="collapse" class="opened">Price</a></h4>
+                    <div class="collapse show" id="filter_4">
                         <ul>
                             <li>
                                 <label class="container_check">50.000đ — 99.000đ<small>11</small>
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="price_checkbox" value="50000-99000">
                                     <span class="checkmark"></span>
                                 </label>
                             </li>
                             <li>
                                 <label class="container_check">120.000đ — 199.000đ<small>08</small>
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="price_checkbox" value="120000-199000">
                                     <span class="checkmark"></span>
                                 </label>
                             </li>
                             <li>
                                 <label class="container_check">250.000đ — 399.000đ<small>05</small>
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="price_checkbox" value="250000-399000">
                                     <span class="checkmark"></span>
                                 </label>
                             </li>
                             <li>
                                 <label class="container_check">450.000đ — 599.000đ<small>18</small>
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="price_checkbox" value="450000-599000">
                                     <span class="checkmark"></span>
                                 </label>
                             </li>
@@ -215,6 +151,8 @@ if (isset($_GET['category'])) {
                                 $discount = 0.3;
                             }
                             $priceNew = $priceOld - ($priceOld * $discount);
+                            // handle image
+                            $listImage = explode(',', $value['p_image']);
                             ?>
                             <div class="col-6 col-md-4">
                                 <div class="grid_item">
@@ -233,7 +171,7 @@ if (isset($_GET['category'])) {
 
                                     <figure>
                                         <a href="<?= BASE_URL ?>?act=product-detail&id=<?= $value['p_id'] ?>">
-                                            <img class="img-fluid lazy" src="<?= BASE_URL . $value['p_image'] ?>" data-src="<?= BASE_URL . $value['p_image'] ?>" alt="" style="width: 100%; height: 300px; object-fit: fill;">
+                                            <img class="img-fluid lazy" src="<?= BASE_URL . $listImage[0] ?>" data-src="<?= BASE_URL . $listImage[0] ?>" alt="" style="width: 100%; height: 300px; object-fit: fill;">
                                         </a>
 
                                         <?php if ($value['p_type'] == 'sale') :  ?>
@@ -254,7 +192,7 @@ if (isset($_GET['category'])) {
                                     <ul>
                                         <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Thêm vào danh mục yêu thích"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
                                         <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Thêm vào so sánh"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                        <li class="btn__addToCart" onclick="addToCart(event, '<?= $value['p_id'] ?>', '<?= $value['p_name'] ?>', '<?= $value['p_price'] ?>','<?= $value['p_image'] ?>','<?= $value['p_description'] ?>','<?= $value['p_type'] ?>','<?= $value['c_name'] ?>')"><a href="#1" class=" tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Thêm vào giỏ hàng"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                                        <li class="btn__addToCart" onclick="addToCart(event, '<?= $value['p_id'] ?>', '<?= $value['p_name'] ?>', '<?= $value['p_price'] ?>','<?= $listImage[0] ?>','<?= $value['p_description'] ?>','<?= $value['p_type'] ?>','<?= $value['c_name'] ?>')"><a href="#1" class=" tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Thêm vào giỏ hàng"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -272,7 +210,6 @@ if (isset($_GET['category'])) {
                             $urlPanigation = '?act=shop&page=';
                         }
 
-
                         if (isset($_GET['category'])) {
                             $category = $_GET['category'];
                             if ($category == 'thoi-trang-nam') {
@@ -281,6 +218,19 @@ if (isset($_GET['category'])) {
                                 $urlPanigation = '?act=shop&category=thoi-trang-nu&page=';
                             } elseif ($category == 'thoi-trang-tre-em') {
                                 $urlPanigation = '?act=shop&category=thoi-trang-tre-em&page=';
+                            }
+                        }
+
+                        if(isset($_GET['price'])){
+                            $category = $_GET['price'];
+                            if ($category == '50000-99000') {
+                                $urlPanigation = '?act=shop&price=50000-99000&page=';
+                            } elseif ($category == '120000-199000') {
+                                $urlPanigation = '?act=shop&price=120000-199000&page=';
+                            } elseif ($category == '250000-399000') {
+                                $urlPanigation = '?act=shop&price=250000-399000&page=';
+                            }elseif($category == '450000-599000'){
+                                $urlPanigation = '?act=shop&price=450000-599000&page=';
                             }
                         }
 

@@ -31,7 +31,7 @@ function getAllComment($limit, $initial_page)
     }
 }
 // select k chia page
-function selectAllComment()
+function selectAllComment($id)
 {
     try {
         $sql = "SELECT
@@ -47,8 +47,10 @@ function selectAllComment()
         users ON comments.id_user = users.id
     INNER JOIN
         products ON comments.id_product = products.id
+    WHERE comments.id_product = :id
     ORDER BY comments.id DESC";
         $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(":id", $id);
         $stmt->execute();
         $result = $stmt->fetchAll();
         return $result;

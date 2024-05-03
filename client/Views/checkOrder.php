@@ -14,12 +14,53 @@
         </div>
 
         <?php if (isset($dataOrder)) : ?>
+            <?php if (!empty($dataOrder)) : ?>
 
-            <div>
-                <h1>Khách Hàng: <span><?= $dataOrder['username'] ?></span></h1>
-                <h3>Đơn hàng: <span><?= $dataOrder['code_order'] ?></span></h3>
-                <h3>Trạng Thái: <span><?= $dataOrder['status'] ?></span></h3>
-            </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Đơn Hàng</th>
+                            <th scope="col">Khách Hàng</th>
+                            <th scope="col">Trạng Thái</th>
+                            <th scope="col">Hình thức thanh toán</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <?php
+
+                            if (isset($dataOrder['status']) && $dataOrder['status'] == 'Đã Giao Hàng') {
+                                $activeClass = 'badge bg-success';
+                            } elseif ($dataOrder['status'] == 'Đang Vận Chuyển') {
+                                $activeClass = 'badge bg-warning';
+                            } else {
+                                $activeClass = 'badge bg-danger';
+                            }
+
+
+                            ?>
+                            <th scope="row">1</th>
+                            <td><?= $dataOrder['code_order'] ?></td>
+                            <td><?= $dataOrder['username'] ?></td>
+                            <td>
+                                <span class="<?= $activeClass ?> p-2">
+                                    <?= $dataOrder['status'] ?>
+                                </span>
+                            </td>
+                            <td><span class="badge bg-success p-2"><?= $dataOrder['payments'] ?></span></td>
+                            <td><?= $dataOrder['address'] ?></td>
+                            <td><?= number_format($dataOrder['total_amount'], 0, '.', '.') ?>đ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            <?php else :  ?>
+
+                <h1 class="text-danger">Mã đơn hàng sai . Vui lòng kiểm tra lại tin nhắn email</h1>
+
+            <?php endif ?>
         <?php endif ?>
         <!-- /row -->
     </div>
@@ -28,134 +69,3 @@
     <!-- /container -->
 </div>
 <!-- /track_order -->
-
-<div class="bg_white">
-    <div class="container margin_60_35">
-        <div class="main_title">
-            <h2>New Entries</h2>
-            <span>Products</span>
-            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
-        </div>
-        <div class="owl-carousel owl-theme products_carousel">
-            <div class="item">
-                <div class="grid_item">
-                    <span class="ribbon new">New</span>
-                    <figure>
-                        <a href="product-detail-1.html">
-                            <img class="img-fluid lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL ?>public/assets/img/products/shoes/4.jpg" alt="">
-                        </a>
-                    </figure>
-                    <a href="product-detail-1.html">
-                        <h3>ACG React Terra</h3>
-                    </a>
-                    <div class="price_box">
-                        <span class="new_price">$110.00</span>
-                    </div>
-                    <ul>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                    </ul>
-                </div>
-                <!-- /grid_item -->
-            </div>
-            <!-- /item -->
-            <div class="item">
-                <div class="grid_item">
-                    <span class="ribbon new">New</span>
-                    <figure>
-                        <a href="product-detail-1.html">
-                            <img class="img-fluid lazy" src="img/products/product_placeholder_square_medium.jpg" data-src="img/products/shoes/5.jpg" alt="">
-                        </a>
-                    </figure>
-                    <a href="product-detail-1.html">
-                        <h3>Air Zoom Alpha</h3>
-                    </a>
-                    <div class="price_box">
-                        <span class="new_price">$140.00</span>
-                    </div>
-                    <ul>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                    </ul>
-                </div>
-                <!-- /grid_item -->
-            </div>
-            <!-- /item -->
-            <div class="item">
-                <div class="grid_item">
-                    <span class="ribbon hot">Hot</span>
-                    <figure>
-                        <a href="product-detail-1.html">
-                            <img class="img-fluid lazy" src="img/products/product_placeholder_square_medium.jpg" data-src="img/products/shoes/8.jpg" alt="">
-                        </a>
-                    </figure>
-                    <a href="product-detail-1.html">
-                        <h3>Air Color 720</h3>
-                    </a>
-                    <div class="price_box">
-                        <span class="new_price">$120.00</span>
-                    </div>
-                    <ul>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                    </ul>
-                </div>
-                <!-- /grid_item -->
-            </div>
-            <!-- /item -->
-            <div class="item">
-                <div class="grid_item">
-                    <span class="ribbon off">-30%</span>
-                    <figure>
-                        <a href="product-detail-1.html">
-                            <img class="img-fluid lazy" src="img/products/product_placeholder_square_medium.jpg" data-src="img/products/shoes/2.jpg" alt="">
-                        </a>
-                    </figure>
-                    <a href="product-detail-1.html">
-                        <h3>Okwahn II</h3>
-                    </a>
-                    <div class="price_box">
-                        <span class="new_price">$90.00</span>
-                        <span class="old_price">$170.00</span>
-                    </div>
-                    <ul>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                    </ul>
-                </div>
-                <!-- /grid_item -->
-            </div>
-            <!-- /item -->
-            <div class="item">
-                <div class="grid_item">
-                    <span class="ribbon off">-50%</span>
-                    <figure>
-                        <a href="product-detail-1.html">
-                            <img class="img-fluid lazy" src="img/products/product_placeholder_square_medium.jpg" data-src="img/products/shoes/3.jpg" alt="">
-                        </a>
-                    </figure>
-                    <a href="product-detail-1.html">
-                        <h3>Air Wildwood ACG</h3>
-                    </a>
-                    <div class="price_box">
-                        <span class="new_price">$75.00</span>
-                        <span class="old_price">$155.00</span>
-                    </div>
-                    <ul>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                    </ul>
-                </div>
-                <!-- /grid_item -->
-            </div>
-            <!-- /item -->
-        </div>
-        <!-- /products_carousel -->
-    </div>
-    <!-- /container -->
-</div>

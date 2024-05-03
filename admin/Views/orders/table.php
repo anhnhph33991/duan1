@@ -8,6 +8,8 @@
         </div>
     </div>
     <div class="section-body">
+        <?php require_once "../core/toast.php" ?>
+
         <?php
         // echo "<pre>";
         // print_r($data);
@@ -35,21 +37,11 @@
                                     <th>Thời Gian</th>
                                     <th>Action</th>
                                 </tr>
-
                                 <?php foreach ($dataOrder as $key => $value) :  ?>
                                     <?php
 
                                     $status = $value['status'];
                                     $status_text = ($status == 'Đang Xử Lý') ? 'badge-danger' : (($status == 'Đang Vận Chuyển') ? 'badge-warning' : 'badge-success');
-
-
-                                    // echo "<pre>";
-                                    // print_r($value);
-                                    // echo "</pre>";
-
-
-
-
                                     ?>
                                     <tr>
                                         <td><?= $value['id'] ?></td>
@@ -60,18 +52,10 @@
                                         <td><?= $value['time_at'] ?></td>
                                         <td>
                                             <a href="<?= BASE_URL_ADMIN ?>?act=show-order&id=<?= $value['id'] ?>" class="btn btn-success">SHOW</a>
-                                            <a href="<?= BASE_URL_ADMIN . '?act=delete-order&id=' . $value['id'] ?>" class="btn btn-warning">DELETE</a>
+                                            <a href="<?= BASE_URL_ADMIN . '?act=delete-order&id=' . $value['id'] ?>" class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này không ?')">DELETE</a>
                                         </td>
                                     </tr>
                                 <?php endforeach  ?>
-
-                                <?php
-
-                                // echo "<pre>";
-                                // print_r($value);
-                                // echo "</pre>";
-
-                                ?>
                             </table>
                         </div>
                     </div>

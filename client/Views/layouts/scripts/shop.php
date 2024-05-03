@@ -5,6 +5,7 @@
     const filterButton = document.querySelector('.filter__button');
     const resetButton = document.querySelector('.reset__button');
     let checkboxes = document.querySelectorAll('.category_checkbox');
+    let checkboxesPrice = document.querySelectorAll('.price_checkbox');
 
     let btn_addToCart = document.querySelectorAll('.btn__addToCart');
 
@@ -12,18 +13,32 @@
     filterButton.addEventListener('click', (event) => {
         event.preventDefault();
 
-
+        // handle category
         let selectedCategories = Array.from(checkboxes).filter(function(checkbox) {
             return checkbox.checked;
         }).map(function(checkbox) {
             return checkbox.value;
         });
+        // handle price
+        let selectedPrices = Array.from(checkboxesPrice).filter(function(checkbox) {
+            return checkbox.checked;
+        }).map(function(checkbox) {
+            return checkbox.value;
+        });
 
+        // url category
         let categoryParam = selectedCategories.length > 0 ? 'category=' + selectedCategories.join(',') : '';
+        // url price
+        let priceParam = selectedPrices.length > 0 ? 'price=' + selectedPrices.join(',') : '';
+
         let url = 'http://localhost/duan1/?act=shop';
 
         if (categoryParam !== '') {
             url += '&' + categoryParam;
+        }
+
+        if (priceParam !== '') {
+            url += '&' + priceParam;
         }
 
         window.location.href = url;

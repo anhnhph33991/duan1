@@ -86,13 +86,14 @@
     <div class="row small-gutters">
         <?php if (!empty($dataTop8)) : ?>
             <?php foreach ($dataTop8 as $key => $value) :  ?>
+                <?php $listImage =  explode(',', $value['p_image']) ?>
                 <div class="col-6 col-md-4 col-xl-3">
                     <div class="grid_item">
                         <figure>
                             <!-- <span class="ribbon off">-30%</span> -->
                             <a href="<?= BASE_URL . '?act=product-detail&id=' . $value['p_id']  ?>">
-                                <img class="img-fluid lazy" src="<?= BASE_URL . $value['p_image'] ?>" data-src="<?= BASE_URL . $value['p_image'] ?>" alt="">
-                                <img class="img-fluid lazy" src="<?= BASE_URL . $value['p_image'] ?>" data-src="<?= BASE_URL . $value['p_image'] ?>" alt="">
+                                <img class="img-fluid lazy" src="<?= BASE_URL . $listImage[0] ?>" data-src="<?= BASE_URL . $listImage[0] ?>" alt="" style="height: 300px;">
+                                <img class="img-fluid lazy" src="<?= BASE_URL . $listImage[0] ?>" data-src="<?= BASE_URL . $listImage[0] ?>" alt="" style="height: 300px;">
                             </a>
                             <?php if ($value['p_type'] == 'sale') :  ?>
                                 <div data-countdown="2024/3/29" class="countdown"></div>
@@ -153,12 +154,13 @@
     </div>
     <div class="owl-carousel owl-theme products_carousel">
         <?php foreach ($data8prodctViews as $key => $value) :  ?>
+            <?php $listImage = explode(',', $value['image']);  ?>
             <div class="item">
                 <div class="grid_item">
                     <!-- <span class="ribbon new">New</span> -->
                     <figure>
                         <a href="<?= BASE_URL . '?act=product-detail&id=' . $value['id']  ?>">
-                            <img class="owl-lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL . $value['image'] ?>" alt="">
+                            <img class="owl-lazy" src="<?= BASE_URL ?>public/assets/img/products/product_placeholder_square_medium.jpg" data-src="<?= BASE_URL . $listImage[0] ?>" alt="" style="height: 300px;">
                         </a>
                     </figure>
                     <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>

@@ -75,7 +75,7 @@ function checkoutIndex()
         }
 
         // Thêm giá trị product_id vào biến chuỗi
-        $listProductId .= $value['product_id'];
+        $listProductId .= $value['id'];
     }
 
 
@@ -103,6 +103,7 @@ function checkoutIndex()
             setcookie("subTitle_confirm", "Đã gửi mail xác nhận đơn hàng", time() + 1);
             sendMail($user['email'], $user['username'], 'Mua hang thanh cong', $body);
             insertOrder('cod', $user['address'], 'Đang Xử Lý', $pricePayMomo, $listProductId, $expiry, $codeProduct, $user['username']);
+            updateStatusCart($listProductId, "sold");
             header('location: ' . BASE_URL . '?act=confirm');
         } else {
             momoPay($pricePayMomo);
@@ -115,6 +116,7 @@ function checkoutIndex()
         setcookie("subTitle_confirm", "Đã gửi mail xác nhận đơn hàng", time() + 1);
         sendMail($user['email'], $user['username'], 'Mua hang thanh cong', $body);
         insertOrder('Đã thanh toán', $user['address'], 'Đang Xử Lý', $pricePayMomo, $listProductId, $expiry, $codeProduct, $user['username']);
+        updateStatusCart($listProductId, "sold");
         header('location: ' . BASE_URL . '?act=confirm');
     }
 

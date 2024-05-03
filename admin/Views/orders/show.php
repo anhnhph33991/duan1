@@ -67,36 +67,33 @@
                                     <th>TOTAL</th>
                                 </tr>
 
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        <img src="http://localhost/ismart.com/admin/public/images/img-product.png" alt="">
-                                    </td>
-                                    <td>Áo Nam 1</td>
-                                    <td>99.000đ</td>
-                                    <td>5</td>
-                                    <td>495.000đ</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>
-                                        <img src="http://localhost/ismart.com/admin/public/images/img-product.png" alt="">
-                                    </td>
-                                    <td>Áo Nam 1</td>
-                                    <td>99.000đ</td>
-                                    <td>5</td>
-                                    <td>495.000đ</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>
-                                        <img src="http://localhost/ismart.com/admin/public/images/img-product.png" alt="">
-                                    </td>
-                                    <td>Áo Nam 1</td>
-                                    <td>99.000đ</td>
-                                    <td>5</td>
-                                    <td>495.000đ</td>
-                                </tr>
+                                <?php
+
+                                // echo "<pre>";
+                                // print_r($testdata);
+                                // echo "</pre>";
+
+
+                                ?>
+                                <?php $priceSum = 0 ?>
+                                <?php foreach ($testdata as $key => $value) :  ?>
+                                    <?php
+                                    $priceTotal =  $value['price'] * $value['qty'];
+                                    $priceSum += $priceTotal;
+
+
+                                    ?>
+                                    <tr>
+                                        <td><?= $key + 1 ?></td>
+                                        <td>
+                                            <img src="<?= BASE_URL . $value['image'] ?>" alt="" style="height: 70px; width: 70px;">
+                                        </td>
+                                        <td><?= $value['name'] ?></td>
+                                        <td><?= number_format($value['price'], 0, '.', '.') ?> đ</td>
+                                        <td><?= $value['qty'] ?></td>
+                                        <td><?= number_format($priceTotal, 0, '.', '.') ?> đ</td>
+                                    </tr>
+                                <?php endforeach  ?>
                             </table>
                         </div>
 
@@ -106,8 +103,8 @@
                         <h4>- Giá trị đơn hàng</h4>
                     </div>
                     <div class="card-body">
-                        <h1>Tổng số lượng: <span>15 sản phẩm</span></h1>
-                        <h1>Tổng Tiền: <span class="text-danger"><?= number_format($dataOrder['total_amount'], 0, '.', '.') ?>đ</span></h1>
+                        <h1>Tổng số lượng: <span><?= count($testdata) ?? '' ?> sản phẩm</span></h1>
+                        <h1>Tổng Tiền: <span class="text-danger"><?= number_format($priceSum, 0, '.', '.') ?>đ</span></h1>
                     </div>
                 </div>
 

@@ -25,7 +25,16 @@ function orderShow()
     $title = 'Show';
     $view = 'orders/show';
     $id = $_GET['id'] ?? null;
+
     $dataOrder = selectOneOrder($id);
+
+    // $listIdProduct = explode(',', $dataOrder['idProduct_cart']);
+    // $listIdProductString = implode(',', $listIdProduct);
+
+    // print_r($listIdProduct) . '</br>';
+    // echo $listIdProductString;
+
+    $testdata = showOrder($id, $dataOrder['idProduct_cart']);
 
     if (isset($_POST['submit'])) {
         $status = $_POST['status'] ?? $dataOrder['status'];
@@ -41,6 +50,8 @@ function orderShow()
 function orderDelete()
 {
     $id = $_GET['id'] ?? null;
-    echo $id .  ' </br>';
-    echo 'sicccc';
+    deleteOrder($id);
+    setcookie("message", "Xóa thành công 🎊", time() + 1);
+    setcookie("type_mess", "success", time() + 1);
+    header('location: ' . BASE_URL_ADMIN . '?act=orders');
 }

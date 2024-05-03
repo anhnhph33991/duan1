@@ -20,7 +20,7 @@
         <div class="col-lg-4 col-md-6">
             <?php if (isset($_SESSION['user'])) : ?>
                 <div class="step first">
-                    <h3>1. Your address</h3>
+                    <h3>1. Your address </h3>
                     <?php if (!empty($user['address'])) : ?>
                         <label>
                             <input type="radio" name="address" value="address1" checked>
@@ -28,6 +28,7 @@
                             Phone: 0<?= $user['tel'] ?><br>
                             Address: <?= $user['address'] ?>
                         </label><br>
+
                     <?php else :  ?>
                         <button>Thêm địa chỉ</button>
                     <?php endif  ?>

@@ -70,6 +70,25 @@ function selectOneOrder($id)
     }
 }
 
+// function show order
+function showOrder($id, $listIdProduct)
+{
+    try {
+        $sql = "SELECT orders.id, orders.payments, orders.address, orders.status, orders.total_amount, orders.time_at, orders.code_order, orders.username, cart.image, cart.name, cart.price, cart.qty 
+        FROM orders
+        INNER JOIN cart
+        ON FIND_IN_SET(cart.id, orders.idProduct_cart) AND cart.id IN ($listIdProduct)
+        WHERE orders.id = $id";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+
+
 function updateOrder($id, $username, $email, $password, $address, $tel, $image)
 {
     try {

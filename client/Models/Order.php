@@ -58,10 +58,40 @@ function insertOrder($payment, $address, $status, $total_amount, $idProduct, $ti
     }
 }
 
-function selectOneOrder($id)
+function selectOneOrder($username)
 {
     try {
-        $sql = "SELECT * FROM slideshow WHERE id = :id";
+        $sql = "SELECT * FROM orders WHERE username = :username";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->bindParam(":username", $username);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+// function show order
+function showOrder($id, $listIdProduct)
+{
+    try {
+        $sql = "SELECT orders.id, orders.payments, orders.address, orders.status, orders.total_amount, orders.time_at, orders.code_order, orders.username, cart.image, cart.name, cart.price, cart.qty 
+        FROM orders
+        INNER JOIN cart
+        ON FIND_IN_SET(cart.id, orders.idProduct_cart) AND cart.id IN ($listIdProduct)
+        WHERE orders.id = $id";
+        $stmt = $GLOBALS['connect']->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        debug($e->getMessage());
+    }
+}
+
+function selectOrderWithId($id)
+{
+    try {
+        $sql = "SELECT * FROM orders WHERE id = :id";
         $stmt = $GLOBALS['connect']->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->execute();

@@ -57,10 +57,33 @@ function shopIndex()
         }
     }
 
+    if (isset($_GET['price'])) {
+        $price = $_GET['price'];
+        switch ($price) {
+            case '50000-99000':
+                $dataProduct = getAllProductWithPrice($limit, $initial_page, 50000, 99000);
+                $total_rows = getTotalPageProductsWithPrice(50000, 99000);
+                break;
+            case '120000-199000':
+                $dataProduct = getAllProductWithPrice($limit, $initial_page, 120000, 199000);
+                $total_rows = getTotalPageProductsWithPrice(120000, 199000);
+                break;
+            case '250000-399000':
+                $dataProduct = getAllProductWithPrice($limit, $initial_page, 250000, 399000);
+                $total_rows = getTotalPageProductsWithPrice(250000, 399000);
+                break;
+            case '450000-599000':
+                $dataProduct = getAllProductWithPrice($limit, $initial_page, 450000, 599000);
+                $total_rows = getTotalPageProductsWithPrice(450000, 599000);
+                break;
+        }
+    }
+
     if (isset($_GET['search'])) {
         $dataProduct = getSearchProduct($_GET['search'], $limit, $initial_page);
         $total_rows = getTotalPageProductsWithSearch($_GET['search']);
     }
+
 
     $total_pages = ceil($total_rows / $limit);
 
@@ -78,30 +101,12 @@ function detailProduct()
     $countView = $product['p_views'] + 1;
     if ($product) {
         updateProductView($_GET['id'], $countView);
+        $listImage = explode(',', $product['p_image']);
     }
 
-    $listImage = selectListImages($_GET['id'] ?? null);
-    $dataComment = selectAllComment();
-    // data biến thể
-    $dataColor = selectColorProduct('colors', $_GET['id'] ?? null);
-    $dataSize = selectSizeProduct('sizes', $_GET['id'] ?? null);
-    // end data biến thể
-    $listColor = [];
-    $listSize = [];
-
+    $dataComment = selectAllComment($_GET['id']);
+    // sản phẩm liên quan
     $productRelated = selectProductWithCategory($product['c_id']);
-
-
-    // echo "<pre>";
-    // print_r($dataColor);
-    // echo "</pre>";
-    // echo "<pre>";
-    // print_r($listColor);
-    // echo "</pre>";
-
-
-
-
 
     require_once VIEW . 'layouts/master.php';
 }
@@ -288,7 +293,7 @@ function handleAddToCart()
             }
             $cartItemCount =  getCountRowsCart($idUser);
         }
-        
+
         // Tạo mảng phản hồi JSON
         $response = array(
             'cartItemCount' => $cartItemCount,

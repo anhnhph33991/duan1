@@ -44,7 +44,7 @@ if (!empty($dataSize)) {
                 // print_r($listImage);
                 // echo "</pre>";
 
-                $merge = array_merge($product, $listImage);
+                // $merge = array_merge($product, $listImage);
 
                 // echo "<pre>";
                 // print_r($product);
@@ -52,7 +52,7 @@ if (!empty($dataSize)) {
 
                 // $slideShow = [$product['p_image'], $listImage];
 
-                $slideShow = array_merge(array($product['p_image']), array_column($listImage, 'image'));
+                // $slideShow = array_merge(array($product['p_image']), array_column($listImage, 'image'));
 
 
                 // echo "<pre>";
@@ -86,7 +86,7 @@ if (!empty($dataSize)) {
                 <div class="slider">
                     <div class="owl-carousel owl-theme main">
 
-                        <?php foreach ($slideShow as $slide) :  ?>
+                        <?php foreach ($listImage as $slide) :  ?>
                             <div style="background-image: url(<?= BASE_URL . $slide ?>);" class="item-box"></div>
                         <?php endforeach  ?>
                     </div>
@@ -95,7 +95,7 @@ if (!empty($dataSize)) {
                 </div>
                 <div class="slider-two">
                     <div class="owl-carousel owl-theme thumbs">
-                        <?php foreach ($slideShow as $slide) :  ?>
+                        <?php foreach ($listImage as $slide) :  ?>
                             <div style="background-image: url(<?= BASE_URL . $slide ?>" class="item active"></div>
                         <?php endforeach  ?>
                     </div>
@@ -137,9 +137,9 @@ if (!empty($dataSize)) {
                             <div class="custom-select-form">
                                 <select class="wide">
                                     <option value="S" selected>Small (S)</option>
-                                    <?php foreach ($listSize as $size) :  ?>
-                                        <option value="<?= $size ?>"><?= $size ?></option>
-                                    <?php endforeach  ?>
+                                    <option value="M" selected>Medium (M)</option>
+                                    <option value="L" selected>Large (L)</option>
+                                    <option value="XL" selected>Extra Large (XL)</option>
                                 </select>
                             </div>
                         </div>
@@ -162,8 +162,9 @@ if (!empty($dataSize)) {
                             <?php endif ?>
                         </div>
                     </div>
+                    <?php $listImage = explode(',', $product['p_image']);  ?>
                     <div class="col-lg-4 col-md-6">
-                        <div class="btn_add_to_cart"><a href="#0" class="btn_1 " onclick="handleAddToCart('<?= $product['p_id'] ?>', '<?= $product['p_name'] ?>', '<?= $product['p_price'] ?>','<?= $product['p_image'] ?>','<?= $product['p_description'] ?>','<?= $product['p_type'] ?>','<?= $product['c_name'] ?>')">Add to Cart</a></div>
+                        <div class="btn_add_to_cart"><a href="#0" class="btn_1 " onclick="handleAddToCart('<?= $product['p_id'] ?>', '<?= $product['p_name'] ?>', '<?= $product['p_price'] ?>','<?= $listImage[0] ?>','<?= $product['p_description'] ?>','<?= $product['p_type'] ?>','<?= $product['c_name'] ?>')">Add to Cart</a></div>
 
 
                     </div>
@@ -226,9 +227,7 @@ if (!empty($dataSize)) {
                                             <tr>
                                                 <td><strong>Color</strong></td>
                                                 <td style="display: flex; gap: 5px;">
-                                                    <?php foreach ($listSize as $size) :  ?>
-                                                        <p><?= $size ?></p> |
-                                                    <?php endforeach  ?>
+                                                    <p>Xanh|Đỏ|Tím|Vàng</p>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -264,19 +263,24 @@ if (!empty($dataSize)) {
                 <div id="collapse-B" class="collapse" role="tabpanel" aria-labelledby="heading-B">
                     <div class="card-body">
                         <div class="row justify-content-between">
-                            <?php foreach ($dataComment as $key => $value) :  ?>
-                                <div class="col-lg-6" data-id="<?= $value['comment_id'] ?>">
-                                    <div class="review_content">
-                                        <div class="clearfix add_bottom_10">
-                                            <span class="rating"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><em>5.0/5.0</em></span>
-                                            <em>Published 54 minutes ago</em>
+                            <?php if (!empty($dataComment)) :  ?>
+                                <?php foreach ($dataComment as $key => $value) :  ?>
+                                    <div class="col-lg-6" data-id="<?= $value['comment_id'] ?>">
+                                        <div class="review_content">
+                                            <div class="clearfix add_bottom_10">
+                                                <span class="rating"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><em>5.0/5.0</em></span>
+                                                <em>Published 54 minutes ago</em>
+                                            </div>
+                                            <img class="avatar" src="<?= BASE_URL . $value['user_image'] ?>" style="width: 30px; height: 30x; border-radius: 50%;" />
+                                            <h4><?= $value['user_name'] ?></h4>
+                                            <p><?= $value['comment_content'] ?></p>
                                         </div>
-                                        <img class="avatar" src="<?= BASE_URL . $value['user_image'] ?>" style="width: 30px; height: 30x; border-radius: 50%;" />
-                                        <h4><?= $value['user_name'] ?></h4>
-                                        <p><?= $value['comment_content'] ?></p>
                                     </div>
-                                </div>
-                            <?php endforeach  ?>
+                                <?php endforeach  ?>
+                            <?php else :  ?>
+                                <h1 class="text-danger">Chưa có comment nào 😿</h1>
+                            <?php endif  ?>
+
                         </div>
                         <!-- /row -->
                         <!-- <div class="row justify-content-between">
@@ -327,6 +331,7 @@ if (!empty($dataSize)) {
     </div>
     <div class="owl-carousel owl-theme products_carousel">
         <?php foreach ($productRelated as $key => $value) :  ?>
+            <?php $images = explode(',', $value['image']) ?>
             <div class="item">
                 <div class="grid_item">
                     <span class="ribbon <?= $value['type'] == 'new' ? 'new' : ($value['type'] == 'hot' ? 'hot' : 'off') ?>">
@@ -342,7 +347,7 @@ if (!empty($dataSize)) {
                     </span>
                     <figure>
                         <a href="<?= BASE_URL ?>?act=product-detail&id=<?= $value['id'] ?>">
-                            <img class="owl-lazy" src="<?= BASE_URL . $value['image'] ?>" data-src="<?= BASE_URL . $value['image'] ?>" alt="">
+                            <img class="owl-lazy" src="<?= BASE_URL . $images[0] ?>" data-src="<?= BASE_URL . $images[0] ?>" alt="" style="height: 350px;">
                         </a>
                     </figure>
                     <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
