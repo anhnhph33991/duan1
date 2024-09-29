@@ -24,25 +24,18 @@ match ($act) {
     'cart' => cartIndex(),
     'checkout' => checkoutIndex(),
     'confirm' => confirmIndex(),
-    // 'wishlists' => wishlistsIndex(),
-
     'momoPay' => handleDataMomo(),
-
-
     'leave-review' => reviewIndex(),
-
     // profile
     'check-your-order' => checkOrderIndex(),
     'my-order' => myOrderIndex(),
     'show-my-order' => showMyOrder(),
     'delete-order' => deleteOneOrder(),
     'my-profile' => profileIndex(),
-
     // handle cart
     'handleAddToCart' => handleAddToCart(),
     'remove-product' => handleRemoveProduct(),
     'updateCart' => updateCart(),
-
     // auth route
     'login' => loginIndex(),
     'register' => registerIndex(),
@@ -50,8 +43,5 @@ match ($act) {
     'forgotPassword' => forgotPassword(),
     default => require_once VIEW . 'layouts/404.php'
 };
-
-
-
 
 require_once "./Core/disconnect.php";

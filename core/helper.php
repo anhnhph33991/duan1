@@ -4,6 +4,16 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
+if (!function_exists('dd')) {
+	function dd($data)
+	{
+		echo "<pre>";
+		print_r($data);
+		echo "</pre>";
+		die;
+	}
+}
+
 if (!function_exists('debug')) {
 	function debug($data)
 	{
@@ -31,45 +41,34 @@ if (!function_exists('upload_file')) {
 if (!function_exists('upload_multifile')) {
 	function upload_multifile($image, $pathFolder)
 	{
-		$uploadedFiles = []; // Mảng lưu trữ tên các ảnh đã upload
+		$uploadedFiles = [];
 
-		// Loop qua từng file được upload từ form
 		foreach ($image['tmp_name'] as $key => $tmp_name) {
 			$fileName = $image['name'][$key];
 			$fileSize = $image['size'][$key];
 			$fileTmp = $image['tmp_name'][$key];
 			$fileType = $image['type'][$key];
 
-			// Kiểm tra xem file có phải là ảnh không
 			$allowedExtensions = array("jpeg", "jpg", "png");
 			$fileParts = explode('.', $fileName);
 			$fileExtension = strtolower(end($fileParts));
 
 			if (in_array($fileExtension, $allowedExtensions) === false) {
 				echo "Chỉ cho phép upload file ảnh có định dạng JPEG, JPG, PNG.";
-				// setcookie("message", "Chỉ cho phép upload file ảnh có định dạng JPEG, JPG, PNG 😢😿", time() + 1);
-				// setcookie("type_mess", "error", time() + 1);
-				// header("location : ". $url);
 				exit();
 			}
 
-			// Tạo đường dẫn cho file upload
 			$uploadPath = $pathFolder . time() . '-' . basename($fileName);
 
-			// Di chuyển file vào thư mục uploads
 			if (move_uploaded_file($fileTmp, PATH_UPLOAD . $uploadPath)) {
 				$uploadedFiles[] = $uploadPath; // Lưu tên file vào mảng
 			} else {
 				echo "Có lỗi xảy ra khi upload file.";
-				// setcookie("message", "Có lỗi xảy ra khi upload file 😢😿", time() + 1);
-				// setcookie("type_mess", "error", time() + 1);
 				exit();
 			}
 		}
 
-		// Tạo chuỗi string từ tên các ảnh
 		$imageString = implode(",", $uploadedFiles);
-		// echo "Các ảnh đã được upload: " . $imageString;
 		return $imageString;
 	}
 }
@@ -154,11 +153,8 @@ if (!function_exists('momoPay')) {
 			'signature' => $signature
 		);
 		$result = execPostRequest($endpoint, json_encode($data));
-		$jsonResult = json_decode($result, true);  // decode json
+		$jsonResult = json_decode($result, true);
 
-		//Just a example, please check more in there
-		// setcookie("title_confirm", "Đặt hàng thành công", time() + 1);
-		// setcookie("subTitle_confirm", "Đã gửi mail xác nhận đơn hàng", time() + 1);
 		header('Location: ' . $jsonResult['payUrl']);
 	}
 }
@@ -176,14 +172,13 @@ if (!function_exists('middlewareAuthThor')) {
 	}
 }
 
-if(!function_exists('validateImage')){
-	function validateImage($image){
-		if(!$image['error'][0] == UPLOAD_ERR_NO_FILE){
-            return true;
-        }else{
-            return false;
-        }
+if (!function_exists('validateImage')) {
+	function validateImage($image)
+	{
+		if (!$image['error'][0] == UPLOAD_ERR_NO_FILE) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
-
-

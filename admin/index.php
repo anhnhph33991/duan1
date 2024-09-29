@@ -2,11 +2,9 @@
 session_start();
 ob_start();
 // Require file core
-// require_once "../vendor/autoload.php";
 require_once "../core/env.php";
 require_once "../core/helper.php";
 require_once "../core/connect.php";
-// require_once "../core/configCloudinary.php";
 
 // Require controllers start
 require_once CONTROLLER_ADMIN . 'DashboardController.php';
@@ -39,7 +37,6 @@ match ($act) {
     'delete-product' => productDelete(),
     // route biến thể product
     'variant-product' => variantProductIndex(),
-    'add-variant-product' => variantProductCreate(),
     // // route category
     'categorys' => categoryIndex(),
     'add-category' => categoryCreate(),
@@ -73,17 +70,11 @@ match ($act) {
     'update-slides' => slideUpdate(),
     'delete-slides' => slideDelete(),
     'show-slides' => slideShow(),
-
     // show profile admin
     'show-profile' => profileIndex(),
-
-
-
     // sale manage
     "sale-setting" => saleSettingIndex(),
-
     // handle variant product
-    'variant-product' => variantProduct(),
         // 404
     default => require_once VIEW_ADMIN . 'layouts/404.php',
 };

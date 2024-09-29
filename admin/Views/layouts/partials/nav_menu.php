@@ -93,14 +93,7 @@ $menuAdmin = [
                 </a>
             </li>
         <?php endforeach; ?>
-
-        <!--        <li class="dropdown">-->
-        <!--            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>-->
-        <!--                <span>Layout</span></a>-->
-        <!--            <ul class="dropdown-menu">-->
-        <!--                <li><a class="nav-link" href="layout-default.html">Default Layout</a></li>-->
-        <!--            </ul>-->
-        <!--        </li>-->
+        
     </ul>
     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
         <a href="<?= BASE_URL ?>" class="btn btn-primary btn-lg btn-block btn-icon-split">

@@ -3,7 +3,6 @@
     $typeMess = $_COOKIE['type_mess'] ?? '';
     ?>
 
-
     <script type="text/javascript">
         let mess = "<?= $_COOKIE['message'] ?? '' ?>";
         let toastType = "<?= $typeMess ?>"
